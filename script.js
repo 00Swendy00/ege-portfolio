@@ -1,9 +1,6 @@
-```js
 "use strict";
 
-// =========================
 // LOADER
-// =========================
 window.addEventListener("load", () => {
     const loader = document.getElementById("loader");
 
@@ -19,17 +16,14 @@ window.addEventListener("load", () => {
     }, 2500);
 });
 
-// =========================
 // CURSOR GLOW
-// =========================
 document.addEventListener("DOMContentLoaded", () => {
     const glow = document.querySelector(".cursor-glow");
 
     if (!glow) return;
 
     document.addEventListener("mousemove", (e) => {
-       glow.style.left = `${e.clientX}px`;
-        glow.style.top = `${e.clientY}px`;
+        glow.style.left = e.clientX + "px";
+        glow.style.top = e.clientY + "px";
     });
 });
-```
