@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spotify Dot Matrix | Ege Coşkun</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.hero-project{height:70vh;display:flex;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#050816,#0f172a)}
+.hero-project h1{font-size:5rem;background:linear-gradient(90deg,#00c6ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-project p{font-size:1.3rem;opacity:.85;margin-top:20px}
+.project-image{width:100%;border-radius:25px;margin-top:30px}
+.hardware-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}
+.hardware-card,.glass-card{background:rgba(255,255,255,.05);padding:25px;border-radius:20px}
+.code-block{background:#0b1220;border:1px solid rgba(255,255,255,.08);padding:25px;border-radius:20px;overflow:auto;white-space:pre-wrap;font-family:Consolas,monospace;line-height:1.6}
+.copy-btn{padding:10px 20px;border:none;border-radius:10px;cursor:pointer;margin-top:15px;background:#00c6ff;font-weight:bold}
+.wiring{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.hero-project h1{font-size:3rem}.wiring{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="logo">Ege Coşkun</div>
+<ul><li><a href="../index.html">Ana Sayfa</a></li></ul>
+</nav>
+
+<section class="hero-project">
+<div>
+<h1>Spotify Dot Matrix</h1>
+<p>Spotify'da çalan şarkıları gerçek zamanlı olarak Arduino Uno ve MAX7219 Dot Matrix üzerinde gösteren proje.</p>
+</div>
+</section>
+
+<section>
+<h2>Proje Hakkında</h2>
+<div class="glass-card">
+Bu projede Python bilgisayardaki aktif Spotify başlığını okur ve seri port üzerinden Arduino Uno'ya gönderir. Arduino gelen veriyi MAX7219 Dot Matrix üzerinde kayan yazı olarak gösterir.
+</div>
+</section>
+
+<section>
+<h2>Kullanılan Donanımlar</h2>
+<div class="hardware-grid">
+<div class="hardware-card">Arduino Uno</div>
+<div class="hardware-card">MAX7219 Dot Matrix</div>
+<div class="hardware-card">USB Kablo</div>
+<div class="hardware-card">Python + PyGetWindow</div>
+</div>
+</section>
+
+<section>
+<h2>Devre Bağlantıları</h2>
+<div class="glass-card">
+DIN → D11<br>
+CS → D10<br>
+CLK → D13<br>
+VCC → 5V<br>
+GND → GND
+</div>
+</section>
+
+<section>
+<h2>Arduino Kodu</h2>
+<pre id="arduinoKod" class="code-block"><code>#include &lt;MD_Parola.h&gt;
+#include &lt;MD_MAX72xx.h&gt;
+#include &lt;SPI.h&gt;
+
+#define HARDWARE_TYPE MD_MAX72XX::FC16_HW
+
+#define MAX_DEVICES 1
+
+#define DATA_PIN 11
+#define CLK_PIN 13
+#define CS_PIN 10
+
+MD_Parola ekran =
+MD_Parola(
+HARDWARE_TYPE,
+DATA_PIN,
+CLK_PIN,
+CS_PIN,
+MAX_DEVICES
+);
+
+String gelenMesaj = &quot;Spotify Hazir&quot;;
+
+void setup()
+{
+  Serial.begin(9600);
+
+  ekran.begin();
+  ekran.setIntensity(5);
+
+  ekran.displayClear();
+}
+
+void loop()
+{
+  if (Serial.available())
+  {
+    gelenMesaj =
+      Serial.readStringUntil(&#x27;
+&#x27;);
+  }
+
+  if (ekran.displayAnimate())
+  {
+    ekran.displayText(
+      gelenMesaj.c_str(),
+      PA_LEFT,
+      60,
+      0,
+      PA_SCROLL_LEFT,
+      PA_SCROLL_LEFT
+    );
+  }
+}</code></pre>
+<button class="copy-btn" onclick="kodKopyala('arduinoKod',this)">📋 Kopyala</button>
+</section>
+
+<section>
+<h2>Python Kodu</h2>
+<pre id="pythonKod" class="code-block"><code>import serial
+import time
+import pygetwindow as gw
+
+arduino = serial.Serial(&quot;COM9&quot;, 9600)
+time.sleep(2)
+
+eski = &quot;&quot;
+
+def turkce_temizle(yazi):
+    cevir = str.maketrans(&quot;çğıöşüÇĞİÖŞÜ&quot;, &quot;cgiosuCGIOSU&quot;)
+    return yazi.translate(cevir)
+
+yasakli = [
+    &quot;Microsoft Edge&quot;,
+    &quot;Google Chrome&quot;,
+    &quot;Opera&quot;,
+    &quot;Komut&quot;,
+    &quot;Administrator&quot;,
+    &quot;Arduino&quot;,
+    &quot;Visual Studio&quot;,
+    &quot;Discord&quot;
+]
+
+while True:
+    pencereler = gw.getAllTitles()
+    spotify_baslik = &quot;&quot;
+
+    for baslik in pencereler:
+        if baslik and &quot; - &quot; in baslik:
+            if not any(kelime in baslik for kelime in yasakli):
+                spotify_baslik = baslik
+                break
+
+    if spotify_baslik != &quot;&quot; and spotify_baslik != eski:
+        eski = spotify_baslik
+        spotify_baslik = turkce_temizle(spotify_baslik)
+
+        print(&quot;Gonderiliyor:&quot;, spotify_baslik)
+        arduino.write((spotify_baslik + &quot;\n&quot;).encode(&quot;utf-8&quot;))
+
+    time.sleep(2)</code></pre>
+<button class="copy-btn" onclick="kodKopyala('pythonKod',this)">📋 Kopyala</button>
+</section>
+
+<section>
+<h2>Galeri</h2>
+<img src="../assets/spotify.jpg" class="project-image">
+</section>
+
+<footer>
+<h3>Ege Coşkun</h3>
+<p>Spotify Dot Matrix Projesi</p>
+</footer>
+
+<script>
+function kodKopyala(id,btn){
+ const kod=document.getElementById(id).innerText;
+ navigator.clipboard.writeText(kod);
+ btn.innerHTML="✅ Kopyalandı";
+ setTimeout(()=>btn.innerHTML="📋 Kopyala",2000);
+}
+</script>
+
+</body>
+</html>
