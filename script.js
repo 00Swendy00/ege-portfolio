@@ -1,40 +1,35 @@
+```js
+"use strict";
+
+// =========================
+// LOADER
+// =========================
 window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
 
-```
-const loader = document.getElementById("loader");
-
-if(loader){
+    if (!loader) return;
 
     setTimeout(() => {
-
         loader.style.opacity = "0";
 
         setTimeout(() => {
-
             loader.style.display = "none";
-
         }, 1000);
 
     }, 2500);
-
-}
-```
-
 });
 
+// =========================
 // CURSOR GLOW
+// =========================
+document.addEventListener("DOMContentLoaded", () => {
+    const glow = document.querySelector(".cursor-glow");
 
-const glow = document.querySelector(".cursor-glow");
+    if (!glow) return;
 
-if(glow){
-
-```
-document.addEventListener("mousemove", (e) => {
-
-    glow.style.left = e.clientX + "px";
-    glow.style.top = e.clientY + "px";
-
+    document.addEventListener("mousemove", (e) => {
+        glow.style.left = `${e.clientX}px`;
+        glow.style.top = `${e.clientY}px`;
+    });
 });
 ```
-
-}
