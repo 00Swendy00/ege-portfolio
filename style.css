@@ -324,3 +324,178 @@ line-height:1.6;
 font-size:14px;
 
 }
+/* ========================= */
+/* GELİŞMİŞ NAVBAR */
+/* ========================= */
+
+nav{
+backdrop-filter: blur(25px);
+border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+nav a{
+transition:.3s;
+position:relative;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-5px;
+width:0;
+height:2px;
+background:#00c6ff;
+transition:.3s;
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+/* ========================= */
+/* HERO */
+/* ========================= */
+
+.hero{
+background:
+radial-gradient(circle at center,
+rgba(0,198,255,.08),
+transparent 60%);
+}
+
+.hero h1{
+text-shadow:
+0 0 20px rgba(0,198,255,.3);
+}
+
+/* ========================= */
+/* GLASS */
+/* ========================= */
+
+.glass{
+transition:.4s;
+}
+
+.glass:hover{
+transform:translateY(-5px);
+border-color:rgba(0,198,255,.3);
+}
+
+/* ========================= */
+/* PROJECT CARDS */
+/* ========================= */
+
+.project-card{
+border:1px solid rgba(255,255,255,.05);
+}
+
+.project-card:hover{
+box-shadow:
+0 0 25px rgba(0,198,255,.15),
+0 0 50px rgba(139,92,246,.15);
+}
+
+.project-card img{
+transition:.5s;
+}
+
+.project-card:hover img{
+transform:scale(1.05);
+}
+
+/* ========================= */
+/* BUTTON */
+/* ========================= */
+
+.btn{
+background:
+linear-gradient(
+90deg,
+#00c6ff,
+#8b5cf6
+);
+color:white;
+}
+
+.btn:hover{
+box-shadow:
+0 0 20px rgba(0,198,255,.4);
+}
+
+/* ========================= */
+/* SOCIALS */
+/* ========================= */
+
+.socials{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:25px;
+flex-wrap:wrap;
+}
+
+.socials a{
+color:white;
+text-decoration:none;
+padding:12px 20px;
+background:#111827;
+border-radius:50px;
+transition:.3s;
+}
+
+.socials a:hover{
+transform:translateY(-3px);
+background:#1f2937;
+}
+
+/* ========================= */
+/* SCROLLBAR */
+/* ========================= */
+
+::-webkit-scrollbar{
+width:10px;
+}
+
+::-webkit-scrollbar-track{
+background:#050816;
+}
+
+::-webkit-scrollbar-thumb{
+background:
+linear-gradient(
+180deg,
+#00c6ff,
+#8b5cf6
+);
+border-radius:10px;
+}
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:2.4rem;
+line-height:1.2;
+}
+
+.hero p{
+font-size:1rem;
+}
+
+.logo{
+font-size:1.1rem;
+}
+
+.project-card img{
+height:200px;
+}
+
+.stats-grid{
+grid-template-columns:1fr;
+}
+
+}
