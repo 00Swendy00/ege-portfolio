@@ -535,3 +535,86 @@ box-shadow:0 0 15px rgba(0,198,255,.2);
     height:48px;
     border-radius:50%;
 }
+/* ==========================
+   LOADER
+========================== */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:#050816;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:1s;
+}
+
+.loader-content{
+    text-align:center;
+}
+
+.loader-content img{
+    width:120px;
+    height:120px;
+    object-fit:contain;
+    margin-bottom:20px;
+
+    animation:pulseLogo 2s infinite;
+}
+
+.loader-content h1{
+    font-size:3rem;
+    font-weight:800;
+    color:white;
+    margin-bottom:25px;
+    letter-spacing:3px;
+}
+
+.progress{
+    width:280px;
+    height:6px;
+    background:rgba(255,255,255,.1);
+    border-radius:50px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        #00c6ff,
+        #7f5af0
+    );
+
+    animation:loadingBar 2s forwards;
+}
+
+@keyframes loadingBar{
+
+    from{
+        width:0%;
+    }
+
+    to{
+        width:100%;
+    }
+
+}
+
+@keyframes pulseLogo{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
