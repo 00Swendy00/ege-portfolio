@@ -522,3 +522,16 @@ outline:none;
 border-color:#00c6ff;
 box-shadow:0 0 15px rgba(0,198,255,.2);
 }
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:700;
+}
+
+.logo img{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+}
