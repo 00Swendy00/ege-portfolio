@@ -499,3 +499,26 @@ grid-template-columns:1fr;
 }
 
 }
+.contact-form{
+display:flex;
+flex-direction:column;
+gap:15px;
+margin-top:25px;
+}
+
+.contact-form input,
+.contact-form textarea{
+background:#111827;
+border:1px solid rgba(255,255,255,.08);
+padding:15px;
+border-radius:12px;
+color:white;
+font-family:inherit;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+outline:none;
+border-color:#00c6ff;
+box-shadow:0 0 15px rgba(0,198,255,.2);
+}
