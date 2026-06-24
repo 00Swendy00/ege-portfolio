@@ -1,7 +1,9 @@
 window.addEventListener("load", () => {
 
-    const loader =
-    document.getElementById("loader");
+```
+const loader = document.getElementById("loader");
+
+if(loader){
 
     setTimeout(() => {
 
@@ -15,28 +17,8 @@ window.addEventListener("load", () => {
 
     }, 2500);
 
-});
-// LOADER
-
-window.addEventListener("load", () => {
-
-    const loader = document.getElementById("loader");
-
-    if(loader){
-
-        setTimeout(() => {
-
-            loader.style.opacity = "0";
-
-            setTimeout(() => {
-
-                loader.style.display = "none";
-
-            }, 500);
-
-        }, 1000);
-
-    }
+}
+```
 
 });
 
@@ -46,11 +28,13 @@ const glow = document.querySelector(".cursor-glow");
 
 if(glow){
 
-    document.addEventListener("mousemove", (e) => {
+```
+document.addEventListener("mousemove", (e) => {
 
-        glow.style.left = e.clientX + "px";
-        glow.style.top = e.clientY + "px";
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
 
-    });
+});
+```
 
 }
