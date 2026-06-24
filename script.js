@@ -1,112 +1,178 @@
+// ==========================
 // LOADING SCREEN
+// ==========================
 
 window.addEventListener("load", () => {
 
+```
+setTimeout(() => {
+
+    const loader = document.getElementById("loader");
+
+    loader.style.opacity = "0";
+
     setTimeout(() => {
 
-        document.getElementById("loader").style.opacity = "0";
+        loader.style.display = "none";
 
-        setTimeout(() => {
+    }, 1000);
 
-            document.getElementById("loader").style.display = "none";
-
-        }, 1000);
-
-    }, 3000);
+}, 2000);
+```
 
 });
 
-
-// MOUSE GLOW
+// ==========================
+// CURSOR GLOW
+// ==========================
 
 const glow = document.querySelector(".cursor-glow");
 
 document.addEventListener("mousemove", (e) => {
 
-    glow.style.left = e.clientX + "px";
-    glow.style.top = e.clientY + "px";
+```
+glow.style.left = e.clientX + "px";
+glow.style.top = e.clientY + "px";
+```
 
 });
 
-
+// ==========================
 // SCROLL REVEAL
+// ==========================
 
 const observer = new IntersectionObserver((entries) => {
 
-    entries.forEach(entry => {
+```
+entries.forEach(entry => {
 
-        if (entry.isIntersecting) {
+    if (entry.isIntersecting) {
 
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0px)";
+        entry.target.style.opacity = "1";
+        entry.target.style.transform = "translateY(0px)";
 
-        }
+    }
 
-    });
+});
+```
 
 }, {
-    threshold: 0.1
+threshold: 0.1
 });
 
 document.querySelectorAll("section").forEach(section => {
 
-    section.style.opacity = "0";
-    section.style.transform = "translateY(80px)";
-    section.style.transition = "1s";
+```
+section.style.opacity = "0";
+section.style.transform = "translateY(80px)";
+section.style.transition = "all 1s ease";
 
-    observer.observe(section);
+observer.observe(section);
+```
 
 });
 
+// ==========================
+// NAVBAR SCROLL EFFECT
+// ==========================
 
-// PARALLAX HERO
+const navbar = document.querySelector("nav");
 
 window.addEventListener("scroll", () => {
 
-    const scrolled = window.pageYOffset;
+```
+if(window.scrollY > 50){
 
-    const hero = document.querySelector(".hero");
+    navbar.style.background =
+    "rgba(5,8,22,0.85)";
 
-    hero.style.backgroundPositionY = scrolled * 0.5 + "px";
+}else{
+
+    navbar.style.background =
+    "rgba(0,0,0,.3)";
+
+}
+```
 
 });
 
+// ==========================
+// HERO PARALLAX
+// ==========================
 
+window.addEventListener("scroll", () => {
+
+```
+const scrolled = window.pageYOffset;
+
+const hero = document.querySelector(".hero");
+
+hero.style.backgroundPositionY =
+scrolled * 0.4 + "px";
+```
+
+});
+
+// ==========================
 // PROJECT CARD EFFECT
+// ==========================
 
-const cards = document.querySelectorAll(".project-card");
+const cards =
+document.querySelectorAll(".project-card");
 
 cards.forEach(card => {
 
-    card.addEventListener("mousemove", (e) => {
+```
+card.addEventListener("mousemove", (e) => {
 
-        const rect = card.getBoundingClientRect();
+    const rect =
+    card.getBoundingClientRect();
 
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+    const x =
+    e.clientX - rect.left;
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+    const y =
+    e.clientY - rect.top;
 
-        const rotateY = (x - centerX) / 25;
-        const rotateX = -(y - centerY) / 25;
+    const centerX =
+    rect.width / 2;
 
-        card.style.transform =
-            `perspective(1000px)
-             rotateX(${rotateX}deg)
-             rotateY(${rotateY}deg)
-             translateY(-10px)`;
+    const centerY =
+    rect.height / 2;
 
-    });
+    const rotateY =
+    (x - centerX) / 25;
 
-    card.addEventListener("mouseleave", () => {
+    const rotateX =
+    -(y - centerY) / 25;
 
-        card.style.transform =
-            "perspective(1000px) rotateX(0) rotateY(0)";
-
-    });
+    card.style.transform = `
+    perspective(1000px)
+    rotateX(${rotateX}deg)
+    rotateY(${rotateY}deg)
+    translateY(-10px)
+    `;
 
 });
+
+card.addEventListener("mouseleave", () => {
+
+    card.style.transform = `
+    perspective(1000px)
+    rotateX(0deg)
+    rotateY(0deg)
+    translateY(0px)
+    `;
+
+});
+```
+
+});
+
+// ==========================
+// TS PARTICLES
+// ==========================
+
 tsParticles.load("tsparticles", {
 
 particles: {
@@ -122,7 +188,8 @@ value: "#00c6ff"
 links: {
 enable: true,
 color: "#00c6ff",
-distance: 150
+distance: 150,
+opacity: 0.4
 },
 
 move: {
@@ -132,6 +199,33 @@ speed: 2
 
 size: {
 value: 2
+}
+
+},
+
+interactivity: {
+
+events: {
+
+onHover: {
+enable: true,
+mode: "grab"
+}
+
+},
+
+modes: {
+
+grab: {
+
+distance: 180,
+
+links: {
+opacity: 0.8
+}
+
+}
+
 }
 
 }
