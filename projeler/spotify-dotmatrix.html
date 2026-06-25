@@ -70,52 +70,62 @@
             color: white;
         }
 
-        /* Devre Bağlantıları Bölümü */
-        .connection-section {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px 30px;
-            border-radius: 20px;
-            margin: 30px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+        /* ========================================================================
+        DEVRE BAĞLANTILARI (ÇAKIŞMAYI ÖNLEYEN KURŞUNGEÇİRMEZ ORTALAMA KODU) 
+        ========================================================================
+        */
+        section.connection-section {
+            background: rgba(255, 255, 255, 0.04) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            padding: 40px 20px !important;
+            border-radius: 20px !important;
+            margin: 60px auto !important;
+            max-width: 950px !important;
+            display: block !important;
         }
-        .section-title {
-            margin-bottom: 15px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            gap: 10px;
+        section.connection-section .section-title {
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important;
+            text-align: center !important;
+            width: 100% !important;
+            gap: 12px !important;
+            margin-bottom: 20px !important;
+            color: #00c6ff !important;
         }
-        .section-description {
-            opacity: 0.85; 
-            line-height: 1.6;
-            max-width: 800px;
+        section.connection-section .section-description {
+            opacity: 0.85 !important; 
+            line-height: 1.6 !important;
+            max-width: 750px !important;
+            margin: 0 auto !important;
+            text-align: center !important;
+            display: block !important;
         }
-        .connection-image {
-            width: 100%;
-            display: flex; /* Flexbox ile matematikesel kusursuz ortalama */
-            justify-content: center; 
-            align-items: center;
-            margin-top: 25px;
+        section.connection-section .connection-image {
+            width: 100% !important;
+            display: block !important;
+            text-align: center !important;
+            margin-top: 35px !important;
         }
-        .connection-image img {
-            width: 80%; /* Görsel biraz daha büyütüldü */
-            max-width: 850px; /* Büyüme sınırı artırıldı */
-            height: auto;
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        section.connection-section .connection-image img {
+            width: 85% !important; 
+            max-width: 800px !important; 
+            height: auto !important;
+            border-radius: 15px !important; 
+            display: inline-block !important; /* Blok içinde mükemmel ortalar */
+            margin: 0 auto !important;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4) !important;
+            transition: transform 0.4s ease, box-shadow 0.4s ease !important;
+        }
+        section.connection-section .connection-image img:hover {
+            transform: scale(1.02) !important;
+            box-shadow: 0 20px 50px rgba(0, 198, 255, 0.25) !important; /* Şık neon gölge */
         }
 
         /* Mobil Uyum (Responsive) */
         @media(max-width: 768px) {
-            .hero-project h1 {
-                font-size: 3rem;
-            }
-            .connection-image img {
-                width: 100%; /* Mobilde ekranı tam kaplasın */
-            }
+            .hero-project h1 { font-size: 3rem; }
+            section.connection-section .connection-image img { width: 95% !important; }
         }
     </style>
 </head>
