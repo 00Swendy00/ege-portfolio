@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arduino Servo Radar | Ege Coşkun</title>
+<link rel="icon" type="image/png" href="../assets/ec-logo.png?v=2">
+<link rel="apple-touch-icon" href="../assets/ec-logo.png?v=2">
 <link rel="stylesheet" href="../style.css">
 <style>
 .hero-project{height:70vh;display:flex;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#050816,#0f172a)}
@@ -68,12 +70,9 @@ Turuncu (Sinyal) → D11
 <h2>Arduino Kodu</h2>
 <pre id="arduinoKod" class="code-block"><code>#include &lt;Servo.h&gt;
 
-#include <Servo.h>
-
-// Pin Tanımlamaları
 const int trigPin = 10;
 const int echoPin = 11;
-const int servoPin = 12; // DİKKAT: Çakışmayı önlemek için Servo'yu 12'ye aldık!
+const int servoPin = 12; 
 
 long duration;
 int distance;
@@ -87,20 +86,17 @@ void setup() {
 }
 
 void loop() {
-  // Servo 15 dereceden 165 dereceye döner
   for (int i = 15; i <= 165; i++) {
     myServo.write(i);
     delay(30);
     distance = calculateDistance();
     
-    // Veriyi Processing'in okuyabileceği "Açı,Mesafe." formatında gönderiyoruz
     Serial.print(i);
     Serial.print(",");
     Serial.print(distance);
     Serial.print(".");
   }
   
-  // Servo 165 dereceden 15 dereceye geri döner
   for (int i = 165; i > 15; i--) {
     myServo.write(i);
     delay(30);
@@ -113,7 +109,6 @@ void loop() {
   }
 }
 
-// Mesafe ölçümü yapan fonksiyon
 int calculateDistance() {
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -123,7 +118,6 @@ int calculateDistance() {
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
   return distance;
-}
 }</code></pre>
 <button class="copy-btn" onclick="kodKopyala('arduinoKod',this)">📋 Kopyala</button>
 </section>
@@ -199,13 +193,11 @@ void drawRadar() {
   strokeWeight(2);
   stroke(98, 245, 31);
   
-  // Çemberler
   arc(0, 0, 1800, 1800, PI, TWO_PI);
   arc(0, 0, 1400, 1400, PI, TWO_PI);
   arc(0, 0, 1000, 1000, PI, TWO_PI);
   arc(0, 0, 600, 600, PI, TWO_PI);
   
-  // Açı çizgileri - İşaret hataları düzeltilerek radarla %100 senkron yapıldı
   line(-960, 0, 960, 0);
   line(0, 0, 960 * cos(radians(30)), -960 * sin(radians(30)));
   line(0, 0, 960 * cos(radians(60)), -960 * sin(radians(60)));
@@ -252,7 +244,6 @@ void drawText() {
   
   fill(98, 245, 31);
   
-  // Mesafe yazıları kendi çemberlerinin tam üstüne matematiksel olarak hizalandı
   textSize(25);
   textAlign(RIGHT, BASELINE);
   text("10cm", 1260, 990);
@@ -260,7 +251,6 @@ void drawText() {
   text("30cm", 1660, 990);
   text("40cm", 1860, 990);
   
-  // Alt panel yazıları
   textAlign(LEFT, BASELINE);
   textSize(40);
   text("Durum: " + noObject, 240, 1060);
@@ -272,28 +262,24 @@ void drawText() {
     text("Mesafe: -", 1350, 1060);
   }
   
-  // Açı dereceleri (30°, 60°, vs.) trigonometri ile mükemmel hizalandı
   pushMatrix();
-  translate(960, 1000); // Radar merkezine in
+  translate(960, 1000); 
   textAlign(CENTER, CENTER);
   textSize(25);
   fill(98, 245, 60);
   
   for (int a = 30; a <= 150; a += 30) {
     pushMatrix();
-    float r = 1000; // Yazıların çizgilerden ne kadar uzakta olacağı
+    float r = 1000;
     float x = r * cos(radians(a));
     float y = -r * sin(radians(a));
     translate(x, y);
-    rotate(radians(90 - a)); // Çemberin eğimine göre yazıyı döndür
+    rotate(radians(90 - a));
     text(a + "°", 0, 0);
     popMatrix();
   }
   popMatrix();
-  
   popMatrix(); 
-}
-// --- KODUN SONU ---
 }</code></pre>
 <button class="copy-btn" onclick="kodKopyala('processingKod',this)">📋 Kopyala</button>
 </section>
