@@ -95,17 +95,17 @@
         }
         .connection-image {
             width: 100%;
-            text-align: center; /* İçeriği kesin ortalar */
+            display: flex; /* Flexbox ile matematikesel kusursuz ortalama */
+            justify-content: center; 
+            align-items: center;
             margin-top: 25px;
         }
         .connection-image img {
-            width: 60%; /* Görseli ciddi oranda küçülttük */
-            max-width: 650px; /* Maksimum bir genişlik sınırı koyduk */
+            width: 80%; /* Görsel biraz daha büyütüldü */
+            max-width: 850px; /* Büyüme sınırı artırıldı */
             height: auto;
             border-radius: 15px; 
-            display: inline-block; /* Ortalamayı garantiye alır */
-            margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4); /* Resme şık bir derinlik/gölge katar */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
         /* Mobil Uyum (Responsive) */
@@ -114,7 +114,7 @@
                 font-size: 3rem;
             }
             .connection-image img {
-                width: 95%; /* Telefondan girilince resim çok küçük kalmasın diye büyütür */
+                width: 100%; /* Mobilde ekranı tam kaplasın */
             }
         }
     </style>
