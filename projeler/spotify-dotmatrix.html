@@ -95,20 +95,26 @@
         }
         .connection-image {
             width: 100%;
-            display: flex;
-            justify-content: center;
+            text-align: center; /* İçeriği kesin ortalar */
+            margin-top: 25px;
         }
         .connection-image img {
-            max-width: 100%; 
+            width: 60%; /* Görseli ciddi oranda küçülttük */
+            max-width: 650px; /* Maksimum bir genişlik sınırı koyduk */
+            height: auto;
             border-radius: 15px; 
-            margin: 20px auto 0 auto; 
-            display: block;
+            display: inline-block; /* Ortalamayı garantiye alır */
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); /* Resme şık bir derinlik/gölge katar */
         }
 
         /* Mobil Uyum (Responsive) */
         @media(max-width: 768px) {
             .hero-project h1 {
                 font-size: 3rem;
+            }
+            .connection-image img {
+                width: 95%; /* Telefondan girilince resim çok küçük kalmasın diye büyütür */
             }
         }
     </style>
@@ -181,3 +187,93 @@ void setup() {
   Serial.begin(9600);
   ekran.begin();
   ekran.setIntensity(5);
+  ekran.displayClear();
+}
+
+void loop() {
+  if (Serial.available()) {
+    gelenMesaj = Serial.readStringUntil('\n');
+  }
+
+  if (ekran.displayAnimate()) {
+    ekran.displayText(
+      gelenMesaj.c_str(),
+      PA_LEFT,
+      60,
+      0,
+      PA_SCROLL_LEFT,
+      PA_SCROLL_LEFT
+    );
+  }
+}</code></pre>
+        <button class="copy-btn" onclick="kodKopyala('arduinoKod', this)">📋 Kopyala</button>
+    </section>
+
+    <section>
+        <h2>Python Kodu</h2>
+<pre id="pythonKod" class="code-block"><code>import serial
+import time
+import pygetwindow as gw
+
+arduino = serial.Serial("COM9", 9600)
+time.sleep(2)
+
+eski = ""
+
+def turkce_temizle(yazi):
+    cevir = str.maketrans("çğıöşüÇĞİÖŞÜ", "cgiosuCGIOSU")
+    return yazi.translate(cevir)
+
+yasakli = [
+    "Microsoft Edge",
+    "Google Chrome",
+    "Opera",
+    "Komut",
+    "Administrator",
+    "Arduino",
+    "Visual Studio",
+    "Discord"
+]
+
+while True:
+    pencereler = gw.getAllTitles()
+    spotify_baslik = ""
+
+    for baslik in pencereler:
+        if baslik and " - " in baslik:
+            if not any(kelime in baslik for kelime in yasakli):
+                spotify_baslik = baslik
+                break
+
+    if spotify_baslik != "" and spotify_baslik != eski:
+        eski = spotify_baslik
+        spotify_baslik = turkce_temizle(spotify_baslik)
+
+        print("Gonderiliyor:", spotify_baslik)
+        arduino.write((spotify_baslik + "\n").encode("utf-8"))
+
+    time.sleep(2)</code></pre>
+        <button class="copy-btn" onclick="kodKopyala('pythonKod', this)">📋 Kopyala</button>
+    </section>
+
+    <section>
+        <h2>Galeri</h2>
+        <img src="../assets/spotify.jpg" class="project-image" alt="Spotify Dot Matrix Projesi Tamamlanmış Hali">
+    </section>
+
+    <footer>
+        <h3>Ege Coşkun</h3>
+        <p>Spotify Dot Matrix Projesi</p>
+    </footer>
+
+    <script>
+        function kodKopyala(id, btn) {
+            const kod = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(kod);
+            btn.innerHTML = "✅ Kopyalandı";
+            setTimeout(() => { btn.innerHTML = "📋 Kopyala"; }, 2000);
+        }
+    </script>
+
+</body>
+</html>
