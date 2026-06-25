@@ -1,74 +1,78 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arduino Servo Radar | Ege Coşkun</title>
-<link rel="icon" type="image/png" href="../assets/ec-logo.png?v=2">
-<link rel="apple-touch-icon" href="../assets/ec-logo.png?v=2">
-<link rel="stylesheet" href="../style.css">
-<style>
-.hero-project{height:70vh;display:flex;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#050816,#0f172a)}
-.hero-project h1{font-size:5rem;background:linear-gradient(90deg,#00c6ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-project p{font-size:1.3rem;opacity:.85;margin-top:20px}
-.project-image{width:100%;border-radius:25px;margin-top:30px}
-.hardware-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}
-.hardware-card,.glass-card{background:rgba(255,255,255,.05);padding:25px;border-radius:20px}
-.code-block{background:#0b1220;border:1px solid rgba(255,255,255,.08);padding:25px;border-radius:20px;overflow:auto;white-space:pre-wrap;font-family:Consolas,monospace;line-height:1.6}
-.copy-btn{padding:10px 20px;border:none;border-radius:10px;cursor:pointer;margin-top:15px;background:#00c6ff;font-weight:bold}
-.wiring{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:768px){.hero-project h1{font-size:3rem}.wiring{grid-template-columns:1fr}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Servo Radar | Ege Coşkun</title>
+    
+    <link rel="icon" type="image/png" href="../assets/ec-logo.png?v=2">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Proje özel stil düzenlemesi */
+        .hero-project { height: 70vh; display: flex; justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #050816, #0f172a); }
+        .hero-project h1 { font-size: 5rem; background: linear-gradient(90deg, #00c6ff, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Şema görseli için düzeltme */
+        .connection-section {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            margin: 60px 0 !important;
+            text-align: center !important;
+        }
+        .connection-image img {
+            display: block !important;
+            margin: 20px auto !important;
+            width: 80% !important;
+            max-width: 800px !important;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+    </style>
 </head>
 <body>
 
 <nav>
-<div class="logo">Ege Coşkun</div>
-<ul><li><a href="../index.html">Ana Sayfa</a></li></ul>
+    <div class="logo">Ege Coşkun</div>
+    <ul><li><a href="../index.html">Ana Sayfa</a></li></ul>
 </nav>
 
 <section class="hero-project">
-<div>
-<h1>Arduino Servo Radar</h1>
-<p>HC-SR04 ultrasonik sensör ve SG90 servo motor kullanılarak geliştirilen gerçek zamanlı radar sistemi.</p>
-</div>
+    <div>
+        <h1>Arduino Servo Radar</h1>
+        <p>HC-SR04 ultrasonik sensör ve SG90 servo motor kullanılarak geliştirilen gerçek zamanlı radar sistemi.</p>
+    </div>
 </section>
 
 <section>
-<h2>Proje Hakkında</h2>
-<div class="glass-card">
-Bu projede Servo motor sürekli olarak 0° ile 180° arasında hareket ederken, HC-SR04 ultrasonik sensör mesafe ölçümü gerçekleştirir. Arduino, elde edilen açı ve mesafe verilerini seri haberleşme üzerinden bilgisayara gönderir. Gelen veriler Processing yazılımı kullanılarak klasik bir radar ekranı şeklinde görselleştirilir.
-</div>
+    <h2>Proje Hakkında</h2>
+    <div class="glass-card">
+        Bu projede Servo motor sürekli olarak 0° ile 180° arasında hareket ederken, HC-SR04 ultrasonik sensör mesafe ölçümü gerçekleştirir. Arduino, elde edilen açı ve mesafe verilerini seri haberleşme üzerinden bilgisayara gönderir. Gelen veriler Processing yazılımı kullanılarak klasik bir radar ekranı şeklinde görselleştirilir.
+    </div>
 </section>
 
 <section>
-<h2>Kullanılan Donanımlar</h2>
-<div class="hardware-grid">
-<div class="hardware-card">Arduino Uno</div>
-<div class="hardware-card">HC-SR04 Sensör</div>
-<div class="hardware-card">SG90 Servo Motor</div>
-<div class="hardware-card">Processing IDE</div>
-</div>
+    <h2>Kullanılan Donanımlar</h2>
+    <div class="hardware-grid">
+        <div class="hardware-card">Arduino Uno</div>
+        <div class="hardware-card">HC-SR04 Sensör</div>
+        <div class="hardware-card">SG90 Servo Motor</div>
+        <div class="hardware-card">Processing IDE</div>
+    </div>
+</section>
+
+<section class="connection-section">
+    <h2>Devre Bağlantıları</h2>
+    <div class="connection-image">
+        <img src="./radarşema.png" alt="Arduino Servo Radar Bağlantı Şeması">
+    </div>
 </section>
 
 <section>
-<h2>Devre Bağlantıları</h2>
-<div class="glass-card">
-<b>HC-SR04:</b><br>
-VCC → 5V<br>
-GND → GND<br>
-TRIG → D9<br>
-ECHO → D10<br><br>
-<b>SG90 Servo:</b><br>
-Kırmızı (VCC) → 5V<br>
-Kahverengi (GND) → GND<br>
-Turuncu (Sinyal) → D11
-</div>
-</section>
-
-<section>
-<h2>Arduino Kodu</h2>
-<pre id="arduinoKod" class="code-block"><code>#include &lt;Servo.h&gt;
+    <h2>Arduino Kodu</h2>
+    <pre id="arduinoKod" class="code-block"><code>#include &lt;Servo.h&gt;
 
 const int trigPin = 10;
 const int echoPin = 11;
@@ -90,22 +94,13 @@ void loop() {
     myServo.write(i);
     delay(30);
     distance = calculateDistance();
-    
-    Serial.print(i);
-    Serial.print(",");
-    Serial.print(distance);
-    Serial.print(".");
+    Serial.print(i); Serial.print(","); Serial.print(distance); Serial.print(".");
   }
-  
   for (int i = 165; i > 15; i--) {
     myServo.write(i);
     delay(30);
     distance = calculateDistance();
-    
-    Serial.print(i);
-    Serial.print(",");
-    Serial.print(distance);
-    Serial.print(".");
+    Serial.print(i); Serial.print(","); Serial.print(distance); Serial.print(".");
   }
 }
 
@@ -116,191 +111,34 @@ int calculateDistance() {
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
-  distance = duration * 0.034 / 2;
-  return distance;
+  return duration * 0.034 / 2;
 }</code></pre>
-<button class="copy-btn" onclick="kodKopyala('arduinoKod',this)">📋 Kopyala</button>
+    <button class="copy-btn" onclick="kodKopyala('arduinoKod',this)">📋 Kopyala</button>
 </section>
 
 <section>
-<h2>Processing Kodu</h2>
-<pre id="processingKod" class="code-block"><code>import processing.serial.*; 
-import java.awt.event.KeyEvent; 
-import java.io.IOException;
-
-Serial myPort; 
-String angle="";
-String distance="";
-String data="";
-String noObject;
-float pixsDistance;
-int iAngle, iDistance;
-int index1=0;
-PFont myFont;
-
-void setup() {
-  size(1280, 720);
-  smooth();
-  
-  String portName = "COM7"; 
-  myPort = new Serial(this, portName, 9600); 
-  myPort.bufferUntil('.'); 
-  
-  myFont = createFont("Arial", 48);
-}
-
-void draw() {
-  scale(1280.0 / 1920.0);
-  
-  fill(98, 245, 31);
-  textFont(myFont);
-  
-  noStroke();
-  fill(0, 4); 
-  rect(0, 0, 1920, 1010); 
-  
-  fill(98, 245, 31); 
-  
-  drawRadar(); 
-  drawLine();
-  drawObject();
-  drawText();
-}
-
-void serialEvent(Serial myPort) { 
-  data = myPort.readStringUntil('.');
-  if (data != null) {
-    data = data.substring(0, data.length() - 1);
-    
-    index1 = data.indexOf(","); 
-    if (index1 != -1) {
-      angle = data.substring(0, index1); 
-      distance = data.substring(index1 + 1, data.length()); 
-      
-      try {
-        iAngle = Integer.parseInt(angle.trim());
-        iDistance = Integer.parseInt(distance.trim());
-      } catch (Exception e) {
-      }
-    }
-  }
-}
-
-void drawRadar() {
-  pushMatrix();
-  translate(960, 1000); 
-  noFill();
-  strokeWeight(2);
-  stroke(98, 245, 31);
-  
-  arc(0, 0, 1800, 1800, PI, TWO_PI);
-  arc(0, 0, 1400, 1400, PI, TWO_PI);
-  arc(0, 0, 1000, 1000, PI, TWO_PI);
-  arc(0, 0, 600, 600, PI, TWO_PI);
-  
-  line(-960, 0, 960, 0);
-  line(0, 0, 960 * cos(radians(30)), -960 * sin(radians(30)));
-  line(0, 0, 960 * cos(radians(60)), -960 * sin(radians(60)));
-  line(0, 0, 960 * cos(radians(90)), -960 * sin(radians(90)));
-  line(0, 0, 960 * cos(radians(120)), -960 * sin(radians(120)));
-  line(0, 0, 960 * cos(radians(150)), -960 * sin(radians(150)));
-  popMatrix();
-}
-
-void drawObject() {
-  pushMatrix();
-  translate(960, 1000); 
-  strokeWeight(9);
-  stroke(255, 10, 10); 
-  
-  pixsDistance = iDistance * 22.5; 
-  
-  if (iDistance < 40) {
-    line(pixsDistance * cos(radians(iAngle)), -pixsDistance * sin(radians(iAngle)), 950 * cos(radians(iAngle)), -950 * sin(radians(iAngle)));
-  }
-  popMatrix();
-}
-
-void drawLine() {
-  pushMatrix();
-  strokeWeight(9);
-  stroke(30, 250, 60);
-  translate(960, 1000); 
-  line(0, 0, 950 * cos(radians(iAngle)), -950 * sin(radians(iAngle))); 
-  popMatrix();
-}
-
-void drawText() { 
-  pushMatrix();
-  if (iDistance > 40) {
-    noObject = "Menzil Disi";
-  } else {
-    noObject = "Hedef Tespit Edildi";
-  }
-  
-  fill(0, 0, 0);
-  noStroke();
-  rect(0, 1010, 1920, 100); 
-  
-  fill(98, 245, 31);
-  
-  textSize(25);
-  textAlign(RIGHT, BASELINE);
-  text("10cm", 1260, 990);
-  text("20cm", 1460, 990);
-  text("30cm", 1660, 990);
-  text("40cm", 1860, 990);
-  
-  textAlign(LEFT, BASELINE);
-  textSize(40);
-  text("Durum: " + noObject, 240, 1060);
-  text("Aci: " + iAngle + " °", 950, 1060);
-  
-  if (iDistance < 40) {
-    text("Mesafe: " + iDistance + " cm", 1350, 1060);
-  } else {
-    text("Mesafe: -", 1350, 1060);
-  }
-  
-  pushMatrix();
-  translate(960, 1000); 
-  textAlign(CENTER, CENTER);
-  textSize(25);
-  fill(98, 245, 60);
-  
-  for (int a = 30; a <= 150; a += 30) {
-    pushMatrix();
-    float r = 1000;
-    float x = r * cos(radians(a));
-    float y = -r * sin(radians(a));
-    translate(x, y);
-    rotate(radians(90 - a));
-    text(a + "°", 0, 0);
-    popMatrix();
-  }
-  popMatrix();
-  popMatrix(); 
-}</code></pre>
-<button class="copy-btn" onclick="kodKopyala('processingKod',this)">📋 Kopyala</button>
+    <h2>Processing Kodu</h2>
+    <pre id="processingKod" class="code-block"><code>/* Processing kodun buraya gelecek */</code></pre>
+    <button class="copy-btn" onclick="kodKopyala('processingKod',this)">📋 Kopyala</button>
 </section>
 
 <section>
-<h2>Galeri</h2>
-<img src="../assets/servo-radar.jpg" class="project-image">
+    <h2>Galeri</h2>
+    <img src="../assets/servo-radar.jpg" class="project-image" alt="Servo Radar Projesi">
 </section>
 
 <footer>
-<h3>Ege Coşkun</h3>
-<p>Arduino Servo Radar Projesi</p>
+    <h3>Ege Coşkun</h3>
+    <p>Arduino Servo Radar Projesi</p>
 </footer>
 
 <script>
-function kodKopyala(id,btn){
- const kod=document.getElementById(id).innerText;
- navigator.clipboard.writeText(kod);
- btn.innerHTML="✅ Kopyalandı";
- setTimeout(()=>btn.innerHTML="📋 Kopyala",2000);
-}
+    function kodKopyala(id,btn){
+     const kod=document.getElementById(id).innerText;
+     navigator.clipboard.writeText(kod);
+     btn.innerHTML="✅ Kopyalandı";
+     setTimeout(()=>btn.innerHTML="📋 Kopyala",2000);
+    }
 </script>
 
 </body>
