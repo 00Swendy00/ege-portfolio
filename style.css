@@ -527,3 +527,126 @@ footer {
         font-size: 1rem;
     }
 }
+/* ==========================================
+   DEVRE BAĞLANTILARI
+========================================== */
+
+.connection-section{
+    margin:80px 0;
+    padding:40px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    transition:.4s ease;
+}
+
+.connection-section:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 45px rgba(29,185,84,.18);
+}
+
+.section-title{
+    text-align:center;
+    font-size:2.2rem;
+    color:#1DB954;
+    margin-bottom:20px;
+}
+
+.section-title i{
+    margin-right:12px;
+}
+
+.section-description{
+    text-align:center;
+    max-width:850px;
+    margin:0 auto 35px;
+    color:#bdbdbd;
+    line-height:1.8;
+    font-size:1.05rem;
+}
+
+.connection-image{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:35px auto;
+}
+
+.connection-image img{
+    width:100%;
+    max-width:900px;
+    border-radius:18px;
+    border:2px solid rgba(29,185,84,.35);
+    box-shadow:0 15px 45px rgba(0,0,0,.45);
+    transition:.35s;
+}
+
+.connection-image img:hover{
+    transform:scale(1.02);
+    box-shadow:0 20px 55px rgba(29,185,84,.35);
+}
+
+.connection-table-wrapper{
+    overflow-x:auto;
+    margin-top:40px;
+}
+
+.connection-table{
+    width:100%;
+    max-width:650px;
+    margin:auto;
+    border-collapse:collapse;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.connection-table thead{
+    background:#1DB954;
+}
+
+.connection-table th{
+    color:#fff;
+    font-size:18px;
+    padding:16px;
+}
+
+.connection-table td{
+    padding:16px;
+    text-align:center;
+    color:#fff;
+    background:#181818;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    transition:.3s;
+}
+
+.connection-table tbody tr:hover td{
+    background:#242424;
+}
+
+.connection-table tbody tr:last-child td{
+    border-bottom:none;
+}
+
+@media(max-width:768px){
+
+    .connection-section{
+        padding:25px;
+    }
+
+    .section-title{
+        font-size:1.7rem;
+    }
+
+    .section-description{
+        font-size:.95rem;
+    }
+
+    .connection-table th,
+    .connection-table td{
+        padding:12px;
+        font-size:15px;
+    }
+
+}
