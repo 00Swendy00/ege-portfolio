@@ -1,164 +1,183 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spotify Dot Matrix | Ege Coşkun</title>
-<link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-.hero-project{height:70vh;display:flex;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#050816,#0f172a)}
-.hero-project h1{font-size:5rem;background:linear-gradient(90deg,#00c6ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-project p{font-size:1.3rem;opacity:.85;margin-top:20px}
-.project-image{width:100%;border-radius:25px;margin-top:30px}
-.hardware-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}
-.hardware-card,.glass-card{background:rgba(255,255,255,.05);padding:25px;border-radius:20px}
-.code-block{background:#0b1220;border:1px solid rgba(255,255,255,.08);padding:25px;border-radius:20px;overflow:auto;white-space:pre-wrap;font-family:Consolas,monospace;line-height:1.6}
-.copy-btn{padding:10px 20px;border:none;border-radius:10px;cursor:pointer;margin-top:15px;background:#00c6ff;font-weight:bold;color:#050816;}
-.wiring{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Dot Matrix | Ege Coşkun</title>
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Genel Proje Stilleri */
+        .hero-project {
+            height: 70vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #050816, #0f172a);
+        }
+        .hero-project h1 {
+            font-size: 5rem;
+            background: linear-gradient(90deg, #00c6ff, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-project p {
+            font-size: 1.3rem;
+            opacity: 0.85;
+            margin-top: 20px;
+        }
+        .project-image {
+            width: 100%;
+            border-radius: 25px;
+            margin-top: 30px;
+        }
+        .hardware-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+        .hardware-card, .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 20px;
+        }
+        .code-block {
+            background: #0b1220;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 20px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-family: Consolas, monospace;
+            line-height: 1.6;
+        }
+        .copy-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            background: #00c6ff;
+            font-weight: bold;
+            color: #050816;
+            transition: 0.3s;
+        }
+        .copy-btn:hover {
+            background: #8b5cf6;
+            color: white;
+        }
 
-/* Yeni Devre Bağlantıları Bölümü - TAM ORTALANMIŞ HALİ */
-.connection-section {
-    background:rgba(255,255,255,.05);
-    padding:40px 30px;
-    border-radius:20px;
-    margin: 30px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* İçeriği dikey eksende tam merkeze alır */
-    text-align: center;  /* Metinleri ortalar */
-}
-.section-title {
-    margin-bottom: 15px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; /* İkon ve başlığı yatayda ortalar */
-    gap: 10px;
-}
-.section-description {
-    opacity: 0.85; 
-    line-height: 1.6;
-    max-width: 800px; /* Metnin ekranın sonuna kadar uzamasını engeller, daha şık durur */
-}
-.connection-image {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Fotoğrafı kutu içinde ortalar */
-}
-.connection-image img {
-    max-width: 100%; 
-    border-radius: 15px; 
-    margin: 20px auto 0 auto; 
-    display: block;
-}
+        /* Devre Bağlantıları Bölümü */
+        .connection-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .section-title {
+            margin-bottom: 15px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            gap: 10px;
+        }
+        .section-description {
+            opacity: 0.85; 
+            line-height: 1.6;
+            max-width: 800px;
+        }
+        .connection-image {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .connection-image img {
+            max-width: 100%; 
+            border-radius: 15px; 
+            margin: 20px auto 0 auto; 
+            display: block;
+        }
 
-@media(max-width:768px){.hero-project h1{font-size:3rem}.wiring{grid-template-columns:1fr}}
-</style>
+        /* Mobil Uyum (Responsive) */
+        @media(max-width: 768px) {
+            .hero-project h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<nav>
-<div class="logo">Ege Coşkun</div>
-<ul><li><a href="../index.html">Ana Sayfa</a></li></ul>
-</nav>
+    <nav>
+        <div class="logo">Ege Coşkun</div>
+        <ul>
+            <li><a href="../index.html">Ana Sayfa</a></li>
+        </ul>
+    </nav>
 
-<section class="hero-project">
-<div>
-<h1>Spotify Dot Matrix</h1>
-<p>Spotify'da çalan şarkıları gerçek zamanlı olarak Arduino Uno ve MAX7219 Dot Matrix üzerinde gösteren proje.</p>
-</div>
-</section>
+    <section class="hero-project">
+        <div>
+            <h1>Spotify Dot Matrix</h1>
+            <p>Spotify'da çalan şarkıları gerçek zamanlı olarak Arduino Uno ve MAX7219 Dot Matrix üzerinde gösteren proje.</p>
+        </div>
+    </section>
 
-<section>
-<h2>Proje Hakkında</h2>
-<div class="glass-card">
-Bu projede Python bilgisayardaki aktif Spotify başlığını okur ve seri port üzerinden Arduino Uno'ya gönderir. Arduino gelen veriyi MAX7219 Dot Matrix üzerinde kayan yazı olarak gösterir.
-</div>
-</section>
+    <section>
+        <h2>Proje Hakkında</h2>
+        <div class="glass-card">
+            Bu projede Python bilgisayardaki aktif Spotify başlığını okur ve seri port üzerinden Arduino Uno'ya gönderir. Arduino gelen veriyi MAX7219 Dot Matrix üzerinde kayan yazı olarak gösterir.
+        </div>
+    </section>
 
-<section>
-<h2>Kullanılan Donanımlar</h2>
-<div class="hardware-grid">
-<div class="hardware-card">Arduino Uno</div>
-<div class="hardware-card">MAX7219 Dot Matrix</div>
-<div class="hardware-card">USB Kablo</div>
-<div class="hardware-card">Python + PyGetWindow</div>
-</div>
-</section>
+    <section>
+        <h2>Kullanılan Donanımlar</h2>
+        <div class="hardware-grid">
+            <div class="hardware-card">Arduino Uno</div>
+            <div class="hardware-card">MAX7219 Dot Matrix</div>
+            <div class="hardware-card">USB Kablo</div>
+            <div class="hardware-card">Python + PyGetWindow</div>
+        </div>
+    </section>
 
-<section class="connection-section">
-    <h2 class="section-title">
-        <i class="fas fa-project-diagram"></i>
-        Devre Bağlantıları
-    </h2>
-    <p class="section-description">
-        Spotify Dot Matrix projesinde Arduino Uno ile MAX7219 tabanlı
-        8x8 LED Dot Matrix modülü SPI haberleşmesi kullanılarak
-        bağlanmaktadır.
-    </p>
+    <section class="connection-section">
+        <h2 class="section-title">
+            <i class="fas fa-project-diagram"></i>
+            Devre Bağlantıları
+        </h2>
+        <p class="section-description">
+            Spotify Dot Matrix projesinde Arduino Uno ile MAX7219 tabanlı
+            8x8 LED Dot Matrix modülü SPI haberleşmesi kullanılarak bağlanmaktadır.
+        </p>
+        <div class="connection-image">
+            <img src="./arduino-dotmatrix-wiring.png" alt="Arduino Uno - 8x8 Dot Matrix Bağlantı Şeması">
+        </div>
+    </section>
 
-    <div class="connection-image">
-        <img src="./arduino-dotmatrix-wiring.png" alt="Arduino Uno - 8x8 Dot Matrix Bağlantı Şeması">
-    </div>
-</section>
-
-<section>
-<h2>Arduino Kodu</h2>
+    <section>
+        <h2>Arduino Kodu</h2>
 <pre id="arduinoKod" class="code-block"><code>#include &lt;MD_Parola.h&gt;
 #include &lt;MD_MAX72xx.h&gt;
 #include &lt;SPI.h&gt;
 
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
-
 #define MAX_DEVICES 1
 
 #define DATA_PIN 11
 #define CLK_PIN 13
 #define CS_PIN 10
 
-MD_Parola ekran =
-MD_Parola(
-HARDWARE_TYPE,
-DATA_PIN,
-CLK_PIN,
-CS_PIN,
-MAX_DEVICES
-);
+MD_Parola ekran = MD_Parola(HARDWARE_TYPE, DATA_PIN, CLK_PIN, CS_PIN, MAX_DEVICES);
 
-String gelenMesaj = &quot;Spotify Hazir&quot;;
+String gelenMesaj = "Spotify Hazir";
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
-
   ekran.begin();
   ekran.setIntensity(5);
-
-  ekran.displayClear();
-}
-
-void loop()
-{
-  if (Serial.available())
-  {
-    gelenMesaj =
-      Serial.readStringUntil('\n');
-  }
-
-  if (ekran.displayAnimate())
-  {
-    ekran.displayText(
-      gelenMesaj.c_str(),
-      PA_LEFT,
-      60,
-      0,
-      PA_SCROLL_LEFT,
-      PA_SCROLL_LEFT
-    );
-  }
-}</code></pre>
-<button class="copy-btn" onclick="kodKopyala('arduinoKod',this)">📋 Kopyala</button>
-</section>
-
-<section>
-<h2>
