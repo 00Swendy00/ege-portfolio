@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arduino Servo Radar | Hebil Ege Coşkun</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.hero-project{height:70vh;display:flex;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#050816,#0f172a)}
+.hero-project h1{font-size:5rem;background:linear-gradient(90deg,#00c6ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-project p{font-size:1.3rem;opacity:.85;margin-top:20px}
+.project-image{width:100%;border-radius:25px;margin-top:30px}
+.hardware-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}
+.hardware-card,.glass-card{background:rgba(255,255,255,.05);padding:25px;border-radius:20px}
+.code-block{background:#0b1220;border:1px solid rgba(255,255,255,.08);padding:25px;border-radius:20px;overflow:auto;white-space:pre-wrap;font-family:Consolas,monospace;line-height:1.6}
+.copy-btn{padding:10px 20px;border:none;border-radius:10px;cursor:pointer;margin-top:15px;background:#00c6ff;font-weight:bold}
+@media(max-width:768px){.hero-project h1{font-size:3rem}}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="logo">Hebil Ege Coşkun</div>
+<ul><li><a href="../index.html">Ana Sayfa</a></li></ul>
+</nav>
+
+<section class="hero-project">
+<div>
+<h1>Arduino Servo Radar</h1>
+<p>HC-SR04 ultrasonik sensör ve SG90 servo motor kullanılarak geliştirilen gerçek zamanlı radar sistemi.</p>
+</div>
+</section>
+
+<section>
+<h2>Proje Hakkında</h2>
+<div class="glass-card">
+Bu projede HC-SR04 ultrasonik sensör çevredeki nesnelerin mesafesini ölçmektedir.
+SG90 servo motor sensörü 0°-180° arasında hareket ettirerek çevreyi tarar.
+Arduino Uno ölçüm verilerini seri port üzerinden bilgisayara gönderir ve Processing uygulaması
+bu verileri gerçek zamanlı radar ekranı olarak görselleştirir.
+</div>
+</section>
+
+<section>
+<h2>Kullanılan Donanımlar</h2>
+<div class="hardware-grid">
+<div class="hardware-card">Arduino Uno</div>
+<div class="hardware-card">HC-SR04 Ultrasonik Sensör</div>
+<div class="hardware-card">SG90 Servo Motor</div>
+<div class="hardware-card">Breadboard</div>
+<div class="hardware-card">Jumper Kablolar</div>
+<div class="hardware-card">USB Kablo</div>
+</div>
+</section>
+
+<section>
+<h2>Devre Bağlantıları</h2>
+<div class="glass-card">
+Trig → D9<br>
+Echo → D10<br>
+Servo → D6<br>
+VCC → 5V<br>
+GND → GND
+</div>
+</section>
+
+<section>
+<h2>Arduino Kodu</h2>
+<pre id="arduinoKod" class="code-block"><code>// Arduino Servo Radar kodu
+// Yakında eklenecek.</code></pre>
+<button class="copy-btn" onclick="kodKopyala('arduinoKod',this)">📋 Kopyala</button>
+</section>
+
+<section>
+<h2>Processing Kodu</h2>
+<pre id="processingKod" class="code-block"><code>// Processing Radar Arayüzü
+// Yakında eklenecek.</code></pre>
+<button class="copy-btn" onclick="kodKopyala('processingKod',this)">📋 Kopyala</button>
+</section>
+
+<section>
+<h2>Galeri</h2>
+<img src="../assets/servo-radar.jpg" class="project-image" alt="Arduino Servo Radar">
+</section>
+
+<footer>
+<h3>Hebil Ege Coşkun</h3>
+<p>Arduino Servo Radar Projesi</p>
+</footer>
+
+<script>
+function kodKopyala(id,btn){
+ const kod=document.getElementById(id).innerText;
+ navigator.clipboard.writeText(kod);
+ btn.innerHTML="✅ Kopyalandı";
+ setTimeout(()=>btn.innerHTML="📋 Kopyala",2000);
+}
+</script>
+
+</body>
+</html>
