@@ -17,15 +17,11 @@
 .copy-btn{padding:10px 20px;border:none;border-radius:10px;cursor:pointer;margin-top:15px;background:#00c6ff;font-weight:bold;color:#050816;}
 .wiring{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 
-/* Yeni Devre Bağlantıları Bölümü İçin Stiller */
+/* Yeni Devre Bağlantıları Bölümü İçin Stiller (Tablo kısımları silindi) */
 .connection-section {background:rgba(255,255,255,.05);padding:30px;border-radius:20px;margin: 30px 0;}
 .section-title {margin-bottom: 15px; display: flex; align-items: center; gap: 10px;}
 .section-description {opacity: 0.85; line-height: 1.6;}
 .connection-image img {max-width: 100%; border-radius: 15px; margin: 20px 0; display: block;}
-.connection-table {width: 100%; text-align: left; border-collapse: collapse; margin-top: 15px; background: rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden;}
-.connection-table th, .connection-table td {padding: 15px; border-bottom: 1px solid rgba(255,255,255,.1);}
-.connection-table th {background: rgba(255,255,255,.05); font-weight: bold; color: #00c6ff;}
-.connection-table tr:last-child td {border-bottom: none;}
 
 @media(max-width:768px){.hero-project h1{font-size:3rem}.wiring{grid-template-columns:1fr}}
 </style>
@@ -73,40 +69,7 @@ Bu projede Python bilgisayardaki aktif Spotify başlığını okur ve seri port 
     </p>
 
     <div class="connection-image">
-        <img src="../images/projects/spotify-dotmatrix/arduino-dotmatrix-wiring.png" alt="Arduino Uno - 8x8 Dot Matrix Bağlantı Şeması">
-    </div>
-
-    <div class="connection-table-wrapper">
-        <table class="connection-table">
-            <thead>
-                <tr>
-                    <th>Dot Matrix</th>
-                    <th>Arduino Uno</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>DIN</td>
-                    <td>D11</td>
-                </tr>
-                <tr>
-                    <td>CS</td>
-                    <td>D10</td>
-                </tr>
-                <tr>
-                    <td>CLK</td>
-                    <td>D13</td>
-                </tr>
-                <tr>
-                    <td>VCC</td>
-                    <td>5V</td>
-                </tr>
-                <tr>
-                    <td>GND</td>
-                    <td>GND</td>
-                </tr>
-            </tbody>
-        </table>
+        <img src="../assets/sema.png" alt="Arduino Uno - 8x8 Dot Matrix Bağlantı Şeması">
     </div>
 </section>
 
