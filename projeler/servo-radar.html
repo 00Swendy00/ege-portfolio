@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arduino Servo Radar | Ege Coşkun</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.hero-project{height:70vh;display:flex;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#050816,#0f172a)}
+.hero-project h1{font-size:5rem;background:linear-gradient(90deg,#00c6ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-project p{font-size:1.3rem;opacity:.85;margin-top:20px}
+.project-image{width:100%;border-radius:25px;margin-top:30px}
+.hardware-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}
+.hardware-card,.glass-card{background:rgba(255,255,255,.05);padding:25px;border-radius:20px}
+.code-block{background:#0b1220;border:1px solid rgba(255,255,255,.08);padding:25px;border-radius:20px;overflow:auto;white-space:pre-wrap;font-family:Consolas,monospace;line-height:1.6}
+.copy-btn{padding:10px 20px;border:none;border-radius:10px;cursor:pointer;margin-top:15px;background:#00c6ff;font-weight:bold}
+.wiring{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.hero-project h1{font-size:3rem}.wiring{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="logo">Ege Coşkun</div>
+<ul><li><a href="../index.html">Ana Sayfa</a></li></ul>
+</nav>
+
+<section class="hero-project">
+<div>
+<h1>Arduino Servo Radar</h1>
+<p>HC-SR04 ultrasonik sensör ve SG90 servo motor kullanılarak geliştirilen gerçek zamanlı radar sistemi.</p>
+</div>
+</section>
+
+<section>
+<h2>Proje Hakkında</h2>
+<div class="glass-card">
+Bu projede Servo motor sürekli olarak 0° ile 180° arasında hareket ederken, HC-SR04 ultrasonik sensör mesafe ölçümü gerçekleştirir. Arduino, elde edilen açı ve mesafe verilerini seri haberleşme üzerinden bilgisayara gönderir. Gelen veriler Processing yazılımı kullanılarak klasik bir radar ekranı şeklinde görselleştirilir.
+</div>
+</section>
+
+<section>
+<h2>Kullanılan Donanımlar</h2>
+<div class="hardware-grid">
+<div class="hardware-card">Arduino Uno</div>
+<div class="hardware-card">HC-SR04 Sensör</div>
+<div class="hardware-card">SG90 Servo Motor</div>
+<div class="hardware-card">Processing IDE</div>
+</div>
+</section>
+
+<section>
+<h2>Devre Bağlantıları</h2>
+<div class="glass-card">
+<b>HC-SR04:</b><br>
+VCC → 5V<br>
+GND → GND<br>
+TRIG → D9<br>
+ECHO → D10<br><br>
+<b>SG90 Servo:</b><br>
+Kırmızı (VCC) → 5V<br>
+Kahverengi (GND) → GND<br>
+Turuncu (Sinyal) → D11
+</div>
+</section>
+
+<section>
+<h2>Arduino Kodu</h2>
+<pre id="arduinoKod" class="code-block"><code>#include &lt;Servo.h&gt;
+
+const int trigPin = 9;
+const int echoPin = 10;
+long sure;
+int mesafe;
+Servo benimServo;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+  benimServo.attach(11);
+}
+
+void loop() {
+  // 15 dereceden 165 dereceye tarama
+  for(int i = 15; i &lt;= 165; i++) {
+    benimServo.write(i);
+    delay(30);
+    mesafe = mesafeHesapla();
+    Serial.print(i);
+    Serial.print(&quot;,&quot;);
+    Serial.print(mesafe);
+    Serial.print(&quot;.&quot;);
+  }
+  // 165 dereceden 15 dereceye geri dönüş
+  for(int i = 165; i &gt; 15; i--) {
+    benimServo.write(i);
+    delay(30);
+    mesafe = mesafeHesapla();
+    Serial.print(i);
+    Serial.print(&quot;,&quot;);
+    Serial.print(mesafe);
+    Serial.print(&quot;.&quot;);
+  }
+}
+
+int mesafeHesapla() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  sure = pulseIn(echoPin, HIGH);
+  mesafe = sure * 0.034 / 2;
+  return mesafe;
+}</code></pre>
+<button class="copy-btn" onclick="kodKopyala('arduinoKod',this)">📋 Kopyala</button>
+</section>
+
+<section>
+<h2>Processing Kodu</h2>
+<pre id="processingKod" class="code-block"><code>import processing.serial.*;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+
+Serial port;
+String veri = &quot;&quot;;
+int aci, mesafe;
+
+void setup() {
+  size(1200, 700);
+  smooth();
+  // COM portunuzu Arduino'nun bağlı olduğu port ile değiştirin
+  port = new Serial(this, &quot;COM3&quot;, 9600);
+  port.bufferUntil('.');
+}
+
+void draw() {
+  fill(98, 245, 31);
+  noStroke();
+  fill(0, 4);
+  rect(0, 0, width, height - height * 0.065);
+  
+  fill(98, 245, 31); // Radar rengi (Yeşil)
+  // Basit radar verisi metin yazdırması
+  text(&quot;Açı: &quot; + aci + &quot; °&quot;, 10, 30);
+  text(&quot;Mesafe: &quot; + mesafe + &quot; cm&quot;, 10, 50);
+}
+
+void serialEvent(Serial port) {
+  veri = port.readStringUntil('.');
+  veri = veri.substring(0, veri.length() - 1);
+  int virgul = veri.indexOf(',');
+  if (virgul &gt; 0) {
+    aci = int(veri.substring(0, virgul));
+    mesafe = int(veri.substring(virgul + 1, veri.length()));
+  }
+}</code></pre>
+<button class="copy-btn" onclick="kodKopyala('processingKod',this)">📋 Kopyala</button>
+</section>
+
+<section>
+<h2>Galeri</h2>
+<img src="../assets/servo-radar.jpg" class="project-image">
+</section>
+
+<footer>
+<h3>Ege Coşkun</h3>
+<p>Arduino Servo Radar Projesi</p>
+</footer>
+
+<script>
+function kodKopyala(id,btn){
+ const kod=document.getElementById(id).innerText;
+ navigator.clipboard.writeText(kod);
+ btn.innerHTML="✅ Kopyalandı";
+ setTimeout(()=>btn.innerHTML="📋 Kopyala",2000);
+}
+</script>
+
+</body>
+</html>
