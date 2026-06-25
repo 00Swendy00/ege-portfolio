@@ -20,7 +20,7 @@
         }
         .hero-project h1 {
             font-size: 5rem;
-            background: linear-gradient(90deg, #00c6ff, #1DB954); /* Spotify yeşili eklendi */
+            background: linear-gradient(90deg, #00c6ff, #1DB954);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -31,8 +31,12 @@
         }
         .project-image {
             width: 100%;
+            max-width: 1000px;
+            height: auto;
             border-radius: 25px;
-            margin-top: 30px;
+            margin: 30px auto 0 auto;
+            display: block;
+            box-shadow: 0 15px 40px rgba(29, 185, 84, 0.25);
         }
         .hardware-grid {
             display: grid;
@@ -60,7 +64,7 @@
             border-radius: 10px;
             cursor: pointer;
             margin-top: 15px;
-            background: #1DB954; /* Buton da Spotify yeşili oldu */
+            background: #1DB954; 
             font-weight: bold;
             color: #ffffff;
             transition: 0.3s;
@@ -71,7 +75,7 @@
         }
 
         /* ========================================================================
-        DEVRE BAĞLANTILARI (KUSURSUZ ORTALAMA + YENİ GENİŞ EKRAN AYARI) 
+        DEVRE BAĞLANTILARI (ŞEMA) KISMI
         ======================================================================== */
         section.connection-section {
             background: rgba(255, 255, 255, 0.04) !important;
@@ -79,7 +83,7 @@
             padding: 40px 20px !important;
             border-radius: 20px !important;
             margin: 60px auto !important;
-            max-width: 1050px !important; /* Geniş görsel için alan büyütüldü */
+            max-width: 950px !important; 
             display: block !important;
         }
         section.connection-section .section-title {
@@ -90,7 +94,7 @@
             width: 100% !important;
             gap: 12px !important;
             margin-bottom: 20px !important;
-            color: #1DB954 !important; /* Başlık Spotify yeşiline uyarlandı */
+            color: #1DB954 !important; 
         }
         section.connection-section .section-description {
             opacity: 0.85 !important; 
@@ -107,24 +111,24 @@
             margin-top: 35px !important;
         }
         section.connection-section .connection-image img {
-            width: 90% !important; 
-            max-width: 950px !important; /* Yeni görsel çok ihtişamlı duracak */
+            width: 85% !important; 
+            max-width: 800px !important; 
             height: auto !important;
             border-radius: 15px !important; 
             display: inline-block !important;
             margin: 0 auto !important;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5) !important;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4) !important;
             transition: transform 0.4s ease, box-shadow 0.4s ease !important;
         }
         section.connection-section .connection-image img:hover {
             transform: scale(1.02) !important;
-            box-shadow: 0 20px 50px rgba(29, 185, 84, 0.25) !important; /* Yeşil neon gölge */
+            box-shadow: 0 20px 50px rgba(0, 198, 255, 0.25) !important; 
         }
 
         /* Mobil Uyum */
         @media(max-width: 768px) {
             .hero-project h1 { font-size: 3rem; }
-            section.connection-section .connection-image img { width: 98% !important; }
+            section.connection-section .connection-image img { width: 95% !important; }
         }
     </style>
 </head>
@@ -167,11 +171,11 @@
             Devre Bağlantıları
         </h2>
         <p class="section-description">
-            Spotify Dot Matrix projesinde Arduino Uno ile 4 modüllü MAX7219 tabanlı
+            Spotify Dot Matrix projesinde Arduino Uno ile MAX7219 tabanlı
             8x8 LED Dot Matrix ekranı SPI haberleşmesi kullanılarak bağlanmaktadır.
         </p>
         <div class="connection-image">
-            <img src="./spotify-sema.png" alt="Spotify Dot Matrix Profesyonel Bağlantı Şeması">
+            <img src="./arduino-dotmatrix-wiring.png" alt="Arduino Uno - 8x8 Dot Matrix Bağlantı Şeması">
         </div>
     </section>
 
@@ -266,8 +270,8 @@ while True:
     </section>
 
     <section>
-        <h2>Galeri</h2>
-        <img src="../assets/spotify.jpg" class="project-image" alt="Spotify Dot Matrix Projesi Tamamlanmış Hali">
+        <h2 style="text-align: center;">Galeri</h2>
+        <img src="./spotify-galeri.png" class="project-image" alt="Spotify Dot Matrix Projesi Tamamlanmış Hali">
     </section>
 
     <footer>
