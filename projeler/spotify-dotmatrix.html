@@ -17,11 +17,40 @@
 .copy-btn{padding:10px 20px;border:none;border-radius:10px;cursor:pointer;margin-top:15px;background:#00c6ff;font-weight:bold;color:#050816;}
 .wiring{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 
-/* Yeni Devre Bağlantıları Bölümü İçin Stiller (Tablo kısımları silindi) */
-.connection-section {background:rgba(255,255,255,.05);padding:30px;border-radius:20px;margin: 30px 0;}
-.section-title {margin-bottom: 15px; display: flex; align-items: center; gap: 10px;}
-.section-description {opacity: 0.85; line-height: 1.6;}
-.connection-image img {max-width: 100%; border-radius: 15px; margin: 20px 0; display: block;}
+/* Yeni Devre Bağlantıları Bölümü - TAM ORTALANMIŞ HALİ */
+.connection-section {
+    background:rgba(255,255,255,.05);
+    padding:40px 30px;
+    border-radius:20px;
+    margin: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* İçeriği dikey eksende tam merkeze alır */
+    text-align: center;  /* Metinleri ortalar */
+}
+.section-title {
+    margin-bottom: 15px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; /* İkon ve başlığı yatayda ortalar */
+    gap: 10px;
+}
+.section-description {
+    opacity: 0.85; 
+    line-height: 1.6;
+    max-width: 800px; /* Metnin ekranın sonuna kadar uzamasını engeller, daha şık durur */
+}
+.connection-image {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Fotoğrafı kutu içinde ortalar */
+}
+.connection-image img {
+    max-width: 100%; 
+    border-radius: 15px; 
+    margin: 20px auto 0 auto; 
+    display: block;
+}
 
 @media(max-width:768px){.hero-project h1{font-size:3rem}.wiring{grid-template-columns:1fr}}
 </style>
@@ -69,7 +98,7 @@ Bu projede Python bilgisayardaki aktif Spotify başlığını okur ve seri port 
     </p>
 
     <div class="connection-image">
-        <img src="../assets/sema.png" alt="Arduino Uno - 8x8 Dot Matrix Bağlantı Şeması">
+        <img src="./arduino-dotmatrix-wiring.png" alt="Arduino Uno - 8x8 Dot Matrix Bağlantı Şeması">
     </div>
 </section>
 
@@ -132,70 +161,4 @@ void loop()
 </section>
 
 <section>
-<h2>Python Kodu</h2>
-<pre id="pythonKod" class="code-block"><code>import serial
-import time
-import pygetwindow as gw
-
-arduino = serial.Serial(&quot;COM9&quot;, 9600)
-time.sleep(2)
-
-eski = &quot;&quot;
-
-def turkce_temizle(yazi):
-    cevir = str.maketrans(&quot;çğıöşüÇĞİÖŞÜ&quot;, &quot;cgiosuCGIOSU&quot;)
-    return yazi.translate(cevir)
-
-yasakli = [
-    &quot;Microsoft Edge&quot;,
-    &quot;Google Chrome&quot;,
-    &quot;Opera&quot;,
-    &quot;Komut&quot;,
-    &quot;Administrator&quot;,
-    &quot;Arduino&quot;,
-    &quot;Visual Studio&quot;,
-    &quot;Discord&quot;
-]
-
-while True:
-    pencereler = gw.getAllTitles()
-    spotify_baslik = &quot;&quot;
-
-    for baslik in pencereler:
-        if baslik and &quot; - &quot; in baslik:
-            if not any(kelime in baslik for kelime in yasakli):
-                spotify_baslik = baslik
-                break
-
-    if spotify_baslik != &quot;&quot; and spotify_baslik != eski:
-        eski = spotify_baslik
-        spotify_baslik = turkce_temizle(spotify_baslik)
-
-        print(&quot;Gonderiliyor:&quot;, spotify_baslik)
-        arduino.write((spotify_baslik + &quot;\n&quot;).encode(&quot;utf-8&quot;))
-
-    time.sleep(2)</code></pre>
-<button class="copy-btn" onclick="kodKopyala('pythonKod',this)">📋 Kopyala</button>
-</section>
-
-<section>
-<h2>Galeri</h2>
-<img src="../assets/spotify.jpg" class="project-image">
-</section>
-
-<footer>
-<h3>Ege Coşkun</h3>
-<p>Spotify Dot Matrix Projesi</p>
-</footer>
-
-<script>
-function kodKopyala(id,btn){
- const kod=document.getElementById(id).innerText;
- navigator.clipboard.writeText(kod);
- btn.innerHTML="✅ Kopyalandı";
- setTimeout(()=>btn.innerHTML="📋 Kopyala",2000);
-}
-</script>
-
-</body>
-</html>
+<h2>
