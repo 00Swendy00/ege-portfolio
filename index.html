@@ -1,344 +1,211 @@
 <!DOCTYPE html>
-
 <html lang="tr">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="assets/ec-logo.png">
-<meta property="og:image" content="https://egecoskun.tech/assets/ec-logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hebil Ege Coşkun | ESP32, Arduino ve Otonom Sistemler</title>
 
-<meta name="twitter:image" content="https://egecoskun.tech/assets/ec-logo.png">
-<title>Hebil Ege Coşkun | ESP32, Arduino ve Otonom Sistemler</title>
+    <meta name="description" content="Hebil Ege Coşkun'un kişisel portfolyo sitesi. ESP32, Arduino, IoT, gömülü sistemler, elektronik projeler ve Teknofest çalışmaları.">
+    <meta name="keywords" content="Hebil Ege Coşkun, Ege Coşkun, ESP32, Arduino, IoT, Gömülü Sistemler, Elektronik, Otonom Sistemler, Teknofest">
+    <meta name="author" content="Hebil Ege Coşkun">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#050816">
 
-<meta name="description" content="Hebil Ege Coşkun'un kişisel portfolyo sitesi. ESP32, Arduino, IoT, gömülü sistemler, elektronik projeler ve Teknofest çalışmaları.">
+    <meta property="og:title" content="Hebil Ege Coşkun | ESP32 ve Arduino Projeleri">
+    <meta property="og:description" content="ESP32, Arduino, IoT ve Otonom Sistemler projeleri">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://egecoskun.tech">
+    <meta property="og:image" content="https://egecoskun.tech/assets/ec-logo.png">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hebil Ege Coşkun">
+    <meta name="twitter:description" content="ESP32, Arduino ve Otonom Sistemler Projeleri">
+    <meta name="twitter:image" content="https://egecoskun.tech/assets/ec-logo.png">
 
-<meta name="keywords" content="Hebil Ege Coşkun, Ege Coşkun, ESP32, Arduino, IoT, Gömülü Sistemler, Elektronik, Otonom Sistemler, Teknofest">
+    <link rel="canonical" href="https://egecoskun.tech">
+    <link rel="icon" type="image/png" href="assets/ec-logo.png">
 
-<meta name="author" content="Hebil Ege Coşkun">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#050816">
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 
-<link rel="canonical" href="https://egecoskun.tech">
-
-<meta property="og:title" content="Hebil Ege Coşkun | ESP32 ve Arduino Projeleri">
-<meta property="og:description" content="ESP32, Arduino, IoT ve Otonom Sistemler projeleri">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://egecoskun.tech">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hebil Ege Coşkun">
-<meta name="twitter:description" content="ESP32, Arduino ve Otonom Sistemler Projeleri">
-
-<link rel="icon" type="image/png" href="favicon.png">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
-
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Hebil Ege Coşkun",
-  "url": "https://egecoskun.tech",
-  "jobTitle": "Otonom Sistemler Geliştiricisi",
-  "description": "ESP32, Arduino, IoT ve elektronik projeleri geliştiriyorum.",
-  "sameAs": [
-    "https://github.com/00Swendy00",
-    "https://instagram.com/00.e.ge00"
-  ]
-}
-</script>
-
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hebil Ege Coşkun",
+      "url": "https://egecoskun.tech",
+      "jobTitle": "Otonom Sistemler Geliştiricisi",
+      "description": "ESP32, Arduino, IoT ve elektronik projeleri geliştiriyorum.",
+      "sameAs": [
+        "https://github.com/00Swendy00",
+        "https://instagram.com/00.e.ge00"
+      ]
+    }
+    </script>
 </head>
 
 <body>
-<canvas id="matrix-rain"></canvas>
+    <canvas id="matrix-rain"></canvas>
+    <div id="tsparticles"></div>
+    <div class="cursor-glow"></div>
 
-
-<div id="tsparticles"></div>
-
-<div id="loader">
-
-    <div class="loader-content">
-
-        <img src="assets/ec-logo.png" alt="EC Logo">
-
-        <h1>Hebil Ege Coşkun</h1>
-
-        <div class="progress">
-            <div class="progress-bar"></div>
+    <nav>
+        <div class="logo">
+            <img src="assets/ec-logo.png" alt="Ege Coşkun Logo">
+            <span>Hebil Ege Coşkun</span>
         </div>
-
-    </div>
-
-</div>
-<div class="cursor-glow"></div>
-
-<nav>
-    <div class="logo">
-    <img src="assets/ec-logo.png" alt="Ege Coşkun Logo">
-    <span>Hebil Ege Coşkun</span>
-</div>
-
-<ul>
-    <li><a href="#about">Hakkımda</a></li>
-    <li><a href="#projects">Projeler</a></li>
-    <li><a href="#skills">Yetenekler</a></li>
-    <li><a href="#contact">İletişim</a></li>
-</ul>
-
-</nav>
-
-<header class="hero">
-
-<div class="overlay"></div>
-
-<div class="hero-content">
-
-<h1>ESP32, Arduino ve Otonom Sistemler Projeleri</h1>
-
-<p>
-ESP32, Arduino, IoT ve gömülü sistemler üzerine geliştirdiğim projeleri, kaynak kodlarını ve teknik çalışmalarımı burada paylaşıyorum.
-</p>
-
-<a href="#projects" class="btn">
-Projelerimi İncele
-</a>
-
-</div>
-
-</header>
-
-<div class="neon-line"></div>
-<section id="about">
-
-<h2>Hakkımda</h2>
-
-<div class="glass">
-
-<p>
-Merhaba, ben <strong>Hebil Ege Coşkun</strong>.
-
-Elektronik, gömülü sistemler, IoT teknolojileri ve web geliştirme alanlarında çalışmalar yapıyorum. Özellikle ESP32 ve Arduino tabanlı projeler geliştirerek donanım ve yazılımı bir araya getiren sistemler üretmeyi seviyorum.
-
-Bu web sitesini geliştirdiğim projeleri, teknik deneyimlerimi ve kaynak kodlarımı paylaşmak amacıyla oluşturdum. Burada ESP32, Arduino, sensör sistemleri, IoT çözümleri ve Teknofest projelerime ait içerikleri bulabilirsiniz.
-
-Amacım hem kendi gelişim sürecimi belgelemek hem de benzer alanlarda çalışan kişilere faydalı kaynaklar sunmaktır.
-
-</p>
-
-</div>
-
-</section>
-
-<section id="projects">
-
-<h2>Projeler</h2>
-
-<div class="projects-grid">
-
-<a href="projeler/spotify-dotmatrix.html" class="project-link">
-
-<div class="project-card">
-
-<img src="assets/spotify.jpg" alt="Spotify Dot Matrix">
-
-<div class="card-content">
-
-<h3>Spotify Dot Matrix</h3>
-
-<p>
-Spotify'da çalan şarkıları gerçek zamanlı olarak Arduino Uno ve MAX7219 Dot Matrix üzerinde gösteren proje.
-</p>
-
-</div>
-
-</div>
-
-</a>
-
-<div class="project-card">
-
-<img src="assets/streamdeck.jpg" alt="ESP32 Stream Deck">
-
-<div class="card-content">
-
-<h3>Arduino Servo Radar</h3>
-
-<p>
-HC-SR04 ultrasonik sensör ve SG90 servo motor kullanılarak geliştirilen radar sistemi. Çevredeki nesneleri tarayarak gerçek zamanlı mesafe verisi oluşturur.
-</p>
-
-</div>
-
-</div>
-
-<div class="project-card">
-
-<img src="assets/masterslave.jpg" alt="Arduino Master Slave">
-
-<div class="card-content">
-
-<h3>Arduino Master Slave</h3>
-
-<p>
-İki Arduino arasında seri haberleşme ve kontrol sistemi.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="stats">
-
-<h2>İstatistikler</h2>
-
-<div class="stats-grid">
-
-<div class="stat">
-<h3>20+</h3>
-<p>Proje</p>
-</div>
-
-<div class="stat">
-<h3>5+</h3>
-<p>Yıl Yazılım</p>
-</div>
-
-<div class="stat">
-<h3>100+</h3>
-<p>Saat Ar-Ge</p>
-</div>
-
-<div class="stat">
-<h3>3+</h3>
-<p>Ana Teknoloji</p>
-</div>
-
-</div>
-
-</section>
-
-<section id="skills">
-
-<h2>Yetkinliklerim</h2>
-
-<div class="skills">
-
-<span>ESP32</span> <span>Arduino</span> <span>C#</span> <span>HTML</span> <span>CSS</span> <span>JavaScript</span> <span>ThingSpeak</span> <span>IoT</span>
-
-</div>
-
-</section>
-<section id="codes">
-
-<h2>Kod Arşivi</h2>
-
-<div class="glass">
-
-<h3>🚧 Bakımda</h3>
-
-<p>
-Kod arşivi şu anda güncellenmektedir.
-
-Yakında yeni projeler ve kaynak kodlar sizlerle paylaşılacaktır.
-
-Takipte kalın 🚀
-</p>
-
-</div>
-
-</section>
-
-
-<section id="contact">
-
-<h2>İletişim</h2>
-
-<div class="glass">
-
-<h3>Benimle İletişime Geç</h3>
-
-<form action="https://formsubmit.co/egecoskun065@gmail.com" method="POST" class="contact-form">
-
-<input
-type="text"
-name="name"
-placeholder="Adınız"
-required>
-
-<input
-type="email"
-name="email"
-placeholder="E-posta Adresiniz"
-required>
-
-<textarea
-name="message"
-rows="6"
-placeholder="Mesajınızı yazın..."
-required></textarea>
-
-<button type="submit" class="btn">
-Mesaj Gönder
-</button>
-
-<input type="hidden" name="_captcha" value="false">
-
-</form>
-
-</div>
-
-</section>
-
-<footer>
-
-<div class="footer-content">
-
-<h3>Hebil Ege Coşkun</h3>
-
-<p>
-ESP32, Arduino, IoT ve Otonom Sistemler üzerine geliştirdiğim projeleri paylaşmaya devam ediyorum.
-</p>
-
-
-<div class="socials">
-
-<a href="mailto:egecoskun065@gmail.com">
-E-Posta
-</a>
-
-<a href="https://instagram.com/00.e.ge00" target="_blank">
-Instagram
-</a>
-
-<a href="https://github.com/00Swendy00" target="_blank">
-GitHub
-</a>
-
-</div>
-
-<p class="copyright">
-© 2026 Hebil Ege Coşkun
-</p>
-
-</div>
-
-</footer>
-
-<script src="script.js"></script>
-
+        <ul>
+            <li><a href="#about">Hakkımda</a></li>
+            <li><a href="#projects">Projeler</a></li>
+            <li><a href="#skills">Yetkinliklerim</a></li>
+            <li><a href="#contact">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1>ESP32, Arduino ve Otonom Sistemler Projeleri</h1>
+            <p>
+                ESP32, Arduino, IoT ve gömülü sistemler üzerine geliştirdiğim projeleri, kaynak kodlarını ve teknik çalışmalarımı burada paylaşıyorum.
+            </p>
+            <a href="#projects" class="btn">Projelerimi İncele</a>
+        </div>
+    </header>
+
+    <div class="neon-line"></div>
+
+    <section id="about">
+        <h2>Hakkımda</h2>
+        <div class="glass">
+            <p>
+                Merhaba, ben <strong>Hebil Ege Coşkun</strong>. 
+                Elektronik, gömülü sistemler, IoT teknolojileri ve web geliştirme alanlarında çalışmalar yapıyorum. Özellikle ESP32 ve Arduino tabanlı projeler geliştirerek donanım ve yazılımı bir araya getiren sistemler üretmeyi seviyorum.
+                <br><br>
+                Bu web sitesini geliştirdiğim projeleri, teknik deneyimlerimi ve kaynak kodlarımı paylaşmak amacıyla oluşturdum. Burada ESP32, Arduino, sensör sistemleri, IoT çözümleri ve Teknofest projelerime ait içerikleri bulabilirsiniz. 
+                Amacım hem kendi gelişim sürecimi belgelemek hem de benzer alanlarda çalışan kişilere faydalı kaynaklar sunmaktır.
+            </p>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projeler</h2>
+        <div class="projects-grid">
+            
+            <a href="projeler/spotify-dotmatrix.html" class="project-link">
+                <div class="project-card">
+                    <img src="assets/spotify.jpg" alt="Spotify Dot Matrix" loading="lazy">
+                    <div class="card-content">
+                        <h3>Spotify Dot Matrix</h3>
+                        <p>Spotify'da çalan şarkıları gerçek zamanlı olarak Arduino Uno ve MAX7219 Dot Matrix üzerinde gösteren proje.</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="project-link">
+                <div class="project-card">
+                    <img src="assets/servo-radar.jpg" alt="Arduino Servo Radar" loading="lazy">
+                    <div class="card-content">
+                        <h3>Arduino Servo Radar</h3>
+                        <p>HC-SR04 ultrasonik sensör ve SG90 servo motor kullanılarak geliştirilen radar sistemi. Çevredeki nesneleri tarayarak gerçek zamanlı mesafe verisi oluşturur.</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="project-link">
+                <div class="project-card">
+                    <img src="assets/masterslave.jpg" alt="Arduino Master Slave" loading="lazy">
+                    <div class="card-content">
+                        <h3>Arduino Master Slave</h3>
+                        <p>İki Arduino arasında seri haberleşme ve kontrol sistemi.</p>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <section id="stats">
+        <h2>İstatistikler</h2>
+        <div class="stats-grid">
+            <div class="stat">
+                <h3>20+</h3>
+                <p>Proje</p>
+            </div>
+            <div class="stat">
+                <h3>5+</h3>
+                <p>Yıl Yazılım</p>
+            </div>
+            <div class="stat">
+                <h3>100+</h3>
+                <p>Saat Ar-Ge</p>
+            </div>
+            <div class="stat">
+                <h3>3+</h3>
+                <p>Ana Teknoloji</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Yetkinliklerim</h2>
+        <div class="skills">
+            <span>ESP32</span> 
+            <span>Arduino</span> 
+            <span>C#</span> 
+            <span>HTML</span> 
+            <span>CSS</span> 
+            <span>JavaScript</span> 
+            <span>ThingSpeak</span> 
+            <span>IoT</span>
+        </div>
+    </section>
+
+    <section id="codes">
+        <h2>Kod Arşivi</h2>
+        <div class="glass">
+            <h3>🚧 Bakımda</h3>
+            <p>
+                Kod arşivi şu anda güncellenmektedir.
+                Yakında yeni projeler ve kaynak kodlar sizlerle paylaşılacaktır.
+                Takipte kalın 🚀
+            </p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>İletişim</h2>
+        <div class="glass">
+            <h3>Benimle İletişime Geç</h3>
+            <form action="https://formsubmit.co/egecoskun065@gmail.com" method="POST" class="contact-form">
+                <input type="text" name="name" placeholder="Adınız" required>
+                <input type="email" name="email" placeholder="E-posta Adresiniz" required>
+                <textarea name="message" rows="6" placeholder="Mesajınızı yazın..." required></textarea>
+                <input type="hidden" name="_captcha" value="false">
+                <button type="submit" class="btn">Mesaj Gönder</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Hebil Ege Coşkun</h3>
+            <p>ESP32, Arduino, IoT ve Otonom Sistemler üzerine geliştirdiğim projeleri paylaşmaya devam ediyorum.</p>
+            
+            <div class="socials">
+                <a href="mailto:egecoskun065@gmail.com">E-Posta</a>
+                <a href="https://instagram.com/00.e.ge00" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://github.com/00Swendy00" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+            
+            <p class="copyright">© 2026 Hebil Ege Coşkun</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
