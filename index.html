@@ -1,217 +1,271 @@
 <!DOCTYPE html>
+
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hebil Ege Coşkun | ESP32, Arduino ve Otonom Sistemler</title>
-    
-    <link rel="icon" type="image/png" href="/assets/ec-logo.png" sizes="48x48">
-    <link rel="apple-touch-icon" href="/assets/ec-logo.png">
-    
-    <meta name="description" content="Hebil Ege Coşkun'un kişisel portfolyo sitesi. ESP32, Arduino, IoT, gömülü sistemler, elektronik projeler ve Teknofest çalışmaları.">
-    <meta name="keywords" content="Hebil Ege Coşkun, Ege Coşkun, ESP32, Arduino, IoT, Gömülü Sistemler, Elektronik, Otonom Sistemler, Teknofest">
-    <meta name="author" content="Hebil Ege Coşkun">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#050816">
-
-    <meta property="og:title" content="Hebil Ege Coşkun | ESP32 ve Arduino Projeleri">
-    <meta property="og:description" content="ESP32, Arduino, ">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://egecoskun.tech">
-    <meta property="og:image" content="https://egecoskun.tech/assets/ec-logo.png">
-    
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Hebil Ege Coşkun">
-    <meta name="twitter:description" content="ESP32, Arduino">
-    <meta name="twitter:image" content="https://egecoskun.tech/assets/ec-logo.png">
-
-    <link rel="canonical" href="https://egecoskun.tech">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Hebil Ege Coşkun",
-      "url": "https://egecoskun.tech",
-      "jobTitle": "Otonom Sistemler Geliştiricisi",
-      "description": "ESP32, Arduino, IoT ve elektronik projeleri geliştiriyorum.",
-      "sameAs": [
-        "https://github.com/00Swendy00",
-        "https://instagram.com/00.e.ge00"
-      ]
-    }
-    </script>
-</head>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="light dark" name="color-scheme"/>
+<title>Hebil Ege Coşkun | Gömülü Sistemler ve Yazılım</title>
+<meta content="Hebil Ege Coşkun'un ESP32, Arduino, IoT, elektronik ve gömülü sistemler üzerine geliştirdiği projeler ve teknik çalışmaları." name="description"/>
+<meta content="Hebil Ege Coşkun" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#08090c" name="theme-color"/>
+<link href="assets/favicon-256.png" rel="icon" sizes="256x256" type="image/png"/>
+<link href="assets/ec-logo.png" rel="apple-touch-icon"/>
+<link href="https://egecoskun.tech/" rel="canonical"/>
+<meta content="website" property="og:type"/>
+<meta content="tr_TR" property="og:locale"/>
+<meta content="Hebil Ege Coşkun | Gömülü Sistemler ve Yazılım" property="og:title"/>
+<meta content="ESP32, Arduino ve IoT projelerim; fikirden çalışan sisteme uzanan süreç." property="og:description"/>
+<meta content="https://egecoskun.tech/" property="og:url"/>
+<meta content="https://egecoskun.tech/assets/logo2.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Hebil Ege Coşkun" name="twitter:title"/>
+<meta content="ESP32, Arduino, IoT ve gömülü sistemler." name="twitter:description"/>
+<meta content="https://egecoskun.tech/assets/logo2.png" name="twitter:image"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Hebil Ege Coşkun",
+    "url": "https://egecoskun.tech",
+    "image": "https://egecoskun.tech/assets/ec-logo.png",
+    "description": "ESP32, Arduino, IoT ve elektronik projeleri geliştiriyorum.",
+    "sameAs": [
+      "https://instagram.com/00.e.ge00"
+    ]
+  }
+  </script>
+<link href="interactive.css" rel="stylesheet"/><script>try { document.documentElement.dataset.theme=localStorage.getItem("ege-theme") === "dark" ? "dark" : "light"; } catch(e) { document.documentElement.dataset.theme="light"; }</script></head>
 <body>
-    <canvas id="matrix-rain"></canvas>
-    <div id="tsparticles"></div>
-    <div class="cursor-glow"></div>
-
-    <nav>
-        <div class="logo">
-            <img src="assets/ec-logo.png" alt="Ege Coşkun Logo">
-            <span>Hebil Ege Coşkun</span>
-        </div>
-        <ul>
-            <li><a href="#about">Hakkımda</a></li>
-            <li><a href="#projects">Projeler</a></li>
-            <li><a href="#skills">Yetkinliklerim</a></li>
-            <li><a href="#contact">İletişim</a></li>
-        </ul>
-    </nav>
-
-    <header class="hero">
-        <div class="overlay"></div>
-        <div class="hero-content">
-            <h1>ESP32, Arduino ve Otonom Sistemler Projeleri</h1>
-            <p>
-                ESP32, Arduino, IoT ve gömülü sistemler üzerine geliştirdiğim projeleri, kaynak kodlarını ve teknik çalışmalarımı burada paylaşıyorum.
-            </p>
-            <a href="#projects" class="btn">Projelerimi İncele</a>
-        </div>
-    </header>
-
-    <div class="neon-line"></div>
-
-    <section id="about">
-        <h2>Hakkımda</h2>
-        <div class="glass">
-            <p>
-                Merhaba, ben <strong>Hebil Ege Coşkun</strong>. 
-                Elektronik, gömülü sistemler, IoT teknolojileri ve web geliştirme alanlarında çalışmalar yapıyorum. Özellikle ESP32 ve Arduino tabanlı projeler geliştirerek donanım ve yazılımı bir araya getiren sistemler üretmeyi seviyorum.
-                <br><br>
-                Bu web sitesini geliştirdiğim projeleri, teknik deneyimlerimi ve kaynak kodlarımı paylaşmak amacıyla oluşturdum. Burada ESP32, Arduino, sensör sistemleri, IoT çözümleri ve Teknofest projelerime ait içerikleri bulabilirsiniz. 
-                Amacım hem kendi gelişim sürecimi belgelemek hem de benzer alanlarda çalışan kişilere faydalı kaynaklar sunmaktır.
-            </p>
-        </div>
-    </section>
-
-    <section id="projects">
-        <h2>Projeler</h2>
-        <div class="projects-grid">
-            
-            <a href="projeler/spotify-dotmatrix.html" class="project-link">
-                <div class="project-card">
-                    <img src="assets/spotify.jpg" alt="Spotify Dot Matrix" loading="lazy">
-                    <div class="card-content">
-                        <h3>Spotify Dot Matrix</h3>
-                        <p>Spotify'da çalan şarkıları gerçek zamanlı olarak Arduino Uno ve MAX7219 Dot Matrix üzerinde gösteren proje.</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="project-link">
-                <div class="project-card">
-                    <img src="assets/bakımda.jpg" alt="Arduino Servo Radar" loading="lazy">
-                    <div class="card-content">
-                        <h3>BAKIMDA</h3>
-                        <p>En yakın zamanda yeni projemiz sizlerle olucak.</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="projeler/servo-radar.html" class="project-link">
-    <div class="project-card">
-        <img src="assets/servo-radar.jpg" alt="Arduino Servo Radar" loading="lazy">
-        <div class="card-content">
-            <h3>Arduino Servo Radar</h3>
-            <p>
-                HC-SR04 ultrasonik sensör ve SG90 servo motor kullanılarak geliştirilen gerçek zamanlı radar simülasyonu.
-            </p>
-        </div>
-    </div>
+<a class="skip-link" href="#main">İçeriğe geç</a>
+<div aria-hidden="true" class="scroll-progress"></div>
+<header class="site-header" id="top">
+<nav aria-label="Ana menü" class="nav-shell">
+<a aria-label="Hebil Ege Coşkun — ana sayfa" class="brand" href="#top">
+<span aria-hidden="true" class="brand-mark"><img alt="" height="48" src="assets/ec-logo.png" width="48"/></span>
+<span class="brand-name">Ege Coşkun<span class="brand-dot">.</span></span>
 </a>
+<div class="nav-links" id="primary-nav">
+<a href="#about">Hakkımda</a>
+<a href="#projects">Projeler</a>
+<a href="#skills">Yetkinlikler</a>
+<a href="#codes">Kod arşivi</a>
+<a class="nav-contact" href="#contact">İletişim <span aria-hidden="true">↗</span></a>
+</div>
+<button aria-label="Koyu temaya geç" class="theme-toggle" title="Açık / koyu tema" type="button"><span aria-hidden="true" class="theme-icon">◐</span><span class="theme-label">Tema</span></button><button aria-controls="primary-nav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" type="button">
+<span></span><span></span>
+</button>
+</nav>
+</header>
+<main id="main">
+<!-- Açılış -->
+<section aria-labelledby="hero-title" class="hero matrix-host matrix-dark">
+<canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
+<div aria-hidden="true" class="hero-light hero-light-one"></div>
+<div aria-hidden="true" class="hero-light hero-light-two"></div>
+<div aria-hidden="true" class="hero-grid"></div>
+<div class="container hero-layout">
+<div class="hero-copy">
+<div class="eyebrow hero-eyebrow"><span aria-hidden="true" class="status-dot"></span> ELEKTRONİK &amp; YAZILIM PORTFOLYOSU</div>
+<h1 id="hero-title">Fikirden devreye.<br/><span>Devreden geleceğe.</span></h1>
+<p class="hero-intro">ESP32, Arduino ve gömülü sistemler üzerine geliştirdiğim projeleri, yazılım çalışmalarımı ve teknik deneyimlerimi paylaşıyorum.</p>
+<div class="hero-actions">
+<a class="button button-primary" href="#projects">Projelerimi keşfet <span aria-hidden="true">↗</span></a>
+<a class="button button-quiet" href="#about">Beni tanı <span aria-hidden="true">↓</span></a>
+</div>
+<div class="hero-footnote"><span aria-hidden="true" class="footnote-line"></span> ESP32 <span class="footnote-sep">/</span> ARDUINO <span class="footnote-sep">/</span> IoT <span class="footnote-sep">/</span> WEB</div>
+</div>
+<div aria-label="Örnek bir gömülü sistem kodu ve devre arayüzü" class="hero-art">
+<div aria-hidden="true" class="terminal-aura"></div>
+<div aria-label="Açılış önizlemesi" class="hero-switch" role="tablist">
+<button aria-controls="hero-panel-code" aria-selected="true" class="hero-tab is-active" data-panel="code" id="hero-tab-code" role="tab" type="button">Canlı terminal</button>
+<button aria-controls="hero-panel-board" aria-selected="false" class="hero-tab" data-panel="board" id="hero-tab-board" role="tab" tabindex="-1" type="button">3D devre</button></div><div aria-hidden="true" aria-labelledby="hero-tab-code" class="dev-console" id="hero-panel-code" role="tabpanel">
+<div class="dev-console-top">
+<div class="dev-window-dots"><span></span><span></span><span></span></div>
+<span>embedded_systems.cpp</span>
+<span class="dev-console-more">⌘   01</span>
+</div>
+<div class="dev-console-workspace">
+<div class="dev-code-view">
+<div class="dev-code-caption"><span class="dev-pulse"></span> KOD ÖNİZLEMESİ <span class="dev-inline-mark">/ ESP32</span></div>
+<div class="dev-code-lines">
+<div><span class="ln">01</span><span class="syntax-pink">#include</span> <span class="syntax-cream">&lt;Arduino.h&gt;</span></div>
+<div><span class="ln">02</span></div>
+<div><span class="ln">03</span><span class="syntax-violet">const</span> <span class="syntax-blue">char</span>* device = <span class="syntax-lime">"ESP32"</span>;</div>
+<div><span class="ln">04</span><span class="syntax-violet">const</span> <span class="syntax-blue">int</span> sensor = <span class="syntax-orange">34</span>;</div>
+<div><span class="ln">05</span></div>
+<div><span class="ln">06</span><span class="syntax-blue">void</span> <span class="syntax-yellow">setup</span>() {</div>
+<div><span class="ln">07</span>  Serial.<span class="syntax-yellow">begin</span>(<span class="syntax-orange">115200</span>);</div>
+<div><span class="ln">08</span>  <span class="syntax-yellow">pinMode</span>(sensor, INPUT);</div>
+<div><span class="ln">09</span>}</div>
+<div><span class="ln">10</span></div>
+<div><span class="ln">11</span><span class="syntax-blue">void</span> <span class="syntax-yellow">loop</span>() {</div>
+<div><span class="ln">12</span>  <span class="syntax-violet">int</span> value = <span class="syntax-yellow">analogRead</span>(sensor);</div>
+<div><span class="ln">13</span>  Serial.<span class="syntax-yellow">println</span>(value);<span class="dev-caret"></span></div>
+<div><span class="ln">14</span>  <span class="syntax-yellow">delay</span>(<span class="syntax-orange">250</span>);</div>
+<div><span class="ln">15</span>}</div>
+</div>
+</div>
+<div class="dev-telemetry">
+<div class="telemetry-header"><span>VERİ GÖRSELLEŞTİRME</span><span>DEMO / 01</span></div>
+<div class="telemetry-wave">
+<svg aria-hidden="true" preserveaspectratio="none" viewbox="0 0 380 75">
+<defs><lineargradient id="waveFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#59a7ff" stop-opacity=".22"></stop><stop offset="1" stop-color="#59a7ff" stop-opacity="0"></stop></lineargradient></defs>
+<path class="wave-grid" d="M0 16 H380 M0 38 H380 M0 60 H380"></path>
+<path class="wave-area" d="M0 51 L20 49 40 53 59 37 80 41 101 46 120 19 143 25 162 40 180 35 204 41 222 14 246 26 263 33 280 22 300 31 322 18 346 36 366 21 380 26 V75 H0 Z"></path>
+<path class="wave-stroke" d="M0 51 L20 49 40 53 59 37 80 41 101 46 120 19 143 25 162 40 180 35 204 41 222 14 246 26 263 33 280 22 300 31 322 18 346 36 366 21 380 26"></path>
+</svg>
+<span class="wave-scan"></span>
+</div>
+<div class="telemetry-bottom"><span><i></i> SERİ PORT ÖRNEĞİ</span><span>GPIO • SENSOR • IoT</span></div>
+</div><div aria-live="off" class="live-output"><div class="live-output-title"><span class="pulse-dot"></span> SERİ PORT / SİMÜLASYON <span>115200 baud</span></div><div class="live-values"><div>GPIO34 <strong id="live-gpio">2048</strong></div><div>SICAKLIK <strong id="live-temp">24.6°C</strong></div><div>UPTIME <strong id="live-uptime">00:00:01</strong></div></div><div class="live-log" id="live-log">&gt; system initialized · simulation running</div></div>
+</div>
+</div><div aria-labelledby="hero-tab-board" class="board-panel" hidden="" id="hero-panel-board" role="tabpanel">
+<div class="circuit-heading"><span class="pulse-dot"></span> ESP32 DEVKIT · ETKİLEŞİMLİ MODEL <span>3D / DEMO</span></div>
+<div aria-label="Fare veya dokunarak döndürülebilen üç boyutlu ESP32 kart maketi" class="circuit-stage" id="circuit-stage" tabindex="0">
+<div class="pcb-board" id="pcb-board"><div aria-hidden="true" class="pcb-side"></div><div class="pcb-face">
+<svg aria-hidden="true" class="pcb-traces" preserveaspectratio="none" viewbox="0 0 550 340"><g fill="none" opacity=".58" stroke="#33c6b5" stroke-width="1.7"><path d="M54 42H150V102H213 M54 65H128V133H204 M470 45H400V116H350 M480 69H417V167H354 M53 280H146V234H204 M500 287H418V230H353 M73 165H183 M365 186H485 M92 295H184 M351 68H468"></path><path d="M45 215H106V195H178M486 214H439V199H372"></path></g><g fill="#56e5ca"><circle cx="54" cy="42" r="5"></circle><circle cx="54" cy="65" r="5"></circle><circle cx="470" cy="45" r="5"></circle><circle cx="480" cy="69" r="5"></circle><circle cx="53" cy="280" r="5"></circle><circle cx="500" cy="287" r="5"></circle></g></svg>
+<div class="pcb-port">USB-C</div><span class="pcb-label pcb-label-top">ESP32 DEVKIT V1</span><div aria-hidden="true" class="pcb-pin pcb-pin-left"></div><div aria-hidden="true" class="pcb-pin pcb-pin-right"></div>
+<div class="pcb-module"><span>ESPRESSIF</span><strong>ESP32</strong><small>Wi-Fi + Bluetooth</small></div>
+<div aria-hidden="true" class="pcb-led" id="pcb-led"></div><div class="pcb-cap cap-one"></div><div class="pcb-cap cap-two"></div><span class="pcb-label pcb-label-bottom">IoT / CONTROL · GPIO 34</span>
+<span class="pcb-mark pin-label-l">3V3 · GND · D13 · D12</span><span class="pcb-mark pin-label-r">VIN · GND · RX · TX</span>
+</div></div>
+</div>
+<div class="board-controls"><div><strong>ESP32 kart modeli</strong><span>Sürükle veya ok tuşlarıyla döndür.</span></div><button id="board-led-toggle" type="button">LED: Açık</button><button id="board-reset" type="button">Görünümü sıfırla ↺</button></div>
+<p class="board-disclaimer">Görsel bir 3D canlandırmadır; fiziksel kart bağlantısı içermez.</p>
+</div>
 
-        </div>
-    </section>
-
-    <section id="stats">
-        <h2>İstatistikler</h2>
-        <div class="stats-grid">
-            <div class="stat">
-                <h3>20+</h3>
-                <p>Proje</p>
-            </div>
-            <div class="stat">
-                <h3>5+</h3>
-                <p>Yıl Yazılım</p>
-            </div>
-            <div class="stat">
-                <h3>100+</h3>
-                <p>Saat Ar-Ge</p>
-            </div>
-            <div class="stat">
-                <h3>3+</h3>
-                <p>Ana Teknoloji</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills">
-        <h2>Yetkinliklerim</h2>
-        <div class="skills">
-            <span>ESP32</span> 
-            <span>Arduino</span> 
-            <span>C#</span> 
-            <span>HTML</span> 
-            <span>CSS</span> 
-            <span>JavaScript</span> 
-            <span>ThingSpeak</span> 
-            <span>IoT</span>
-        </div>
-    </section>
-
-    <section id="codes">
-        <h2>Kod Arşivi</h2>
-        <div class="glass">
-            <h3>🚧 Bakımda</h3>
-            <p>
-                Kod arşivi şu anda güncellenmektedir.
-                Yakında yeni projeler ve kaynak kodlar sizlerle paylaşılacaktır.
-                Takipte kalın 🚀
-            </p>
-        </div>
-    </section>
-
-    <section id="contact">
-        <h2>İletişim</h2>
-        <div class="glass">
-            <h3>Benimle İletişime Geç</h3>
-            <form action="https://formsubmit.co/egecoskun065@gmail.com" method="POST" class="contact-form">
-                <input type="text" name="name" placeholder="Adınız" required>
-                <input type="email" name="email" placeholder="E-posta Adresiniz" required>
-                <textarea name="message" rows="6" placeholder="Mesajınızı yazın..." required></textarea>
-                <input type="hidden" name="_captcha" value="false">
-                <button type="submit" class="btn">Mesaj Gönder</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <h3>Hebil Ege Coşkun</h3>
-            <p>ESP32, Arduino, IoT ve Otonom Sistemler üzerine geliştirdiğim projeleri paylaşmaya devam ediyorum.</p>
-            
-            <div class="socials">
-                <a href="https://instagram.com/00.e.ge00" target="_blank" rel="noopener noreferrer">Instagram</a>
-            </div>
-            
-            <p class="copyright">
-    © 2026 <strong>Hebil Ege Coşkun</strong>. Tüm hakları saklıdır.<br>
-    Bu web sitesinde yer alan projeler ve içerikler kişisel portfolyomun bir parçasıdır.
-    Geri bildirimleriniz ve önerileriniz benim için değerlidir.
-</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
+</div>
+</div>
+<a aria-label="Projeler bölümüne kaydır" class="scroll-cue" href="#projects"><span aria-hidden="true" class="scroll-cue-line"></span> KEŞFETMEK İÇİN KAYDIR</a>
+</section>
+<!-- Projeler -->
+<section aria-labelledby="projects-title" class="projects-section section-light matrix-host matrix-light" id="projects">
+<canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
+<div class="container">
+<div class="section-heading reveal">
+<div><span class="eyebrow eyebrow-dark"><span class="eyebrow-index">01</span> / ÇALIŞMALARIM</span>
+<h2 id="projects-title">Ürettiğim <span class="text-muted">projeler.</span></h2>
+</div>
+<p>Gerçek donanımlar, çalışan kodlar ve yeni fikirler. Son çalışmalarımı buradan inceleyebilirsin.</p>
+</div>
+<div class="project-grid">
+<article class="project-card project-featured reveal">
+<a aria-label="Spotify Dot Matrix projesini incele" class="project-anchor" href="projeler/spotify-dotmatrix.html">
+<div class="project-visual visual-spotify">
+<img alt="Arduino ile Spotify Dot Matrix projesi" class="project-photo" data-visual-fallback="" height="941" loading="lazy" src="assets/spotify.jpg" width="1672"/>
+<span class="visual-corner">PROJECT / 001</span>
+<span aria-hidden="true" class="project-open">↗</span>
+</div>
+<div class="project-details">
+<div class="project-tags"><span>ARDUINO</span><span>LED MATRIX</span><span>SPOTIFY</span></div>
+<div class="project-title-row"><h3>Spotify Dot Matrix</h3><span aria-hidden="true" class="project-arrow">↗</span></div>
+<p>Spotify'da çalan şarkıları Arduino Uno ve MAX7219 Dot Matrix ekranında gerçek zamanlı gösteren sistem.</p>
+<span class="text-link">Projeyi incele <span aria-hidden="true">↗</span></span>
+<span class="project-demo-hint">◉ Etkileşimli demo mevcut</span></div>
+</a>
+</article>
+<article class="project-card project-featured reveal">
+<a aria-label="Arduino Servo Radar projesini incele" class="project-anchor" href="projeler/servo-radar.html">
+<div class="project-visual visual-radar">
+<img alt="Arduino Uno, HC-SR04 ve Servo Radar projesi" class="project-photo" data-visual-fallback="" height="1024" loading="lazy" src="assets/servo-radar.jpg" width="1536"/>
+<span class="visual-corner">PROJECT / 002</span>
+<span aria-hidden="true" class="project-open">↗</span>
+</div>
+<div class="project-details">
+<div class="project-tags"><span>ARDUINO</span><span>HC-SR04</span><span>SERVO</span></div>
+<div class="project-title-row"><h3>Arduino Servo Radar</h3><span aria-hidden="true" class="project-arrow">↗</span></div>
+<p>HC-SR04 ultrasonik sensör ve SG90 servo motorla geliştirilen gerçek zamanlı radar simülasyonu.</p>
+<span class="text-link">Projeyi incele <span aria-hidden="true">↗</span></span>
+<span class="project-demo-hint">◉ Etkileşimli demo mevcut</span></div>
+</a>
+</article>
+<article aria-label="Yakında yayınlanacak proje" class="upcoming-card reveal">
+<div class="upcoming-copy">
+<span class="eyebrow">SIRADAKİ PROJE</span>
+<h3>Yeni proje hazırlanıyor.</h3>
+<p>Yeni çalışmamı tamamladığımda bu bölümde paylaşacağım.</p>
+<span class="upcoming-subtitle">03 / YAKINDA</span>
+</div>
+<div class="upcoming-image-wrap"><img alt="Projeler güncelleniyor — Bakımda" height="1024" loading="lazy" src="assets/bakimda.jpg" width="1536"/></div>
+</article>
+</div>
+</div>
+</section>
+<!-- Tanıtım -->
+<section aria-labelledby="about-title" class="about-section matrix-host matrix-dark" id="about">
+<canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
+<div class="container about-layout">
+<div class="about-left reveal">
+<span class="eyebrow"><span class="eyebrow-index">02</span> / HAKKIMDA</span>
+<h2 id="about-title">Merakla başlar.<br/><span>Üreterek gelişir.</span></h2>
+<div aria-hidden="true" class="about-symbol"><span class="about-symbol-ring"></span><span class="about-symbol-core">&lt;/&gt;</span></div>
+</div>
+<div class="about-right reveal">
+<div class="about-kicker">MERHABA, BEN EGE.</div>
+<p>Elektronik, gömülü sistemler, IoT teknolojileri ve web geliştirme alanlarında çalışıyorum. Özellikle <strong>ESP32 ve Arduino</strong> tabanlı projeler geliştirerek donanım ile yazılımı bir araya getiriyorum.</p>
+<p>Bu siteyi projelerimi, teknik deneyimlerimi ve kaynak kodlarımı paylaşmak için oluşturdum. Geliştirme sürecimi belgeliyor, benzer alanlarda çalışanlarla öğrendiklerimi paylaşıyorum.</p>
+<a class="inline-link" href="#contact">Birlikte bir şey geliştirelim <span aria-hidden="true">↗</span></a>
+<div aria-label="Portfolyo istatistikleri" class="about-metrics" id="stats">
+<div><strong>20<span>+</span></strong><span>Proje</span></div>
+<div><strong>5<span>+</span></strong><span>Yıl yazılım</span></div>
+<div><strong>100<span>+</span></strong><span>Saat Ar-Ge</span></div>
+<div><strong>3<span>+</span></strong><span>Ana teknoloji</span></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Teknolojiler -->
+<section aria-labelledby="skills-title" class="skills-section section-light matrix-host matrix-light" id="skills">
+<canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
+<div class="container">
+<div class="section-heading reveal">
+<div><span class="eyebrow eyebrow-dark"><span class="eyebrow-index">03</span> / TEKNOLOJİLER</span><h2 id="skills-title">Kullandığım <span class="text-muted">araçlar.</span></h2></div>
+<p>Projelerimi geliştirirken kullandığım platformlar, diller ve teknolojiler.</p>
+</div>
+<div class="skills-grid">
+<div class="skill-panel reveal"><div aria-hidden="true" class="skill-icon skill-chip"><svg fill="none" viewbox="0 0 48 48"><rect height="22" rx="5" stroke="currentColor" stroke-width="2" width="22" x="13" y="13"></rect><path d="M18 7v6m12-6v6M18 35v6m12-6v6M7 18h6m-6 12h6m22-12h6m-6 12h6" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path><rect fill="currentColor" height="8" rx="2" width="8" x="20" y="20"></rect></svg></div><span class="skill-number">01 / DONANIM</span><h3>Gömülü sistemler</h3><p>Donanım, sensörler ve mikrodenetleyici tabanlı uygulamalar.</p><div class="skill-tags"><span>ESP32</span><span>Arduino</span><span>IoT</span></div></div>
+<div class="skill-panel reveal"><div aria-hidden="true" class="skill-icon skill-code"><svg fill="none" viewbox="0 0 48 48"><path d="m17 15-9 9 9 9m14-18 9 9-9 9m-4-25-6 32" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></div><span class="skill-number">02 / YAZILIM</span><h3>Yazılım geliştirme</h3><p>Web arayüzleri ve farklı uygulamalar için yazılım geliştirme.</p><div class="skill-tags"><span>C#</span><span>JavaScript</span><span>HTML</span><span>CSS</span></div></div>
+<div class="skill-panel reveal"><div aria-hidden="true" class="skill-icon skill-data"><svg fill="none" viewbox="0 0 48 48"><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2.3"></circle><circle cx="36" cy="24" r="4" stroke="currentColor" stroke-width="2.3"></circle><circle cx="12" cy="36" r="4" stroke="currentColor" stroke-width="2.3"></circle><path d="m16 15 16 7M16 34l16-8" stroke="currentColor" stroke-linecap="round" stroke-width="2.3"></path></svg></div><span class="skill-number">03 / BAĞLANTI</span><h3>Veri ve bağlantı</h3><p>Veri aktarımı, bağlantılı cihazlar ve IoT sistemleri.</p><div class="skill-tags"><span>ThingSpeak</span><span>IoT</span><span>Sensörler</span></div></div>
+</div>
+</div>
+</section>
+<!-- Kod arşivi -->
+<section aria-labelledby="archive-title" class="archive-section matrix-host matrix-light" id="codes">
+<canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
+<div class="container archive-shell reveal">
+<div aria-hidden="true" class="archive-visual"><div class="code-window"><div class="window-dots"><i></i><i></i><i></i></div><div class="code-lines"><span><em>const</em> project = {</span><span>  board: <b>'ESP32'</b>,</span><span>  idea: <b>'create'</b>,</span><span>  status: <b>'building'</b></span><span>};</span><span class="code-cursor">_</span></div></div></div>
+<div class="archive-copy"><span class="eyebrow"><span class="eyebrow-index">04</span> / KOD ARŞİVİ</span><h2 id="archive-title">Kodları keşfet.</h2><p>Kod arşivimi düzenliyorum. Yeni proje dosyaları hazır olduğunda bu bölümde yayımlayacağım.</p><p class="archive-note">Arduino, Python ve Processing örneklerini ilgili proje sayfalarından görüntüleyebilir, kopyalayabilir ve indirebilirsin.</p><div class="archive-links"><a href="projeler/spotify-dotmatrix.html">Dot Matrix kodları ↗</a><a href="projeler/servo-radar.html">Radar kodları ↗</a></div></div>
+</div>
+</section>
+<!-- İletişim -->
+<section aria-labelledby="contact-title" class="contact-section section-light matrix-host matrix-light" id="contact">
+<canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
+<div class="container contact-layout">
+<div class="contact-copy reveal"><span class="eyebrow eyebrow-dark"><span class="eyebrow-index">05</span> / İLETİŞİM</span><h2 id="contact-title">Bir fikrin mi var?<br/><span class="text-muted">Konuşalım.</span></h2><p>Bir proje, teknik soru veya iş birliği için aşağıdaki formdan bana mesaj gönderebilirsin.</p><div class="contact-social"><a href="https://instagram.com/00.e.ge00" rel="noopener noreferrer" target="_blank">Instagram <span aria-hidden="true">↗</span></a></div></div>
+<form action="https://formsubmit.co/egecoskun065@gmail.com" class="contact-form reveal" method="POST">
+<input name="_subject" type="hidden" value="Portfolyo üzerinden yeni mesaj"/>
+<input name="_captcha" type="hidden" value="false"/>
+<input aria-hidden="true" autocomplete="off" class="hidden-field" name="_honey" tabindex="-1" type="text"/>
+<div class="form-field"><label for="contact-name">Adın</label><input autocomplete="name" id="contact-name" maxlength="100" name="name" placeholder="Adın ve soyadın" required="" type="text"/></div>
+<div class="form-field"><label for="contact-email">E-posta adresin</label><input autocomplete="email" id="contact-email" maxlength="180" name="email" placeholder="ornek@eposta.com" required="" type="email"/></div>
+<div class="form-field"><label for="contact-message">Mesajın</label><textarea id="contact-message" maxlength="5000" name="message" placeholder="Nasıl yardımcı olabilirim?" required="" rows="5"></textarea></div>
+<button class="button button-dark" type="submit">Mesaj gönder <span aria-hidden="true">↗</span></button>
+<p class="form-note">Form, mesajını FormSubmit üzerinden iletir.</p>
+</form>
+</div>
+</section>
+</main>
+<footer class="site-footer matrix-host matrix-dark">
+<canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
+<div class="container footer-main"><a aria-label="En üste dön" class="footer-logo" href="#top"><img alt="" height="42" src="assets/ec-logo.png" width="42"/> Ege Coşkun<span>.</span></a><div class="footer-right"><a href="#projects">Projeler</a><a href="#about">Hakkımda</a><a href="#contact">İletişim</a><a aria-label="Sayfanın en üstüne dön" href="#top">↑</a></div></div>
+<div class="container footer-bottom"><span>© <span id="copyright-year">2026</span> Hebil Ege Coşkun. Tüm hakları saklıdır.</span><span>ESP32 · Arduino · IoT · Yazılım</span></div>
+</footer>
+<script defer="" src="script.js"></script>
+<script defer="True" src="interactive.js"></script></body>
 </html>
