@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="tr"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#08090c" name="theme-color"/><title>Spotify Dot Matrix | Ege Coşkun</title><meta content="Spotify'da çalan şarkı bilgilerini Arduino Uno ve 4×8×8 MAX7219 Dot Matrix üzerinde kayan yazıyla gösteren proje." name="description"/><link href="../assets/favicon-256.png" rel="icon" type="image/png"/><link href="https://egecoskun.tech/projeler/spotify-dotmatrix.html" rel="canonical"/><meta content="article" property="og:type"/><meta content="Spotify Dot Matrix | Ege Coşkun" property="og:title"/><meta content="Spotify'da çalan şarkı bilgilerini Arduino Uno ve 4×8×8 MAX7219 Dot Matrix üzerinde kayan yazıyla gösteren proje." property="og:description"/><meta content="https://egecoskun.tech/assets/spotify.jpg" property="og:image"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="../style.css" rel="stylesheet"/><link href="../project.css" rel="stylesheet"/><link href="../interactive.css" rel="stylesheet"/><script>try { document.documentElement.dataset.theme=localStorage.getItem("ege-theme") === "dark" ? "dark" : "light"; } catch(e) { document.documentElement.dataset.theme="light"; }</script></head>
+<body><a class="skip-link" href="#main">İçeriğe geç</a><div aria-hidden="true" class="scroll-progress"></div><header class="site-header" id="top"><nav aria-label="Ana menü" class="nav-shell"><a aria-label="Ana sayfa" class="brand" href="../index.html"><span class="brand-mark"><img alt="" height="48" src="../assets/ec-logo.png" width="48"/></span><span class="brand-name">Ege Coşkun<span class="brand-dot">.</span></span></a><div class="nav-links" id="primary-nav"><a href="../index.html#about">Hakkımda</a><a href="../index.html#projects">Projeler</a><a href="../index.html#skills">Yetkinlikler</a><a href="../index.html#codes">Kod arşivi</a><a class="nav-contact" href="../index.html#contact">İletişim ↗</a></div><button aria-label="Koyu temaya geç" class="theme-toggle" title="Açık / koyu tema" type="button"><span aria-hidden="true" class="theme-icon">◐</span><span class="theme-label">Tema</span></button><button aria-controls="primary-nav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" type="button"><span></span><span></span></button></nav></header>
+<main id="main"><div class="detail-hero matrix-host matrix-dark"><canvas aria-hidden="true" class="matrix-rain-layer"></canvas><div class="container"><a class="back-link" href="../index.html#projects">← Tüm projeler</a><div class="detail-eyebrow">PROJE DETAYI <span>/ ARDUINO</span></div><h1>Spotify Dot Matrix</h1><p>Spotify'da çalan şarkı bilgilerini Arduino Uno ve 4×8×8 MAX7219 Dot Matrix üzerinde kayan yazıyla gösteren proje.</p><div class="detail-tags"><span>ARDUINO UNO</span><span>4×8×8 MAX7219</span><span>PYTHON</span><span>SERİ HABERLEŞME</span><a class="demo-jump" href="#simulator">Canlı demoyu dene ↘</a></div></div></div>
+<div class="detail-feature container"><img alt="Spotify Dot Matrix proje görseli" loading="eager" src="../assets/spotify.jpg"/></div><div aria-label="Proje görselleri" class="container reveal gallery-strip">
+<a class="gallery-tile" data-caption="Proje fotoğrafı" data-lightbox="" href="../assets/spotify.jpg"><img alt="Proje fotoğrafını büyüt" loading="lazy" src="../assets/spotify.jpg"/><span>Proje fotoğrafı <b>↗</b></span></a>
+<a class="gallery-tile" data-caption="Devre bağlantı şeması" data-lightbox="" href="../assets/arduino-dotmatrix-wiring.png"><img alt="Bağlantı şemasını büyüt" loading="lazy" src="../assets/arduino-dotmatrix-wiring.png"/><span>Bağlantı şeması <b>↗</b></span></a>
+</div>
+<div class="detail-content container matrix-host matrix-light"><canvas aria-hidden="true" class="matrix-rain-layer"></canvas><section class="detail-block"><h2>Proje hakkında</h2><p>Bilgisayarda çalışan Python betiği, açık pencerelerin başlıklarını kontrol ederek müzik bilgisi olabilecek metni seri bağlantıyla Arduino Uno'ya iletir. Arduino, gelen metni MAX7219 LED matrisler üzerinde kaydırır. Bu örnek Spotify'ın resmî Web API'sini kullanmaz; masaüstündeki pencere başlıklarını okur.</p><h3>Kullanılan araçlar ve bileşenler</h3><ul class="detail-parts"><li>Arduino Uno</li><li>MAX7219 sürücülü 4 adet 8×8 LED Dot Matrix modülü</li><li>USB bağlantısı ve jumper kablolar</li><li>Python, pyserial ve pygetwindow</li><li>Arduino IDE, MD_Parola ve MD_MAX72XX kütüphaneleri</li></ul></section>
+<section class="detail-block"><h2>Devre bağlantıları</h2><p>Bağlantı şemasını tam boy görmek için görsele tıklayabilirsin.</p><a class="wiring-link" data-caption="Devre bağlantı şeması" data-lightbox="" href="../assets/arduino-dotmatrix-wiring.png" rel="noopener" target="_blank"><img alt="Arduino Uno ve MAX7219 Dot Matrix için DIN D11, CS D10, CLK D13, VCC 5V, GND GND bağlantı şeması" loading="lazy" src="../assets/arduino-dotmatrix-wiring.png"/></a><div class="pin-table-wrap"><table class="pin-table"><caption>Pin bağlantı tablosu</caption><thead><tr><th scope="col">Modül bağlantısı</th><th scope="col">Arduino Uno</th></tr></thead><tbody><tr><th scope="row">DIN</th><td>D11</td></tr><tr><th scope="row">CS</th><td>D10</td></tr><tr><th scope="row">CLK</th><td>D13</td></tr><tr><th scope="row">VCC</th><td>5V</td></tr><tr><th scope="row">GND</th><td>GND</td></tr></tbody></table></div><p class="wiring-note">Şemada tek 8×8 modül gösteriliyor. Dört modüllü MAX7219 kartında aynı sinyal girişleri kullanılır. Python betiğinde COM9 örnektir; bilgisayarındaki gerçek seri portu yazmalısın.</p></section>
+<section class="reveal simulator-section detail-block" id="simulator">
+<div class="sim-head"><div><span class="sim-overline">ETKİLEŞİMLİ DENEY ALANI</span><h2>LED Matrix simülatörü</h2><p>Kendi metnini yaz, kayma hızını değiştir. Dört adet 8×8 modülün oluşturduğu 32×8 LED alanını tarayıcıda deneyebilirsin.</p></div><span class="demo-pill">DEMO VERİSİ</span></div>
+<div class="sim-layout led-layout"><div class="sim-screen led-screen"><div class="sim-led-head"><span>MAX7219 · 4 × 8×8</span><span><i class="sim-led-dot"></i> GÖRÜNTÜLEME</span></div><canvas aria-label="32 sütun 8 satırlık hareketli LED Matrix simülasyonu" height="280" id="led-canvas" role="img" width="960"></canvas><div class="sim-led-footer"><span>DIN D11 · CS D10 · CLK D13</span><span>ARDUINO UNO / DEMO</span></div></div>
+<div class="sim-controls"><label for="led-text">Gösterilecek metin</label><input autocomplete="off" id="led-text" maxlength="40" spellcheck="false" type="text" value="EGE COSKUN"/><label for="led-speed">Kayma hızı <output id="led-speed-value">Orta</output></label><input id="led-speed" max="10" min="1" step="1" type="range" value="5"/><button class="sim-button" id="led-toggle" type="button">Animasyonu durdur</button><p class="sim-note">Spotify hesabına bağlanmaz ve müzik verisi okumaz. Yazdığın metni canlandırır.</p></div></div>
+</section><section class="detail-block"><div class="detail-row"><h2>Arduino kodu</h2><a class="download-code" download="" href="../kodlar/spotify-dotmatrix.ino">Kodu indir ↓</a></div><div class="code-block"><div class="code-toolbar"><span>spotify-dotmatrix.ino</span><button class="copy-code" type="button">Kopyala</button></div><pre><code class="language-cpp">#include &lt;MD_Parola.h&gt;
+#include &lt;MD_MAX72xx.h&gt;
+#include &lt;SPI.h&gt;
+
+#define HARDWARE_TYPE MD_MAX72XX::FC16_HW
+#define MAX_DEVICES 4
+#define DATA_PIN 11
+#define CS_PIN 10
+#define CLK_PIN 13
+
+MD_Parola ekran(HARDWARE_TYPE, DATA_PIN, CLK_PIN, CS_PIN, MAX_DEVICES);
+String mesaj = "Spotify hazir";
+
+void setup() {
+  Serial.begin(9600);
+  Serial.setTimeout(100);
+  ekran.begin();
+  ekran.setIntensity(3);
+  ekran.displayClear();
+  ekran.displayText(mesaj.c_str(), PA_LEFT, 65, 0, PA_SCROLL_LEFT, PA_SCROLL_LEFT);
+}
+
+void loop() {
+  if (Serial.available()) {
+    String yeni = Serial.readStringUntil('\n');
+    yeni.trim();
+    if (yeni.length() &gt; 0) {
+      mesaj = yeni;
+      ekran.displayClear();
+      ekran.displayText(mesaj.c_str(), PA_LEFT, 65, 0, PA_SCROLL_LEFT, PA_SCROLL_LEFT);
+    }
+  }
+  ekran.displayAnimate();
+}
+</code></pre></div></section><section class="detail-block"><div class="detail-row"><h2>Python kodu</h2><a class="download-code" download="" href="../kodlar/spotify-pencere-basligi.py">Kodu indir ↓</a></div><div class="code-block"><div class="code-toolbar"><span>spotify-pencere-basligi.py</span><button class="copy-code" type="button">Kopyala</button></div><pre><code class="language-python"># Windows'ta pencere basligini okuyup Arduino'ya seri porttan aktarir.
+# Kurulum: pip install pyserial pygetwindow
+# Not: Spotify Web API entegrasyonu degildir.
+import time
+import serial
+import pygetwindow as gw
+
+PORT = "COM9"  # Aygit Yoneticisi'ndeki Arduino COM portuyla degistirin.
+BAUD = 9600
+
+
+def ascii_cevir(metin):
+    return metin.translate(str.maketrans("çğıöşüÇĞİÖŞÜ", "cgiosuCGIOSU"))
+
+
+def baslik_bul():
+    # Masaustunde Spotify muzik penceresinin basligi gorunebilir.
+    # Baska programlarin basliklarini sarki sanmamak icin filtre koyduk.
+    yasak = ("Google Chrome", "Microsoft Edge", "Visual Studio", "Discord", "Opera", "Administrator", "Arduino")
+    for title in gw.getAllTitles():
+        if title and " - " in title and not any(x.lower() in title.lower() for x in yasak):
+            return title
+    return None
+
+
+with serial.Serial(PORT, BAUD, timeout=1) as arduino:
+    time.sleep(2)
+    onceki = None
+    while True:
+        baslik = baslik_bul()
+        if baslik and baslik != onceki:
+            onceki = baslik
+            arduino.write((ascii_cevir(baslik) + "\n").encode("utf-8"))
+            print("Gonderildi:", baslik)
+        time.sleep(2)
+</code></pre></div></section>
+<section class="detail-block detail-next"><h2>Diğer projeler</h2><p>Başka bir çalışmamı da inceleyebilirsin.</p><a class="button button-dark" href="servo-radar.html">Diğer projeye git <span aria-hidden="true">↗</span></a></section></div></main>
+<footer class="site-footer matrix-host matrix-dark"><canvas aria-hidden="true" class="matrix-rain-layer"></canvas><div class="container footer-main"><a class="footer-logo" href="../index.html"><img alt="" height="42" src="../assets/ec-logo.png" width="42"/> Ege Coşkun<span>.</span></a><div class="footer-right"><a href="../index.html#projects">Projeler</a><a href="../index.html#about">Hakkımda</a><a href="../index.html#contact">İletişim</a><a aria-label="Sayfanın en üstüne dön" href="#top">↑</a></div></div><div class="container footer-bottom"><span>© <span id="copyright-year">2026</span> Hebil Ege Coşkun. Tüm hakları saklıdır.</span><span>ESP32 · Arduino · IoT · Yazılım</span></div></footer><script defer="" src="../script.js"></script><script defer="" src="../project.js"></script><script defer="True" src="../interactive.js"></script></body></html>

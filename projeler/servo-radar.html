@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="tr"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#08090c" name="theme-color"/><title>Arduino Servo Radar | Ege Coşkun</title><meta content="HC-SR04 ultrasonik sensör ve SG90 servo motor ile açıya bağlı mesafe ölçümü yapan gerçek zamanlı radar çalışması." name="description"/><link href="../assets/favicon-256.png" rel="icon" type="image/png"/><link href="https://egecoskun.tech/projeler/servo-radar.html" rel="canonical"/><meta content="article" property="og:type"/><meta content="Arduino Servo Radar | Ege Coşkun" property="og:title"/><meta content="HC-SR04 ultrasonik sensör ve SG90 servo motor ile açıya bağlı mesafe ölçümü yapan gerçek zamanlı radar çalışması." property="og:description"/><meta content="https://egecoskun.tech/assets/servo-radar.jpg" property="og:image"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="../style.css" rel="stylesheet"/><link href="../project.css" rel="stylesheet"/><link href="../interactive.css" rel="stylesheet"/><script>try { document.documentElement.dataset.theme=localStorage.getItem("ege-theme") === "dark" ? "dark" : "light"; } catch(e) { document.documentElement.dataset.theme="light"; }</script></head>
+<body><a class="skip-link" href="#main">İçeriğe geç</a><div aria-hidden="true" class="scroll-progress"></div><header class="site-header" id="top"><nav aria-label="Ana menü" class="nav-shell"><a aria-label="Ana sayfa" class="brand" href="../index.html"><span class="brand-mark"><img alt="" height="48" src="../assets/ec-logo.png" width="48"/></span><span class="brand-name">Ege Coşkun<span class="brand-dot">.</span></span></a><div class="nav-links" id="primary-nav"><a href="../index.html#about">Hakkımda</a><a href="../index.html#projects">Projeler</a><a href="../index.html#skills">Yetkinlikler</a><a href="../index.html#codes">Kod arşivi</a><a class="nav-contact" href="../index.html#contact">İletişim ↗</a></div><button aria-label="Koyu temaya geç" class="theme-toggle" title="Açık / koyu tema" type="button"><span aria-hidden="true" class="theme-icon">◐</span><span class="theme-label">Tema</span></button><button aria-controls="primary-nav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" type="button"><span></span><span></span></button></nav></header>
+<main id="main"><div class="detail-hero matrix-host matrix-dark"><canvas aria-hidden="true" class="matrix-rain-layer"></canvas><div class="container"><a class="back-link" href="../index.html#projects">← Tüm projeler</a><div class="detail-eyebrow">PROJE DETAYI <span>/ ARDUINO</span></div><h1>Arduino Servo Radar</h1><p>HC-SR04 ultrasonik sensör ve SG90 servo motor ile açıya bağlı mesafe ölçümü yapan gerçek zamanlı radar çalışması.</p><div class="detail-tags"><span>ARDUINO UNO</span><span>HC-SR04</span><span>SG90 SERVO</span><span>PROCESSING</span><a class="demo-jump" href="#simulator">Canlı demoyu dene ↘</a></div></div></div>
+<div class="detail-feature container"><img alt="Arduino Servo Radar proje görseli" loading="eager" src="../assets/servo-radar.jpg"/></div><div aria-label="Proje görselleri" class="container reveal gallery-strip">
+<a class="gallery-tile" data-caption="Proje fotoğrafı" data-lightbox="" href="../assets/servo-radar.jpg"><img alt="Proje fotoğrafını büyüt" loading="lazy" src="../assets/servo-radar.jpg"/><span>Proje fotoğrafı <b>↗</b></span></a>
+<a class="gallery-tile" data-caption="Devre bağlantı şeması" data-lightbox="" href="../assets/radar-sema.png"><img alt="Bağlantı şemasını büyüt" loading="lazy" src="../assets/radar-sema.png"/><span>Bağlantı şeması <b>↗</b></span></a>
+</div>
+<div class="detail-content container matrix-host matrix-light"><canvas aria-hidden="true" class="matrix-rain-layer"></canvas><section class="detail-block"><h2>Proje hakkında</h2><p>SG90 servo motor sensörü farklı açılara çevirir. HC-SR04 her açıda bir mesafe ölçümü alır. Arduino, açı ve mesafeyi seri port üzerinden gönderir. Processing uygulaması bu verileri radar görünümünde gösterir.</p><h3>Kullanılan araçlar ve bileşenler</h3><ul class="detail-parts"><li>Arduino Uno</li><li>HC-SR04 ultrasonik mesafe sensörü</li><li>SG90 servo motor</li><li>Breadboard, jumper kablolar ve USB</li><li>Arduino IDE ve Processing IDE</li></ul></section>
+<section class="detail-block"><h2>Devre bağlantıları</h2><p>Bağlantı şemasını tam boy görmek için görsele tıklayabilirsin.</p><a class="wiring-link" data-caption="Devre bağlantı şeması" data-lightbox="" href="../assets/radar-sema.png" rel="noopener" target="_blank"><img alt="HC-SR04 ve SG90 Servo için bağlantı şeması. HC-SR04 TRIG D9 ECHO D10; SG90 sinyal D11." loading="lazy" src="../assets/radar-sema.png"/></a><div class="pin-table-wrap"><table class="pin-table"><caption>Pin bağlantı tablosu</caption><thead><tr><th scope="col">Modül bağlantısı</th><th scope="col">Arduino Uno</th></tr></thead><tbody><tr><th scope="row">HC-SR04 VCC</th><td>5V</td></tr><tr><th scope="row">HC-SR04 GND</th><td>GND</td></tr><tr><th scope="row">HC-SR04 TRIG</th><td>D9</td></tr><tr><th scope="row">HC-SR04 ECHO</th><td>D10</td></tr><tr><th scope="row">SG90 kırmızı</th><td>5V</td></tr><tr><th scope="row">SG90 kahverengi</th><td>GND</td></tr><tr><th scope="row">SG90 turuncu</th><td>D11</td></tr></tbody></table></div><p class="wiring-note">Pin numaraları yüklediğin bağlantı şemasına göre D9, D10 ve D11 olarak ayarlandı. Eski sitedeki kodunda farklı pinler kullanılıyordu; eski devreyi değiştirmeden kullanacaksan kodu buna göre düzenlemelisin.</p></section>
+<section class="reveal simulator-section detail-block" id="simulator">
+<div class="sim-head"><div><span class="sim-overline">ETKİLEŞİMLİ DENEY ALANI</span><h2>Radar simülasyonu</h2><p>Hedef mesafesini değiştir ve tarama hareketini izle. Bu bölüm örnek veri üretir; gerçek Arduino veya sensöre bağlı değildir.</p></div><span class="demo-pill">DEMO VERİSİ</span></div>
+<div class="sim-layout radar-layout"><div class="sim-screen"><canvas aria-label="Hareket eden radar taraması ve sanal hedefler" height="490" id="radar-canvas" role="img" width="900"></canvas></div>
+<div class="sim-controls"><div class="control-topline"><span class="pulse-dot"></span> ÖRNEK RADAR VERİLERİ</div><div class="sim-stat"><span>Açı</span><strong id="radar-angle">90°</strong></div><div class="sim-stat"><span>Hedef mesafesi</span><strong id="radar-distance">25 cm</strong></div><label for="radar-range">Hedef konumu <output id="radar-range-value">25 cm</output></label><input id="radar-range" max="40" min="5" step="1" type="range" value="25"/><button class="sim-button" id="radar-toggle" type="button">Taramayı durdur</button><p class="sim-note">Bu, Processing radar arayüzünün tarayıcıdaki görsel canlandırmasıdır.</p></div></div>
+</section><section class="detail-block"><div class="detail-row"><h2>Arduino kodu</h2><a class="download-code" download="" href="../kodlar/servo-radar.ino">Kodu indir ↓</a></div><div class="code-block"><div class="code-toolbar"><span>servo-radar.ino</span><button class="copy-code" type="button">Kopyala</button></div><pre><code class="language-cpp">#include &lt;Servo.h&gt;
+
+// Pinler, sayfadaki kullanici baglanti semasiyla aynidir.
+const byte TRIG_PIN = 9;
+const byte ECHO_PIN = 10;
+const byte SERVO_PIN = 11;
+
+Servo radarServo;
+
+int mesafeOlc() {
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  unsigned long sure = pulseIn(ECHO_PIN, HIGH, 30000UL);
+  if (sure == 0) return 0;
+  return (int)(sure * 0.0343f / 2.0f);
+}
+
+void olcVeGonder(int aci) {
+  radarServo.write(aci);
+  delay(35);
+  Serial.print(aci);
+  Serial.print(',');
+  Serial.print(mesafeOlc());
+  Serial.print('.');
+}
+
+void setup() {
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  radarServo.attach(SERVO_PIN);
+  Serial.begin(9600);
+}
+
+void loop() {
+  for (int aci = 15; aci &lt;= 165; aci++) olcVeGonder(aci);
+  for (int aci = 165; aci &gt;= 15; aci--) olcVeGonder(aci);
+}
+</code></pre></div></section><section class="detail-block"><div class="detail-row"><h2>Processing kodu</h2><a class="download-code" download="" href="../kodlar/radar-gorsellestirme.pde">Kodu indir ↓</a></div><div class="code-block"><div class="code-toolbar"><span>radar-gorsellestirme.pde</span><button class="copy-code" type="button">Kopyala</button></div><pre><code class="language-java">import processing.serial.*;
+
+Serial port;
+int aci = 90;
+int mesafe = 0;
+
+void setup() {
+  size(1100, 650);
+  smooth();
+  println(Serial.list());
+  // Listedeki uygun portu secin (ornegin Serial.list()[0]).
+  port = new Serial(this, Serial.list()[0], 9600);
+  port.bufferUntil('.');
+}
+
+void serialEvent(Serial p) {
+  String veri = p.readStringUntil('.');
+  if (veri == null) return;
+  veri = trim(veri.substring(0, veri.length() - 1));
+  String[] alan = split(veri, ',');
+  if (alan.length != 2) return;
+  int yeniAci = int(alan[0]);
+  int yeniMesafe = int(alan[1]);
+  if (yeniAci &gt;= 0 &amp;&amp; yeniAci &lt;= 180) aci = yeniAci;
+  if (yeniMesafe &gt;= 0) mesafe = yeniMesafe;
+}
+
+void draw() {
+  background(4, 12, 17);
+  translate(width / 2, height - 65);
+  noFill();
+  stroke(38, 197, 88);
+  strokeWeight(2);
+  for (int r = 160; r &lt;= 950; r += 160) arc(0, 0, r, r, PI, TWO_PI);
+  line(-480, 0, 480, 0);
+  for (int a = 30; a &lt;= 150; a += 30) {
+    float x = 480 * cos(radians(a));
+    float y = -480 * sin(radians(a));
+    line(0, 0, x, y);
+  }
+  float x = 470 * cos(radians(aci));
+  float y = -470 * sin(radians(aci));
+  stroke(67, 255, 131);
+  strokeWeight(4);
+  line(0, 0, x, y);
+  if (mesafe &gt; 0 &amp;&amp; mesafe &lt; 40) {
+    float hedefUzaklik = map(mesafe, 0, 40, 0, 470);
+    stroke(255, 87, 87);
+    strokeWeight(12);
+    point(hedefUzaklik * cos(radians(aci)), -hedefUzaklik * sin(radians(aci)));
+  }
+  resetMatrix();
+  fill(163, 249, 181);
+  textSize(22);
+  text("Arduino Servo Radar", 26, 36);
+  textSize(17);
+  text("Aci: " + aci + "°", 26, height - 20);
+  text("Mesafe: " + (mesafe == 0 ? "Olcum yok" : mesafe + " cm"), 195, height - 20);
+}
+</code></pre></div></section>
+<section class="detail-block detail-next"><h2>Diğer projeler</h2><p>Başka bir çalışmamı da inceleyebilirsin.</p><a class="button button-dark" href="spotify-dotmatrix.html">Diğer projeye git <span aria-hidden="true">↗</span></a></section></div></main>
+<footer class="site-footer matrix-host matrix-dark"><canvas aria-hidden="true" class="matrix-rain-layer"></canvas><div class="container footer-main"><a class="footer-logo" href="../index.html"><img alt="" height="42" src="../assets/ec-logo.png" width="42"/> Ege Coşkun<span>.</span></a><div class="footer-right"><a href="../index.html#projects">Projeler</a><a href="../index.html#about">Hakkımda</a><a href="../index.html#contact">İletişim</a><a aria-label="Sayfanın en üstüne dön" href="#top">↑</a></div></div><div class="container footer-bottom"><span>© <span id="copyright-year">2026</span> Hebil Ege Coşkun. Tüm hakları saklıdır.</span><span>ESP32 · Arduino · IoT · Yazılım</span></div></footer><script defer="" src="../script.js"></script><script defer="" src="../project.js"></script><script defer="True" src="../interactive.js"></script></body></html>
