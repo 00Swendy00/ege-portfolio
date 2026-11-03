@@ -17,10 +17,15 @@
 - Ana dalın indirilen 97 commit'indeki değişen metin dosyaları bilinen anahtar/özel anahtar
   kalıpları ve sır atamaları açısından tarandı; eşleşme bulunmadı. Bu kalıp taraması
   bütün sırları yakalama garantisi vermez ve herhangi bir anahtarın geçerliliği sorgulanmadı.
+- 12 yerel güvenlik testi ve JavaScript sözdizimi kontrolleri geçti.
+- GitHub cihaz girişi kullanıcı tarafından tamamlandı; 00Swendy00 hesabının gönderim erişimi doğrulandı.
+- GitHub Pages yapılandırması API üzerinden doğrulandı: yayın kaynağı main dalı / kök klasör;
+  Enforce HTTPS açık. Güncel yayın ve test sonucu deponun Actions kayıtlarından izlenebilir.
 
 ## Henüz tamamlanmayanlar
 
-- GitHub'a gönderim ve canlı site yayını: yazma yetkili GitHub oturumu yok.
+- Canlı yayın bu güncellemenin main dalına gönderilmesiyle tetiklenir; başarılı dağıtım
+  ve canlı dosya eşleşmesi ayrıca doğrulanmalıdır.
 - Tarayıcı testi: yerel önizleme izni reddedildi. Otomatik testler tarayıcı testi yerine geçmez.
 - GitHub ve alan adı hesabının incelemesi: Opera uygulama erişimi onaylı değil.
 - Diğer dallar, release ve Actions artefaktlarında sır taraması.
