@@ -1,0 +1,7 @@
+﻿Malzeme;Adet;Görevi
+Arduino Uno;1;Mesafe ölçümü ve servo kontrolü
+HC-SR04 ultrasonik sensör;1;Mesafe ölçme
+SG90 mikro servo;1;Sensörü sağa sola çevirme
+Breadboard;1;Güç dağıtımı ve bağlantılar
+Jumper kablo;Yeterli sayıda;Sensör, servo ve Arduino bağlantıları
+USB bağlantı kablosu;1;Programlama ve Processing uygulamasıyla seri bağlantı

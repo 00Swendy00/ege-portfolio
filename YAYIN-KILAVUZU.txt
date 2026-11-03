@@ -1,0 +1,14 @@
+EGE COŞKUN — V4 GITHUB PAGES YAYIN KILAVUZU
+
+1) ZIP dosyasını bilgisayarına tamamen çıkar.
+2) GitHub depondaki main dalının ana dizinine ZIP içindeki TÜM dosya ve klasörleri yükle.
+   Özellikle v4.css, v4.js, laboratuvar.html, esp32-pin-haritasi.html ve malzemeler/ gereklidir.
+3) CNAME dosyası pakete egecoskun.tech olarak eklenmiştir. GitHub depo kökündeki CNAME içeriği aynı kalmalıdır.
+4) GitHub Pages > Source: Deploy from a branch, main, /(root) olarak kalmalı.
+5) Commit sonrası GitHub Actions yayınlama durumunu kontrol et.
+6) https://egecoskun.tech/laboratuvar.html ve https://egecoskun.tech/esp32-pin-haritasi.html adreslerini kontrol et.
+7) E-posta formu FormSubmit'e bağlıdır; gerçek gönderimi canlı sunucuda ayrıca doğrula.
+
+Not: Sanal laboratuvar ve proje simülatörleri fiziksel cihazdan veri okumaz.
+Kod indirme .ino/.py/.pde dosyalarını kullanır. Proje malzeme CSV'leri malzemeler/ altındadır.
+Kullanıcının kendi logo/görselleri assets/ içinde özgün sürümleriyle korunmuştur.

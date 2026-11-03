@@ -1,0 +1,6 @@
+﻿Malzeme;Adet;Görevi
+Arduino Uno;1;"Mikrodenetleyici; seri bağlantı ve ekran kontrolü"
+MAX7219 sürücülü 8×8 LED matris;4 modül;32×8 kayan yazı ekranı
+Jumper bağlantı kablosu;5+;DIN, CS, CLK, VCC ve GND bağlantıları
+USB bağlantı kablosu;1;Arduino programlama ve bilgisayarla seri haberleşme
+Bilgisayar;1;Python ve masaüstü pencere başlığı okuma betiği

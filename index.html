@@ -10,8 +10,6 @@
 <meta content="Hebil Ege Coşkun" name="author"/>
 <meta content="index, follow" name="robots"/>
 <meta content="#08090c" name="theme-color"/>
-
-
 <link href="https://egecoskun.tech/" rel="canonical"/>
 <meta content="website" property="og:type"/>
 <meta content="tr_TR" property="og:locale"/>
@@ -40,25 +38,25 @@
     ]
   }
   </script>
-<link href="interactive.css" rel="stylesheet"/><script>try { document.documentElement.dataset.theme=localStorage.getItem("ege-theme") === "dark" ? "dark" : "light"; } catch(e) { document.documentElement.dataset.theme="light"; }</script><link rel="icon" href="favicon.ico?v=20261030-2" type="image/x-icon">
-<link rel="icon" href="assets/favicon-32.png?v=20261030-2" type="image/png" sizes="32x32">
-<link rel="icon" href="assets/favicon-16.png?v=20261030-2" type="image/png" sizes="16x16">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261030-2" sizes="180x180">
-</head>
+<link href="interactive.css" rel="stylesheet"/><script>try { document.documentElement.dataset.theme=localStorage.getItem("ege-theme") === "dark" ? "dark" : "light"; } catch(e) { document.documentElement.dataset.theme="light"; }</script><link href="favicon.ico?v=20261030-2" rel="icon" type="image/x-icon"/>
+<link href="assets/favicon-32.png?v=20261101" rel="icon" sizes="32x32" type="image/png"/>
+<link href="assets/favicon-16.png?v=20261101" rel="icon" sizes="16x16" type="image/png"/>
+<link href="assets/apple-touch-icon.png?v=20261030-2" rel="apple-touch-icon" sizes="180x180"/>
+<link href="v4.css" rel="stylesheet"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Ege Coşkun | Elektronik ve Yazılım","url":"https://egecoskun.tech/","inLanguage":"tr-TR","hasPart":[{"@type":"WebPage","url":"https://egecoskun.tech/laboratuvar.html","name":"Sanal Elektronik Laboratuvarı"},{"@type":"WebPage","url":"https://egecoskun.tech/esp32-pin-haritasi.html","name":"ESP32 Pin Haritası"}]}</script></head>
 <body>
 <a class="skip-link" href="#main">İçeriğe geç</a>
 <div aria-hidden="true" class="scroll-progress"></div>
 <header class="site-header" id="top">
 <nav aria-label="Ana menü" class="nav-shell">
 <a aria-label="Hebil Ege Coşkun — ana sayfa" class="brand" href="#top">
-<span aria-hidden="true" class="brand-mark"><img alt="" height="48" src="assets/ec-logo.png" width="48"/></span>
+<span aria-hidden="true" class="brand-mark"><img alt="" height="48" src="assets/ec-logo-small.webp" width="48"/></span>
 <span class="brand-name">Ege Coşkun<span class="brand-dot">.</span></span>
 </a>
 <div class="nav-links" id="primary-nav">
 <a href="#about">Hakkımda</a>
 <a href="#projects">Projeler</a>
 <a href="#skills">Yetkinlikler</a>
-<a href="#codes">Kod arşivi</a>
+<a href="laboratuvar.html">Laboratuvar</a><a href="esp32-pin-haritasi.html">ESP32 Pinleri</a><a href="#codes">Kod arşivi</a>
 <a class="nav-contact" href="#contact">İletişim <span aria-hidden="true">↗</span></a>
 </div>
 <button aria-label="Koyu temaya geç" class="theme-toggle" title="Açık / koyu tema" type="button"><span aria-hidden="true" class="theme-icon">◐</span><span class="theme-label">Tema</span></button><button aria-controls="primary-nav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" type="button">
@@ -143,7 +141,6 @@
 <div class="board-controls"><div><strong>ESP32 kart modeli</strong><span>Sürükle veya ok tuşlarıyla döndür.</span></div><button id="board-led-toggle" type="button">LED: Açık</button><button id="board-reset" type="button">Görünümü sıfırla ↺</button></div>
 <p class="board-disclaimer">Görsel bir 3D canlandırmadır; fiziksel kart bağlantısı içermez.</p>
 </div>
-
 </div>
 </div>
 <a aria-label="Projeler bölümüne kaydır" class="scroll-cue" href="#projects"><span aria-hidden="true" class="scroll-cue-line"></span> KEŞFETMEK İÇİN KAYDIR</a>
@@ -162,7 +159,7 @@
 <article class="project-card project-featured reveal">
 <a aria-label="Spotify Dot Matrix projesini incele" class="project-anchor" href="projeler/spotify-dotmatrix.html">
 <div class="project-visual visual-spotify">
-<img alt="Arduino ile Spotify Dot Matrix projesi" class="project-photo" data-visual-fallback="" height="941" loading="lazy" src="assets/spotify.jpg" width="1672"/>
+<picture><source srcset="assets/spotify.webp" type="image/webp"/><img alt="Arduino ile Spotify Dot Matrix projesi" class="project-photo" data-visual-fallback="" decoding="async" height="941" loading="lazy" src="assets/spotify.jpg" width="1672"/></picture>
 <span class="visual-corner">PROJECT / 001</span>
 <span aria-hidden="true" class="project-open">↗</span>
 </div>
@@ -177,7 +174,7 @@
 <article class="project-card project-featured reveal">
 <a aria-label="Arduino Servo Radar projesini incele" class="project-anchor" href="projeler/servo-radar.html">
 <div class="project-visual visual-radar">
-<img alt="Arduino Uno, HC-SR04 ve Servo Radar projesi" class="project-photo" data-visual-fallback="" height="1024" loading="lazy" src="assets/servo-radar.jpg" width="1536"/>
+<picture><source srcset="assets/servo-radar.webp" type="image/webp"/><img alt="Arduino Uno, HC-SR04 ve Servo Radar projesi" class="project-photo" data-visual-fallback="" decoding="async" height="1024" loading="lazy" src="assets/servo-radar.jpg" width="1536"/></picture>
 <span class="visual-corner">PROJECT / 002</span>
 <span aria-hidden="true" class="project-open">↗</span>
 </div>
@@ -202,6 +199,29 @@
 </div>
 </section>
 <!-- Tanıtım -->
+
+<section aria-label="Projeleri yakından keşfet" class="v4-story" id="proje-hikayeleri">
+<div class="container">
+<div class="v4-story-row">
+<div class="v4-story-media"><img alt="Arduino Uno ile MAX7219 Spotify Dot Matrix sistemi" decoding="async" height="845" loading="lazy" src="assets/spotify.webp" width="1500"/><span class="v4-story-caption">01 / ARDUINO × MAX7219</span></div>
+<div class="v4-story-copy reveal"><span class="v4-story-index">01 / GÖSTERİMDEN SİSTEME</span><h2>Müzik,<br/>artık ekranda.</h2><p>Bilgisayardaki parça bilgisini seri haberleşmeyle Arduino'ya ileten Dot Matrix çalışmasını, bağlantı şeması ve metin simülatörüyle birlikte incele.</p><a class="button button-white" href="projeler/spotify-dotmatrix.html">Dot Matrix projesini keşfet <span aria-hidden="true">↗</span></a></div>
+</div>
+<div class="v4-story-row">
+<div class="v4-story-media"><img alt="Arduino, ultrasonik sensör ve servo ile radar çalışması" decoding="async" height="960" loading="lazy" src="assets/servo-radar.webp" width="1500"/><span class="v4-story-caption">02 / HC-SR04 × SG90</span></div>
+<div class="v4-story-copy reveal"><span class="v4-story-index">02 / HAREKETTEN ÖLÇÜME</span><h2>Çevreni<br/>tara.</h2><p>Bir servo motorun çevirdiği ultrasonik sensörle açıya bağlı mesafe ölçümü. Radar simülasyonunu dene ve kullanılan malzemeleri incele.</p><a class="button button-white" href="projeler/servo-radar.html">Servo Radar'ı keşfet <span aria-hidden="true">↗</span></a></div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="v4-discover-title" class="v4-discover" id="deney-alani"><div class="container">
+<span class="v4-topline">04 / ETKİLEŞİMLİ KEŞİF</span>
+<h2 id="v4-discover-title">Dokun. Bağla. <span style="color:#5794fc">Deneyimle.</span></h2>
+<p class="v4-desc">Projelerin arkasındaki elektroniği keşfet. Sanal devre kur, bağlantıları doğrula veya ESP32 pinlerinin görevlerini incele.</p>
+<div class="v4-explore-grid">
+<a class="v4-explore-card reveal" href="laboratuvar.html"><span class="v4-topline">SANAL ELEKTRONİK LABORATUVARI</span><span aria-hidden="true" class="v4-card-icon">{ R }</span><strong>Bir devre kurmaya ne dersin?</strong><p>LED, buton ve HC-SR04 bağlantılarını seç. Hataları kontrol et, örnek çıkışları çalıştır.</p><span class="v4-card-foot">Laboratuvara gir ↗</span></a>
+<a class="v4-explore-card reveal" href="esp32-pin-haritasi.html"><span class="v4-topline">ESP32 DEVKIT V1 / PIN REHBERİ</span><span aria-hidden="true" class="v4-card-icon">GPIO</span><strong>Her pinin bir görevi var.</strong><p>30 pinli ESP32 kartını keşfet. ADC, PWM, I²C ve başlangıç pinlerini filtrele.</p><span class="v4-card-foot">Pin haritasını aç ↗</span></a>
+</div>
+</div></section>
 <section aria-labelledby="about-title" class="about-section matrix-host matrix-dark" id="about">
 <canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
 <div class="container about-layout">
@@ -267,9 +287,9 @@
 </main>
 <footer class="site-footer matrix-host matrix-dark">
 <canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
-<div class="container footer-main"><a aria-label="En üste dön" class="footer-logo" href="#top"><img alt="" height="42" src="assets/ec-logo.png" width="42"/> Ege Coşkun<span>.</span></a><div class="footer-right"><a href="#projects">Projeler</a><a href="#about">Hakkımda</a><a href="#contact">İletişim</a><a aria-label="Sayfanın en üstüne dön" href="#top">↑</a></div></div>
+<div class="container footer-main"><a aria-label="En üste dön" class="footer-logo" href="#top"><img alt="" height="42" src="assets/ec-logo-small.webp" width="42"/> Ege Coşkun<span>.</span></a><div class="footer-right"><a href="#projects">Projeler</a><a href="#about">Hakkımda</a><a href="#contact">İletişim</a><a aria-label="Sayfanın en üstüne dön" href="#top">↑</a></div></div>
 <div class="container footer-bottom"><span>© <span id="copyright-year">2026</span> Hebil Ege Coşkun. Tüm hakları saklıdır.</span><span>ESP32 · Arduino · IoT · Yazılım</span></div>
 </footer>
 <script defer="" src="script.js"></script>
-<script defer="True" src="interactive.js"></script></body>
+<script defer="True" src="interactive.js"></script><script defer="True" src="v4.js"></script></body>
 </html>

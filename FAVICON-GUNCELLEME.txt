@@ -1,0 +1,16 @@
+EGE COŞKUN | Sekme simgesi düzeltmesi
+
+Yapılanlar:
+- EC simgesi temel alınarak favicon.ico ve 16/32/48 px PNG ikonları oluşturuldu.
+- Ana sayfa ve iki proje sayfasının favicon bağlantıları düzeltildi.
+- Tarayıcının eski simgeyi göstermemesi için yeni sürüm parametresi eklendi.
+- Apple dokunmatik ekran simgesi de eklendi.
+
+GitHub Pages güncelleme:
+1. Favicon düzeltme paketinin içindeki klasörleri ve dosyaları GitHub depodaki aynı yollarına yükleyin.
+2. CNAME dosyasını kesinlikle silmeyin.
+3. Commit changes ile yayınlayın.
+4. 1-10 dakika bekleyin ve Ctrl+Shift+R ile yenileyin.
+5. Sekme ikonu daha geç güncellenirse gizli pencerede test edin.
+
+Bu paket sizin EC logonuzu kullanır. Yeni logo üretmez.

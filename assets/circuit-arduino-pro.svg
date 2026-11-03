@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="470" height="260" viewBox="0 0 470 260"><defs>
+ <linearGradient id="pcb" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#159bc0"/><stop offset=".56" stop-color="#007da8"/><stop offset="1" stop-color="#065b8a"/></linearGradient>
+ <linearGradient id="steel" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#e1e8ea"/><stop offset=".35" stop-color="#8596a3"/><stop offset=".69" stop-color="#dbe3ea"/><stop offset="1" stop-color="#778b98"/></linearGradient>
+ <pattern id="trace" width="66" height="49" patternUnits="userSpaceOnUse"><path d="M2 5h15l5 5h18 M10 45h22l6-6h22" fill="none" stroke="#77cdd7" stroke-width=".65" opacity=".16"/></pattern>
+ <filter id="sh"><feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#002d4d" flood-opacity=".25"/></filter></defs>
+ <path d="M20 2 H441 Q454 2 457 15 V241 Q456 256 443 258 H12 Q2 256 2 243 V28 L19 14 Z" fill="url(#pcb)" stroke="#0776a4" stroke-width="3" filter="url(#sh)"/>
+ <path d="M20 5H440Q452 5 454 18V238Q452 253 440 254H14Q7 253 6 240V29Z" fill="url(#trace)"/>
+ <g opacity=".65" fill="none" stroke="#a9eff7" stroke-width=".8"><path d="M85 43h120l30 23h34m-174 98h96l32-24h52M93 210h104l19-16h44M418 87h-36l-20 20h-24M408 166h-30l-17-17h-44"/><circle cx="238" cy="66" r="2"/><circle cx="318" cy="149" r="2"/></g>
+ <g fill="#dcebea" stroke="#006080" stroke-width="3"><circle cx="24" cy="21" r="8"/><circle cx="437" cy="21" r="8"/><circle cx="24" cy="238" r="8"/><circle cx="438" cy="237" r="8"/></g><g fill="#9daeb5"><circle cx="24" cy="21" r="3.5"/><circle cx="437" cy="21" r="3.5"/><circle cx="24" cy="238" r="3.5"/><circle cx="438" cy="237" r="3.5"/></g>
+ <g fill="#101721" stroke="#0a374e" stroke-width="2"><rect x="91" y="4" rx="4" width="358" height="30"/><rect x="90" y="224" rx="4" width="359" height="31"/></g>
+ <g fill="#202b36" stroke="#a7b8c2" stroke-width="2"><rect x="-2" y="56" width="82" height="67" rx="5"/><rect x="2" y="63" width="70" height="50" rx="3" fill="url(#steel)"/><rect x="8" y="68" width="55" height="38" rx="2" fill="#617481"/><rect x="14" y="73" width="43" height="30" rx="1" fill="#1d2834"/>
+ <rect x="12" y="180" width="61" height="57" rx="10" fill="#222b33"/><rect x="20" y="186" width="42" height="45" rx="6" fill="#070b10"/></g>
+ <g><rect x="273" y="108" width="156" height="60" rx="7" fill="#121d29" stroke="#293b4c" stroke-width="2"/><rect x="286" y="117" width="130" height="43" rx="3" fill="#182331"/><text x="351" y="141" fill="#94a4b5" font-family="monospace" font-size="12" text-anchor="middle" letter-spacing="1">ATMEGA328P</text></g>
+ <rect x="113" y="148" width="50" height="48" rx="5" fill="#111d29" stroke="#316b83" stroke-width="2"/><rect x="125" y="157" width="25" height="29" rx="3" fill="#1b2c3a"/>
+ <rect x="242" y="182" width="48" height="29" rx="4" fill="#192b3c" stroke="#4794a9"/><g fill="#2d4351"><rect x="244" y="187" width="44" height="3"/><rect x="244" y="195" width="44" height="3"/><rect x="244" y="203" width="44" height="3"/></g>
+ <g fill="#d9ecf4" stroke="#3288a7" stroke-width="2"><ellipse cx="178" cy="177" rx="16" ry="15"/><ellipse cx="213" cy="177" rx="16" ry="15"/></g>
+ <g fill="#c7f1f2"><circle cx="107" cy="90" r="3"/><circle cx="128" cy="90" r="3"/><circle cx="149" cy="90" r="3"/><circle cx="170" cy="90" r="3"/></g>
+ <g font-family="Arial,sans-serif" fill="#eaffff" font-weight="700"><text x="111" y="70" font-size="13" letter-spacing="2.4">EC CIRCUIT STUDIO</text><text x="174" y="128" font-size="55" letter-spacing="-4">UNO</text><text x="181" y="147" font-size="15" letter-spacing="4">ARDUINO R3</text><text x="305" y="200" font-size="10" letter-spacing="1.4">ATMEGA328</text></g>
+ <g font-family="monospace" fill="#d9f7ff" font-size="8" font-weight="700"><text x="99" y="49">DIGITAL PWM ~</text><text x="97" y="219">POWER</text><text x="317" y="219">ANALOG IN</text></g>
+ <g fill="#ffb26d"><circle cx="98" cy="133" r="5"/><circle cx="112" cy="133" r="5"/></g><g fill="#f0cf78"><rect x="390" y="78" width="32" height="16" rx="2"/></g>
+ </svg>

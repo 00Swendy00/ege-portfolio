@@ -41,7 +41,7 @@
       if (menu.classList.contains('is-open') && !header.contains(event.target)) closeMenu();
     });
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 820) closeMenu();
+      if (window.innerWidth > 1120) closeMenu();
     });
   }
 

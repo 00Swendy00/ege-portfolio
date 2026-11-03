@@ -1,0 +1,228 @@
+/* EC Circuit Studio V6 PRO — cleaner Tinkercad-inspired editor */
+.v4-page .v4-content.lab-wide{width:min(calc(100% - 38px),1540px);max-width:none;padding-top:36px;padding-bottom:26px}
+.v4-page .v4-hero{padding-bottom:56px}
+.cs-app{font-family:Inter,system-ui,sans-serif;color:#132238;--cs-blue:#2563eb;--cs-blue-soft:#eaf1ff;--cs-sky:#f5f8fc;--cs-line:#d7e1ef;--cs-line-2:#e9eef6;--cs-ink:#17304f;--cs-muted:#6d809b;--cs-panel:#ffffff;--cs-shadow:0 22px 54px rgba(30,42,70,.09),0 6px 16px rgba(30,42,70,.05);--cs-font:Inter,system-ui,sans-serif}
+.cs-app *, .cs-app *::before,.cs-app *::after{box-sizing:border-box}
+.cs-app button,.cs-app input,.cs-app select{font-family:inherit}
+.cs-app button{cursor:pointer}
+.cs-app button:focus-visible,.cs-app input:focus-visible,.cs-app select:focus-visible,.cs-app [tabindex]:focus-visible{outline:2px solid #60a5fa;outline-offset:3px}
+.cs-intro{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 22px}
+.cs-intro h2{font-size:clamp(28px,3vw,45px);letter-spacing:-.06em;line-height:1.02;margin:10px 0 12px;color:var(--v4-ink)}
+.cs-intro p{font-size:14px;line-height:1.75;color:var(--v4-muted);max-width:760px;margin:0}
+.cs-eyebrow{font-size:10px;letter-spacing:.18em;font-weight:800;color:#2465d5;display:flex;align-items:center;gap:8px}
+.cs-live-dot{background:#32c48d;box-shadow:0 0 0 5px rgba(50,196,141,.18);border-radius:50%;height:8px;width:8px}
+.cs-version{margin-left:8px;color:#7f90aa}
+.cs-mode{border:1px solid #dbe5f2;background:linear-gradient(180deg,#fff,#f8fbff);box-shadow:0 8px 20px rgba(46,78,121,.08);border-radius:999px;color:#60738d;padding:11px 16px;font-size:11px;white-space:nowrap}
+.cs-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid var(--cs-line);padding:13px 16px;border-radius:24px 24px 0 0;box-shadow:var(--cs-shadow)}
+.cs-toolbar-group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cs-selectlabel{font-weight:800;font-size:11px;color:#5c6f8b;letter-spacing:.04em}
+.cs-toolbar select,.cs-app input[type=search],.cs-app input[type=number]{appearance:none;color:#132238;border:1px solid #d9e2ef;border-radius:14px;padding:11px 13px;background:linear-gradient(180deg,#fff,#f5f8fd);font-size:12px;max-width:240px;box-shadow:inset 0 1px 0 rgba(255,255,255,.65)}
+.cs-button{background:linear-gradient(180deg,#3b82f6,#2563eb);color:white;border:1px solid rgba(20,76,177,.15);border-radius:14px;padding:10px 14px;font-size:11px;font-weight:800;white-space:nowrap;line-height:1.1;min-height:38px;transition:filter .15s,transform .15s,box-shadow .15s;box-shadow:0 10px 22px rgba(37,99,235,.16)}
+.cs-button:hover:not(:disabled){filter:brightness(.97);transform:translateY(-1px)}
+.cs-button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.cs-button.cs-soft{background:linear-gradient(180deg,#fff,#f3f7fb);color:#31435d;border-color:#dce5f0;box-shadow:none}
+.cs-button.cs-play{background:linear-gradient(180deg,#20c996,#0f9f74);color:#fff;box-shadow:0 10px 22px rgba(15,159,116,.18)}
+.cs-toolbar .cs-iconbtn{min-width:36px;height:36px;border:1px solid #dce5f0;border-radius:12px;background:linear-gradient(180deg,#fff,#f4f7fb);color:#31435d;font-size:18px;font-weight:800;box-shadow:0 6px 12px rgba(18,40,70,.05)}
+#cs-zoom-label{font-size:10px;min-width:37px;text-align:center;color:#5f728c;font-weight:800}
+.cs-importlabel{display:flex;align-items:center;justify-content:center}
+.cs-editor{display:grid;grid-template-columns:minmax(0,1fr) 310px;border:1px solid var(--cs-line);border-top:0;border-radius:0 0 24px 24px;min-height:760px;overflow:hidden;background:white;box-shadow:var(--cs-shadow)}
+.cs-work-column{min-width:0;background:#f8fbff;border-right:1px solid #dde7f4;display:flex;flex-direction:column}
+.cs-work-head{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;gap:12px;min-height:48px;background:linear-gradient(180deg,#fbfdff,#f0f5fc);border-bottom:1px solid #dce6f2}
+.cs-section-label{font-weight:900;font-size:10px;letter-spacing:.18em;color:#496582;white-space:nowrap}
+.cs-tip{font-size:10px;color:#7c8ea7;text-align:right}
+.cs-viewport{width:100%;height:680px;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y;background:linear-gradient(180deg,#eef3f8,#e8eef6);position:relative;scrollbar-color:#9ab0c9 #edf3f9;padding:22px}
+#cs-stage-shell{position:relative;width:1160px;height:720px}
+.cs-stage{position:absolute;width:1160px;height:720px;top:0;left:0;transform-origin:top left;background-color:#f8fbff;background-image:linear-gradient(rgba(175,190,210,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(175,190,210,.18) 1px,transparent 1px),linear-gradient(rgba(127,147,175,.24) 1px,transparent 1px),linear-gradient(90deg,rgba(127,147,175,.24) 1px,transparent 1px);background-size:20px 20px,20px 20px,100px 100px,100px 100px;border:1px solid #d7e1ee;border-radius:24px;box-shadow:0 30px 46px rgba(20,38,67,.10), inset 0 1px 0 rgba(255,255,255,.8);overflow:hidden;user-select:none;-webkit-user-select:none}
+.cs-stage::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(79,140,255,.08),transparent 31%),radial-gradient(circle at 12% 90%,rgba(14,190,159,.06),transparent 26%);pointer-events:none}
+.cs-stage-watermark{position:absolute;bottom:20px;right:22px;color:#8aa2bf4f;font-size:12px;letter-spacing:.28em;font-weight:900;pointer-events:none}
+.cs-wire-layer{position:absolute;inset:0;z-index:5;width:100%;height:100%;pointer-events:none;overflow:visible}
+.cs-wire-line{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 2px rgba(20,34,59,.22))}
+.cs-wire-line.is-selected{stroke-width:6;stroke-dasharray:7 5;filter:drop-shadow(0 0 4px rgba(36,99,235,.35))}
+.cs-wire-hit{fill:none;stroke:transparent;stroke-width:18;pointer-events:stroke;cursor:pointer}
+#cs-previewwire{fill:none;stroke:#fb923c;stroke-width:3;stroke-dasharray:6 6;stroke-linecap:round;filter:drop-shadow(0 0 4px rgba(251,146,60,.35))}
+.cs-part{position:absolute;z-index:2;touch-action:none;color:#233854;--part-accent:#438af5;filter:drop-shadow(0 18px 30px rgba(19,38,67,.12))}
+.cs-part.selected{z-index:4}.cs-part.selected>.cs-body{outline:2px solid #7db2ff;outline-offset:4px}
+.cs-part-header{position:absolute;left:0;right:0;top:0;height:30px;display:flex;align-items:center;gap:5px;padding:0 12px;background:linear-gradient(180deg,#f7fafc,#e8eef6);border:1px solid #cfdceb;border-bottom:0;border-radius:14px 14px 0 0;color:#4a5f7c;cursor:grab;font-size:11px;font-weight:800;z-index:2;letter-spacing:.01em}
+.cs-part-header:active{cursor:grabbing}.cs-part-header small{color:#8294aa;font-size:9px;white-space:nowrap;margin-left:auto}
+.cs-body{position:absolute;left:0;right:0;top:30px;bottom:0;border:1px solid #d0dbea;border-radius:0 0 16px 16px;background:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.85);overflow:visible}
+.cs-part-arduino{width:470px;height:290px}
+.cs-part-arduino .cs-body{background:linear-gradient(135deg,#138dc2,#0b79ac 65%,#0a5d8d);border-color:#1478ab;border-radius:0 0 18px 18px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.08), inset 0 -60px 110px rgba(2,30,61,.16)}
+.cs-arduino-label{position:absolute;left:162px;top:102px;color:#eaf9ff;font-size:56px;font-weight:900;letter-spacing:-.08em;text-shadow:0 3px 0 rgba(3,67,103,.35)}
+.cs-arduino-sub{position:absolute;left:172px;top:172px;font-size:17px;font-weight:800;letter-spacing:.17em;color:#eff9ff}
+.cs-usb{position:absolute;left:-10px;top:63px;width:96px;height:66px;border:4px solid #8899a8;border-radius:7px;background:linear-gradient(135deg,#dfe4e9,#98a5b2 42%,#bbc5cd);box-shadow:inset 0 0 0 8px rgba(95,110,126,.68)}
+.cs-dcjack{position:absolute;left:14px;bottom:29px;width:61px;height:48px;border:7px solid #111b28;background:#0e1420;border-radius:9px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.cs-chip{position:absolute;right:24px;bottom:40px;width:156px;height:57px;background:#101822;border:3px solid #1c2630;border-radius:7px;box-shadow:inset 0 0 0 3px #0b101a,0 0 0 2px rgba(4,35,55,.2)}
+.cs-chip::after{content:'ATMEGA328P';display:block;font-size:10px;letter-spacing:.08em;text-align:center;margin-top:18px;color:#a4b1c0}
+.cs-board-small{position:absolute;left:114px;top:54px;color:#bde8ff;font-size:16px;letter-spacing:.16em;font-weight:800}
+.cs-board-micro{position:absolute;right:18px;top:60px;width:48px;height:42px;border-radius:3px;background:repeating-linear-gradient(90deg,#0b3c6a 0 4px,#3a93b5 5px 6px);opacity:.88}
+.cs-part-breadboard{width:450px;height:264px}
+.cs-part-breadboard .cs-body{background:linear-gradient(180deg,#ffffff,#f3f6fa);border-color:#ccd7e5;box-shadow:inset 0 0 0 2px #f5f8fb}
+.cs-bread-rule{position:absolute;left:20px;right:20px;height:8px;border-radius:999px;background:#ec6579;top:16px}.cs-bread-rule.neg{background:#5d9de3;top:46px}
+.cs-bread-gap{position:absolute;left:12px;right:12px;top:145px;height:15px;background:#d9e1ec;box-shadow:inset 0 1px 2px rgba(86,106,131,.16);border-radius:2px}
+.cs-bread-letter{display:none}
+.cs-part-led{width:126px;height:145px}
+.cs-part-led .cs-body{background:linear-gradient(180deg,#fff,#eef3f8)}
+.cs-led-dome{position:absolute;top:17px;left:40px;width:46px;height:68px;border-radius:26px 26px 12px 12px;background:radial-gradient(circle at 30% 24%,#ffffffdb,#ff6d6d 24%,#d32020 65%,#86111f 100%);box-shadow:0 10px 18px rgba(233,60,60,.26)}
+.cs-led-dome.on{box-shadow:0 0 22px rgba(255,64,64,.95),0 0 46px rgba(255,64,64,.4),0 12px 18px rgba(233,60,60,.32);background:radial-gradient(circle at 30% 20%,#fff,#ff8e8e 34%,#ff3131 74%)}
+.cs-part-resistor{width:186px;height:112px}.cs-part-resistor .cs-body{background:linear-gradient(180deg,#fff,#f4f7fb)}
+.cs-res-line{position:absolute;top:43px;left:14px;right:14px;height:4px;background:#9fadbc;border-radius:4px}
+.cs-res-tube{position:absolute;top:24px;left:44px;width:96px;height:42px;background:repeating-linear-gradient(90deg,#f3cf95 0 13px,#7a3b1f 13px 19px,#f3cf95 19px 32px,#cf3128 32px 38px,#f3cf95 38px 54px,#a5652d 54px 60px,#f3cf95 60px 72px);border-radius:18px;border:2px solid #eecf9f;box-shadow:0 6px 12px rgba(103,72,35,.12)}
+.cs-part-button{width:146px;height:136px}.cs-part-button .cs-body{background:linear-gradient(180deg,#fff,#f1f5fa)}
+.cs-switch-base{position:absolute;width:78px;height:70px;top:16px;left:34px;border-radius:12px;background:#2b3442;border:5px solid #abb8c8;box-shadow:0 10px 20px rgba(32,44,62,.18)}
+.cs-switch-base::after{content:'';position:absolute;width:42px;height:42px;left:13px;top:9px;border-radius:50%;background:#d6dde7;border:5px solid #74839b;transition:transform .18s,background .18s}
+.cs-switch-base.pressed::after{background:#74d8b3;transform:scale(.88)}
+.cs-part-sonar{width:232px;height:148px}.cs-part-sonar .cs-body{background:linear-gradient(180deg,#2b8cb6,#166b9a 75%,#125375);border-color:#19658e}
+.cs-sonar-eyes{display:flex;justify-content:space-evenly;padding-top:12px}
+.cs-sonar-eyes span{width:72px;height:72px;border:9px solid #cbd3db;border-radius:50%;background:repeating-radial-gradient(circle,#37414a 0 3px,#83929b 4px 6px);box-shadow:inset 0 0 0 2px #2c495f,0 4px 10px rgba(18,45,69,.18)}
+.cs-part-servo{width:176px;height:178px}.cs-part-servo .cs-body{background:linear-gradient(180deg,#2680d9,#1d67be 72%,#154c91);border-color:#1658a7}
+.cs-servo-arm{position:absolute;top:14px;left:63px;width:55px;height:12px;background:#f4f6f8;border-radius:14px;transform-origin:14px 6px;transform:rotate(var(--servo-angle,0deg));transition:transform .22s;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.cs-servo-box{position:absolute;top:41px;left:36px;width:108px;height:90px;border:4px solid #1c59ab;background:#1f71d1;border-radius:17px;display:grid;place-items:center;font-weight:900;color:#ffdc77;box-shadow:0 10px 18px rgba(12,48,97,.18)}
+.cs-part-buzzer{width:138px;height:136px}.cs-part-buzzer .cs-body{background:linear-gradient(180deg,#fff,#f2f6fb)}
+.cs-buzzer-disk{position:absolute;top:16px;left:28px;width:82px;height:82px;border-radius:50%;background:radial-gradient(circle,#1f2d40 22%,#050b11 24% 45%,#435164 47% 60%,#101822 62%);border:3px solid #54667a;box-shadow:0 10px 18px rgba(16,24,34,.18)}
+.cs-part .cs-port{position:absolute;width:14px;height:14px;border-radius:50%;background:#ffffff;border:2px solid #8ca0b8;box-shadow:0 1px 2px rgba(30,42,59,.18);z-index:7;transform:translate(-50%,-50%);cursor:crosshair;touch-action:none}
+.cs-part .cs-port::after{content:'';position:absolute;inset:3px;border-radius:50%;background:#55667f}
+.cs-part .cs-port:hover,.cs-part .cs-port.active{background:#fff6d9;border-color:#f59e0b;box-shadow:0 0 0 6px rgba(251,191,36,.2)}
+.cs-port-label{position:absolute;font:700 9px ui-monospace,monospace;color:#4d617d;pointer-events:none;white-space:nowrap;z-index:8;line-height:1}
+.cs-part-arduino .cs-port,.cs-part-sonar .cs-port,.cs-part-servo .cs-port{background:#e8f6ff;border-color:#dff4ff}
+.cs-part-arduino .cs-port::after,.cs-part-sonar .cs-port::after,.cs-part-servo .cs-port::after{background:#224867}
+.cs-part-arduino .cs-port-label,.cs-part-sonar .cs-port-label,.cs-part-servo .cs-port-label{color:#f5fcff}
+.cs-part-arduino .cs-port-label{font-size:8px}
+.cs-part-breadboard .cs-port{background:#7b8695;border-color:#fff;width:9px;height:9px;box-shadow:0 0 0 1px #c4cdd7}
+.cs-part-breadboard .cs-port::after{content:none}
+.cs-part-breadboard .cs-port:hover{background:#f0ad53;border-color:#b86926}
+.cs-bottomline{padding:12px 17px;display:flex;justify-content:space-between;gap:10px;background:linear-gradient(180deg,#fbfdff,#eff4fb);color:#516681;font-size:10px;border-top:1px solid #dce6f3}
+.cs-legend-dot{background:#00b794;width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:7px;box-shadow:0 0 0 5px rgba(0,183,148,.12)}
+.cs-sidebar{background:#fff;min-width:0;display:flex;flex-direction:column}
+.cs-side-tabs{display:grid;grid-template-columns:repeat(3,1fr);background:#fbfdff;border-bottom:1px solid #dce5f0;padding:8px;gap:5px}
+.cs-tab{border:none;background:transparent;color:#697990;font-size:11px;padding:12px 4px;font-weight:800;border-radius:11px}
+.cs-tab.active{color:#1f5fd4;background:#e9f1ff;box-shadow:inset 0 0 0 1px rgba(72,122,235,.09)}
+.cs-side-body{flex:1;min-height:0}
+.cs-pane{padding:18px 16px}.cs-pane[hidden]{display:none}
+.cs-smalllabel{font-weight:900;letter-spacing:.11em;font-size:10px;color:#6f839d;display:block;margin-bottom:10px}
+.cs-pane input[type=search]{width:100%;max-width:none}
+.cs-helper{font-size:11px;line-height:1.7;color:#8090a6;margin:11px 0 16px}
+.cs-palette{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cs-palette-item{border:1px solid #dce5f0;background:linear-gradient(180deg,#fff,#f7faff);border-radius:16px;min-height:94px;padding:10px 8px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;color:#354660;touch-action:none;cursor:grab;transition:border-color .2s,transform .2s,box-shadow .2s;box-shadow:0 8px 18px rgba(30,42,70,.04)}
+.cs-palette-item:hover{border-color:#6eaaff;transform:translateY(-2px);box-shadow:0 12px 24px rgba(37,99,235,.10)}
+.cs-palette-item .cs-item-icon{font-size:31px;line-height:1;color:#286dca}
+.cs-palette-item strong{font-size:10px;text-align:center;line-height:1.35}
+.cs-palette-item small{font-size:9px;color:#8894a9;text-align:center}
+.cs-pane h3{font-size:17px;letter-spacing:-.035em;margin:0 0 12px;color:#22344d}
+.cs-pane label.cs-prop{display:grid;gap:7px;font-size:11px;color:#5c6e87;margin:12px 0}
+.cs-pane select,.cs-pane input[type=number]{width:100%;max-width:none}
+.cs-wire-config{border-top:1px solid #e3eaf3;padding-top:14px;margin:20px 0}
+.cs-wire-config>span{font-size:11px;font-weight:800;color:#516078}
+.cs-swatches{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.cs-swatch{height:26px;width:26px;border-radius:50%;border:2px solid #fff;outline:1px solid #d7e0eb;box-shadow:0 6px 12px rgba(18,40,70,.08)}
+.cs-swatch.selected{outline:3px solid #72a5ff}
+.cs-wide{width:100%}
+.cs-code{background:#0e1727;color:#d2e5ff;border-radius:16px;padding:16px 12px;font:10px/1.85 ui-monospace,monospace;overflow:auto;white-space:pre;max-height:370px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+.cs-code-actions{display:flex;gap:9px;margin-top:12px}
+.cs-side-footer{border-top:1px solid #dfe7f1;padding:18px 16px;background:linear-gradient(180deg,#fbfdff,#f5f9ff)}
+.cs-side-footer>strong{font-size:12px;color:#2b3d55}
+.cs-validation{font-size:11px;color:#677b96;line-height:1.6;margin-top:10px;white-space:pre-line;max-height:158px;overflow:auto}
+.cs-validation.good{color:#0c8a6c}.cs-validation.bad{color:#aa5644}
+.cs-demo{border:1px solid #cbdffb;border-radius:14px;padding:13px;margin-top:12px;background:#eef5ff;box-shadow:0 10px 20px rgba(43,105,215,.06)}
+.cs-demo[hidden]{display:none}.cs-demo-title{display:block;font-size:9px;letter-spacing:.14em;font-weight:900;color:#4f78b5}
+.cs-demo-data{display:flex;gap:10px;align-items:center;padding:11px 0;font-size:14px;color:#243c61}
+.cs-demo-led{width:16px;height:16px;background:#3b4152;border:2px solid #94a0b2;border-radius:50%;flex-shrink:0}
+.cs-demo-led.on{background:#fc4f57;box-shadow:0 0 13px #f45575}
+.cs-distance{font-size:11px;color:#4e6483;display:grid;grid-template-columns:1fr auto;gap:8px}.cs-distance[hidden]{display:none}.cs-distance input{grid-column:span 2;width:100%}
+.cs-footnote{font-size:12px;line-height:1.9;color:var(--v4-muted);padding:24px 6px 8px}
+.cs-footnote strong{color:var(--v4-ink)}
+.cs-ghost{position:fixed;z-index:10000;pointer-events:none;border-radius:14px;padding:12px 16px;background:rgba(37,99,235,.92);color:white;box-shadow:0 10px 24px rgba(0,0,0,.18);font-size:12px}
+html[data-theme=dark] .cs-intro h2,html[data-theme=dark] .cs-footnote strong{color:#e5eefe}
+html[data-theme=dark] .cs-mode{background:#19243a;color:#9ab3cf}
+@media(max-width:1200px){.cs-editor{grid-template-columns:minmax(0,1fr) 272px}.cs-toolbar{gap:8px}.cs-mode{display:none}}
+@media(max-width:850px){.cs-editor{grid-template-columns:1fr}.cs-work-column{border-right:0;border-bottom:1px solid #dbe4f0}.cs-viewport{height:520px;padding:14px}.cs-sidebar{min-height:390px}.cs-toolbar{justify-content:flex-start}.cs-side-body{min-height:130px}.cs-palette{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:550px){.v4-page .v4-content.lab-wide{width:calc(100% - 16px)}.cs-intro h2{font-size:24px}.cs-intro p{font-size:12px}.cs-toolbar{padding:9px;border-radius:18px 18px 0 0}.cs-selectlabel{display:none}.cs-toolbar select{width:155px;font-size:10px}.cs-toolbar .cs-button{font-size:10px;padding:10px 9px}.cs-work-head{display:block}.cs-tip{display:block;text-align:left;margin-top:7px}.cs-viewport{height:450px;padding:10px}.cs-palette{grid-template-columns:repeat(3,minmax(0,1fr))}.cs-bottomline{flex-wrap:wrap}.cs-tools{gap:4px}}
+@media(prefers-reduced-motion:reduce){.cs-part,.cs-led-dome,.cs-servo-arm{transition:none!important}}
+.cs-palette-item[hidden]{display:none}
+/* V6.1 precise visual language — original component illustrations */
+.cs-app{--cs-blue:#2679f6;--cs-ink:#20334b}
+.cs-intro{margin-bottom:22px}
+.cs-toolbar{border-color:#ccdbe9;background:linear-gradient(180deg,#fff,#f7faff);padding:15px 18px;gap:14px}
+.cs-toolbar-group{gap:9px}
+.cs-button{min-height:39px;border-radius:11px;font-weight:750}
+.cs-button.cs-soft{border-color:#d8e4f2}
+.cs-toolbar .cs-iconbtn{background:#fff;border-radius:10px;border-color:#d8e3f0;transition:background .15s,transform .15s}
+.cs-toolbar .cs-iconbtn:hover{background:#eaf3ff;transform:translateY(-1px)}
+.cs-editor{border-color:#d5e1ed;box-shadow:0 25px 55px rgba(24,48,86,.09)}
+.cs-work-head{background:#f4f8fc;padding:13px 18px;justify-content:flex-start;gap:14px}
+.cs-section-label{color:#3d5876}
+.cs-work-badge{font-weight:800;letter-spacing:.08em;font-size:9px;color:#2563eb;background:#e7f0ff;border:1px solid #cfe1ff;padding:6px 9px;border-radius:7px;white-space:nowrap}
+.cs-tip{margin-left:auto}
+.cs-viewport{background:#eff4fa}
+.cs-stage{background-color:#f8fbff}
+.cs-stage-watermark{font-size:11px;letter-spacing:.18em;color:rgba(74,119,170,.18)}
+/* Illustrated boards replace generic dark rectangles, actual hit areas remain native buttons. */
+.cs-part-arduino .cs-body,.cs-part-breadboard .cs-body{background:none;border:0;box-shadow:none;border-radius:0}
+.cs-part-arduino .cs-body{height:260px;bottom:auto}
+.cs-part-breadboard .cs-body{height:234px;bottom:auto}
+.cs-board-art{width:100%;height:100%;position:absolute;inset:0;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;object-fit:fill}
+.cs-part-arduino .cs-port{background:#102a3a;border:1.5px solid #d9effb;box-shadow:inset 0 0 0 3px #152c39,0 0 0 2px #285a72;width:13px;height:13px}
+.cs-part-arduino .cs-port::after{display:none}
+.cs-part-arduino .cs-port-label{color:#f0fbff;text-shadow:0 1px 3px rgba(0,39,66,.6);font-size:8px}
+.cs-part-arduino .cs-port:hover{background:#ffd166;border-color:#fff;box-shadow:0 0 0 5px rgba(250,195,52,.35)}
+.cs-part-breadboard .cs-port{background:rgba(57,76,91,.95);border:1px solid #f6faff;width:8px;height:8px;box-shadow:0 0 0 1px #a3b0bf}
+.cs-part-breadboard .cs-port:hover{transform:translate(-50%,-50%) scale(1.65);background:#f5aa46;box-shadow:0 0 0 3px rgba(245,170,70,.28)}
+.cs-part-header{height:28px;z-index:10;background:linear-gradient(180deg,#fff,#f4f7fb);border-color:#cfd9e7;border-bottom:1px solid #e3eaf2;color:#3a4f69}
+.cs-part-header small{background:#eff4fa;border:1px solid #e0e9f4;border-radius:6px;padding:2px 5px;font-size:8px;color:#7a8b9f}
+.cs-part-header .cs-grip{color:#7d92aa;font-size:12px}
+.cs-part.selected>.cs-body{outline:2px solid rgba(42,121,247,.7);outline-offset:5px;box-shadow:0 0 0 6px rgba(42,121,247,.12)}
+.cs-part{filter:drop-shadow(0 8px 11px rgba(18,49,74,.14))}
+.cs-part:hover .cs-part-header{background:#eaf3ff;border-color:#aecdf5}
+.cs-wire-under{fill:none;stroke:#172b43;stroke-width:6.4;stroke-linecap:round;stroke-linejoin:round;opacity:.19;filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
+.cs-wire-line{stroke-width:4.5;filter:none;stroke-linejoin:round;stroke-linecap:round}
+.cs-wire-line.is-selected{stroke-width:5.5;stroke-dasharray:8 6;filter:drop-shadow(0 0 3px rgba(69,147,253,.45))}
+.cs-wire-shine{fill:none;stroke:white;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;opacity:.3;pointer-events:none}
+.cs-wire-hit{stroke-width:19}
+#cs-previewwire{stroke:#f59e0b;stroke-width:3.5;stroke-dasharray:8 7}
+/* Electronics icons are vector graphics, not Unicode glyphs */
+.cs-palette{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cs-palette-item{min-height:127px;gap:5px;padding:10px 6px 12px;border:1px solid #dce6f0;border-radius:14px;background:#fff;box-shadow:0 5px 16px rgba(28,56,90,.04);transition:transform .18s,box-shadow .18s,border-color .18s}
+.cs-palette-item:hover{border-color:#69a8ff;background:#f7fbff;box-shadow:0 8px 18px rgba(35,109,218,.1)}
+.cs-palette-item:active{cursor:grabbing;transform:scale(.98)}
+.cs-palette-item .cs-item-icon{width:100%;height:76px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cs-item-icon svg,.cs-ghost-picture svg{height:64px;width:98px;max-width:100%;overflow:visible}
+.cs-mini-art{display:block;width:102px;height:67px;max-width:100%;background-position:center;background-repeat:no-repeat;background-size:contain;filter:drop-shadow(0 5px 5px rgba(20,52,83,.18))}
+.cs-mini-arduino{background-image:url('assets/circuit-arduino-pro.svg')}
+.cs-mini-breadboard{background-image:url('assets/circuit-breadboard-pro.svg')}
+.cs-palette-item strong{font-size:11px;color:#223a58;font-weight:800}
+.cs-palette-item small{font-size:10px;color:#788ba2}
+.cs-filterbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:4px 0 15px}
+.cs-filter{background:#f6f9fd;border:1px solid #dfe8f2;border-radius:9px;color:#61738b;font-size:10px;font-weight:750;min-height:29px;padding:6px 10px;transition:background .16s,color .16s}
+.cs-filter:hover{background:#e7f1ff;color:#2b6bd1}
+.cs-filter.active{background:#246de1;color:#fff;border-color:#246de1;box-shadow:0 5px 12px rgba(36,109,225,.15)}
+.cs-palette-count{font-size:10px;color:#8293aa;margin-top:13px}
+.cs-pane{padding:19px 15px}
+.cs-pane input[type=search]{font-size:12px;border-radius:10px}
+.cs-ghost{min-width:178px;padding:10px 14px 10px 8px;display:flex;align-items:center;gap:9px;border:1px solid rgba(213,233,255,.9);border-radius:12px;background:rgba(255,255,255,.97);box-shadow:0 14px 32px rgba(17,49,84,.28);color:#274665;transform:rotate(-1deg);pointer-events:none}
+.cs-ghost-picture{width:68px;height:58px;display:grid;place-items:center;background:#eef5fd;border-radius:9px;overflow:hidden;flex-shrink:0}
+.cs-ghost-picture .cs-mini-art{width:64px;height:50px}
+.cs-ghost-picture svg{width:66px;height:50px}
+.cs-ghost-copy{display:flex;flex-direction:column;gap:4px;white-space:nowrap}
+.cs-ghost-copy strong{font-size:11px;color:#224163}
+.cs-ghost-copy small{font-size:9px;color:#7b8ca1}
+.cs-pane input:focus{border-color:#6aaaff}
+@media(max-width:850px){.cs-work-head{gap:8px;flex-wrap:wrap}.cs-tip{margin-left:0;width:100%;text-align:left}.cs-palette{grid-template-columns:repeat(4,minmax(0,1fr))}.cs-palette-item{min-height:113px}.cs-palette-item .cs-item-icon{height:63px}.cs-mini-art{height:54px}}
+@media(max-width:550px){.cs-viewport{padding:8px}.cs-palette{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.cs-palette-item{min-height:109px;padding:7px 4px}.cs-palette-item .cs-item-icon{height:52px}.cs-mini-art{height:50px}.cs-item-icon svg{height:50px}.cs-filter{font-size:9px;padding:5px 8px}.cs-intro h2{font-size:24px}.cs-mode{display:none}.cs-editor{border-radius:0 0 16px 16px}}
+
+/* V6.2: Arduino kodunu yaz / kontrol et / simüle et */
+.cs-viewport{scroll-behavior:auto;overscroll-behavior:contain;}
+.cs-code-head{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#1c2d46;color:#e8f2ff;border:1px solid #2d4769;border-bottom:0;border-radius:13px 13px 0 0;padding:10px 12px;font-size:11px;font-weight:800}
+.cs-code-head span+span{font-size:8px;letter-spacing:.07em;color:#9cb3d0;text-align:right}
+.cs-code-editor{display:block;resize:vertical;min-height:300px;height:380px;max-height:900px;width:100%;max-width:none;border:1px solid #2d4769;border-radius:0 0 13px 13px;background:#0e1727;color:#d4e5ff;padding:14px 11px;font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre;overflow:auto;tab-size:2;outline-offset:2px;caret-color:#6beac7;box-shadow:inset 0 0 12px rgba(0,0,0,.12)}
+.cs-code-editor:focus{outline:2px solid #468afe;border-color:#6aafff}
+.cs-code-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.cs-code-actions .cs-button{flex:1 1 auto;font-size:10px;padding:9px 7px;min-height:37px;white-space:normal}
+.cs-code-actions .cs-compile{background:linear-gradient(180deg,#f6faff,#e7f1ff);border:1px solid #cfe0fc;box-shadow:none;color:#1d59a4}
+.cs-code-result{margin-top:12px;border:1px solid #d9e5f2;background:#f6f9fe;border-radius:10px;padding:11px 12px;font-size:11px;line-height:1.55;color:#516680;white-space:pre-line;overflow-wrap:anywhere}
+.cs-code-result.good{background:#e8f9f2;color:#08744f;border-color:#b7e8d3}
+.cs-code-result.bad{background:#fff2f0;color:#a43c31;border-color:#f2c4bf}
+.cs-serial-title{display:flex;align-items:center;justify-content:space-between;margin-top:18px;margin-bottom:8px;font-size:11px;font-weight:800;color:#314662}
+.cs-small-clear{border:1px solid #dbe5f0;color:#4b6485;background:#fff;padding:5px 8px;border-radius:7px;font-size:10px}
+.cs-serial{background:#0d1929;border:1px solid #243754;border-radius:11px;color:#a6edb8;padding:12px;font:11px/1.6 ui-monospace,Consolas,monospace;min-height:90px;max-height:200px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+.cs-code-limits{font-size:10px;line-height:1.75;color:#6e8099;border-top:1px solid #e3eaf4;padding-top:12px;margin:15px 0 0}
+.cs-code-limits code{background:#e8effa;color:#334e70;padding:1px 4px;border-radius:3px;white-space:nowrap}
+@media(max-width:850px){.cs-code-editor{height:310px}.cs-code-actions .cs-button{flex:0 1 auto}}
