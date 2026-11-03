@@ -18,8 +18,9 @@ servo:`// SG90 servo · Sinyal: D11\n#include <Servo.h>\nServo motor;\nvoid setu
 buzzer:`// Aktif buzzer · D8 çıkışı / GND\nconst int buzzerPin = 8;\nvoid setup() { pinMode(buzzerPin, OUTPUT); }\nvoid loop() {\n  digitalWrite(buzzerPin, HIGH); delay(400);\n  digitalWrite(buzzerPin, LOW); delay(400);\n}\n`};
 let state={parts:[],wires:[],example:'blank'},seq=1,selected=null,pendingPort=null,dragPart=null,paletteDrag=null,wireDrag=null,zoom=1,wireColor=colors[2],running=false,timer=0,tick=0,buttonDown=false,history=[];
 let codeRuntime=null, codeLastExample=null, codeDraftTimer=0;
-let codeDrafts={};
-try{const drafts=JSON.parse(localStorage.getItem('ege-arduino-code-v62')||'{}');if(drafts&&typeof drafts==='object')codeDrafts=drafts;}catch(_){ }
+const safeState=window.ECCircuitState;
+let codeDrafts=Object.create(null);
+try{codeDrafts=safeState.drafts(localStorage.getItem('ege-arduino-code-v62')||'{}');}catch(_){ }
 
 const key=p=>p.part+':'+p.port;
 const part=id=>state.parts.find(p=>p.id===id);
@@ -30,7 +31,7 @@ let saveTimer=0;
 function save(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{try{localStorage.setItem('ege-circuit-v5',JSON.stringify(state));$('#cs-save-indicator').textContent='Kaydedildi · bu tarayıcıda';}catch(e){$('#cs-save-indicator').textContent='Yerel kayıt kullanılamıyor';}},250);}
 function change(reason=''){stop();render();save(); if(reason && !checkConnections().ok)status(reason);}
 function status(msg,kind=''){const el=$('#cs-validation');el.textContent=msg;el.className='cs-validation'+(kind?' '+kind:'');}
-function id(){return 'p'+(seq++).toString(36)}
+function id(){let candidate;do{candidate='p'+(seq++).toString(36);}while(state.parts.some(p=>p.id===candidate)||state.wires.some(w=>w.id===candidate||w.id==='w'+candidate));return candidate;}
 function add(type,x,y,{update=true}={}){if(!TYPES.includes(type))return null;if(state.parts.length>=35){status('En fazla 35 bileşen eklenebilir.','bad');return null;}const [w,h]=dims[type];const p={id:id(),type,x:clamp(Math.round(x),5,W-w-5),y:clamp(Math.round(y),5,H-h-5),value:type==='resistor'?220:null};state.parts.push(p);if(update)change(names[type]+' eklendi.');return p}
 function mkPort(partId,port,x,y,orientation='bottom',label=port,small=false){const b=document.createElement('button');b.type='button';b.className='cs-port';b.dataset.part=partId;b.dataset.port=port;b.style.left=x+'px';b.style.top=y+'px';b.title=port;b.setAttribute('aria-label',port+' bağlantı ucu');b.addEventListener('pointerdown',startWire);b.addEventListener('click',e=>e.stopPropagation());const lab=document.createElement('span');lab.className='cs-port-label';lab.textContent=label;
 if(orientation==='top'){lab.style.left=(x-11)+'px';lab.style.top=(y+11)+'px'}else if(orientation==='bottom'){lab.style.left=(x-10)+'px';lab.style.top=(y-17)+'px'}else if(orientation==='left'){lab.style.left=(x+10)+'px';lab.style.top=(y-5)+'px'}else {lab.style.right=(dims[part(partId).type][0]-x+10)+'px';lab.style.top=(y-5)+'px'}
@@ -57,7 +58,7 @@ else if(p.type==='sonar'){body.innerHTML='<span class="cs-sonar-eyes"><span></sp
 else if(p.type==='servo'){body.innerHTML='<span class="cs-servo-arm"></span><span class="cs-servo-box">SG90</span>';put('VCC',39,166,'bottom','+5V');put('GND',88,166,'bottom','GND');put('SIG',137,166,'bottom','SIG')}
 else if(p.type==='buzzer'){body.innerHTML='<span class="cs-buzzer-disk"></span>';put('P',38,127,'bottom','+');put('N',102,127,'bottom','−')}
 return e}
-function coords(port){const p=part(port.part);if(!p)return null;const element=partArea.querySelector(`.cs-port[data-part="${port.part}"][data-port="${CSS.escape(port.port)}"]`);if(!element)return null;return {x:p.x+parseFloat(element.style.left),y:p.y+parseFloat(element.style.top)}}
+function coords(port){const p=part(port.part);if(!p)return null;const element=partArea.querySelector(`.cs-port[data-part="${CSS.escape(port.part)}"][data-port="${CSS.escape(port.port)}"]`);if(!element)return null;return {x:p.x+parseFloat(element.style.left),y:p.y+parseFloat(element.style.top)}}
 function point(event){const r=stage.getBoundingClientRect();return {x:clamp((event.clientX-r.left)*W/r.width,0,W),y:clamp((event.clientY-r.top)*H/r.height,0,H)}}
 function path(a,b){
   const dx=b.x-a.x,dy=b.y-a.y,absx=Math.abs(dx),absy=Math.abs(dy);
@@ -70,7 +71,7 @@ function drawWires(){wireSvg.replaceChildren();for(const w of state.wires){const
 function updateCount(){$('#cs-count').textContent=state.parts.length+' bileşen · '+state.wires.length+' kablo'}
 function finishWire(from,to){if(!to||key(from)===key(to))return; if(state.wires.some(w=>[key(w.from),key(w.to)].sort().join('|')===[key(from),key(to)].sort().join('|'))){status('Bu bağlantı zaten mevcut.');return;} if(state.wires.length>=180){status('En fazla 180 kablo eklenebilir.','bad');return;} snap();state.wires.push({id:'w'+id(),from,to,color:wireColor});selected={type:'wire',id:state.wires.at(-1).id};change('Kablo eklendi.');}
 function startWire(e){e.preventDefault();e.stopPropagation();const from={part:e.currentTarget.dataset.part,port:e.currentTarget.dataset.port};if(pendingPort){if(key(pendingPort)!==key(from))finishWire(pendingPort,from);pendingPort=null;preview.setAttribute('d','');return;} wireDrag={from,startX:e.clientX,startY:e.clientY,dragged:false};pendingPort=null;}
-document.addEventListener('pointermove',e=>{if(wireDrag){const from=coords(wireDrag.from);if(!from)return;if(Math.hypot(e.clientX-wireDrag.startX,e.clientY-wireDrag.startY)>4)wireDrag.dragged=true;preview.setAttribute('d',path(from,point(e)))}if(dragPart){const current=part(dragPart.id);if(!current)return;const pt=point(e);const [w,h]=dims[current.type];current.x=clamp(Math.round(pt.x-dragPart.dx),3,W-w-3);current.y=clamp(Math.round(pt.y-dragPart.dy),3,H-h-3);const el=partArea.querySelector(`[data-id="${current.id}"]`);if(el){el.style.left=current.x+'px';el.style.top=current.y+'px'}drawWires()}if(paletteDrag){paletteDrag.ghost.style.left=e.clientX+10+'px';paletteDrag.ghost.style.top=e.clientY+12+'px'}});
+document.addEventListener('pointermove',e=>{if(wireDrag){const from=coords(wireDrag.from);if(!from)return;if(Math.hypot(e.clientX-wireDrag.startX,e.clientY-wireDrag.startY)>4)wireDrag.dragged=true;preview.setAttribute('d',path(from,point(e)))}if(dragPart){const current=part(dragPart.id);if(!current)return;const pt=point(e);const [w,h]=dims[current.type];current.x=clamp(Math.round(pt.x-dragPart.dx),3,W-w-3);current.y=clamp(Math.round(pt.y-dragPart.dy),3,H-h-3);const el=partArea.querySelector(`[data-id="${CSS.escape(current.id)}"]`);if(el){el.style.left=current.x+'px';el.style.top=current.y+'px'}drawWires()}if(paletteDrag){paletteDrag.ghost.style.left=e.clientX+10+'px';paletteDrag.ghost.style.top=e.clientY+12+'px'}});
 document.addEventListener('pointerup',e=>{if(wireDrag){const target=e.target.closest('.cs-port');const to=target?{part:target.dataset.part,port:target.dataset.port}:null;if(to&&key(wireDrag.from)!==key(to)){finishWire(wireDrag.from,to);pendingPort=null}else if(!wireDrag.dragged){pendingPort=wireDrag.from;status('İkinci bağlantı ucunu seç veya kabloyu oraya sürükle.');}else pendingPort=null;wireDrag=null;preview.setAttribute('d','')} if(dragPart){dragPart=null;save();validate(false)}if(paletteDrag){const rect=stage.getBoundingClientRect();const on=e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom;const type=paletteDrag.type;const click=Math.hypot(e.clientX-paletteDrag.startX,e.clientY-paletteDrag.startY)<10;paletteDrag.ghost.remove();paletteDrag=null;const pt=on?point(e):{x:clamp(viewport.scrollLeft/zoom+viewport.clientWidth/(2*zoom),75,W-115),y:clamp(viewport.scrollTop/zoom+viewport.clientHeight/(2*zoom),75,H-115)};if(on||click){snap();add(type,pt.x-55,pt.y-38)}else status('Parçayı yerleştirmek için çalışma alanına bırak.')}});
 function startMove(e){e.preventDefault();e.stopPropagation();const elem=e.currentTarget.closest('.cs-part');const p=part(elem.dataset.id);if(!p)return;selected={type:'part',id:p.id};showSelection();snap();const pt=point(e);dragPart={id:p.id,dx:pt.x-p.x,dy:pt.y-p.y};}
 function showSelection(){partArea.querySelectorAll('.cs-part').forEach(el=>el.classList.toggle('selected',selected?.type==='part'&&el.dataset.id===selected.id));const ins=$('#cs-inspector');ins.replaceChildren();if(!selected){ins.innerHTML='<p>Bir bileşen veya kablo seçerek özelliklerini buradan değiştir.</p>';return}
@@ -157,6 +158,7 @@ function updateCode(){
  }
 }
 function storeCode(){
+ if($('#cs-code').value.length>14000){codeMessage('Kod en fazla 14.000 karakter olabilir.','bad');return;}
  codeDrafts[state.example]=$('#cs-code').value;
  clearTimeout(codeDraftTimer);
  codeDraftTimer=setTimeout(()=>{try{localStorage.setItem('ege-arduino-code-v62',JSON.stringify(codeDrafts));}catch(_){}},220);
@@ -229,7 +231,7 @@ function runCurrentCode(){
   outputPins.set(pin,value);
   const on=Number(value)>0;
   const ledParts=hardware.ledOnPin(pin);
-  ledParts.forEach(p=>partArea.querySelector('.cs-part[data-id="'+p.id+'"] .cs-led-dome')?.classList.toggle('on',on));
+  ledParts.forEach(p=>partArea.querySelector('.cs-part[data-id="'+CSS.escape(p.id)+'"] .cs-led-dome')?.classList.toggle('on',on));
   const connectedOutputs=ledParts.length+hardware.buzzerOnPin(pin).length;
   const msg='D'+pin+': '+(on?'HIGH':'LOW')+(connectedOutputs?' · '+connectedOutputs+' bileşen':' · bağlı çıkış bulunamadı');
   $('#cs-demo-text').textContent=msg;
@@ -243,7 +245,7 @@ function runCurrentCode(){
   analogRead:()=>512,
   pulseIn:pin=>hardware.sonarPin(pin)?Math.round(Number($('#cs-distance').value)*2/0.0343):0,
   servo:(pin,angle)=>{
-    for(const p of hardware.servoOnPin(pin))partArea.querySelector('.cs-part[data-id="'+p.id+'"] .cs-servo-arm')?.style.setProperty('--servo-angle',Math.max(-90,Math.min(90,angle-90))+'deg');
+    for(const p of hardware.servoOnPin(pin))partArea.querySelector('.cs-part[data-id="'+CSS.escape(p.id)+'"] .cs-servo-arm')?.style.setProperty('--servo-angle',Math.max(-90,Math.min(90,angle-90))+'deg');
     $('#cs-demo-text').textContent='Servo D'+pin+': '+angle+'°';
   },
   tone:(pin,freq)=>visualOutput(pin,freq>0?1:0),
@@ -278,7 +280,19 @@ $('#cs-copy').addEventListener('click',async()=>{
 function download(name,body,type){const blob=new Blob([body],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 $('#cs-download').addEventListener('click',()=>download('ec-'+state.example+'.ino',$('#cs-code').value,'text/plain;charset=utf-8'));
 $('#cs-export').addEventListener('click',()=>download('ec-arduino-devre.json',JSON.stringify({format:'ege-circuit-v5',...state,sketch:$('#cs-code').value},null,2),'application/json'));
-$('#cs-import').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;if(file.size>128000){status('Dosya çok büyük (128 KB sınırı).','bad');return}try{const data=JSON.parse(await file.text());if(data.format!=='ege-circuit-v5'||!Array.isArray(data.parts)||!Array.isArray(data.wires)||data.parts.length>35||data.wires.length>180)throw Error('Beklenmeyen dosya biçimi');const parts=data.parts.filter(p=>TYPES.includes(p.type)&&typeof p.id==='string'&&p.id.length<=32&&Number.isFinite(p.x)&&Number.isFinite(p.y)).map(p=>({id:p.id,type:p.type,x:clamp(p.x,0,W-dims[p.type][0]),y:clamp(p.y,0,H-dims[p.type][1]),value:p.type==='resistor'?clamp(Number(p.value)||220,100,10000):null}));const known=new Set(parts.map(p=>p.id));const wires=data.wires.filter(w=>w.from&&w.to&&known.has(w.from.part)&&known.has(w.to.part)&&typeof w.from.port==='string'&&typeof w.to.port==='string'&&w.from.port.length<10&&w.to.port.length<10).map(w=>({id:id(),from:w.from,to:w.to,color:colors.includes(w.color)?w.color:colors[2]}));snap();state={parts,wires,example:Object.keys(codeSamples).includes(data.example)?data.example:'blank'};selected=null;$('#cs-presets').value=state.example;if(typeof data.sketch==='string'&&data.sketch.length<=14000){codeDrafts[state.example]=data.sketch;codeLastExample=null;}change('Devre ve Arduino kodu dosyadan açıldı.')}catch(err){status('Geçerli bir EC Circuit Studio JSON dosyası seç.','bad')}e.target.value=''});
+$('#cs-import').addEventListener('change',async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{
+  if(file.size>128000)throw Error('Dosya çok büyük');
+  const next=safeState.normalize(safeState.parse(await file.text()),true);
+  const {sketch,...circuit}=next;
+  snap();stop();state=circuit;seq=Math.max(seq,state.parts.length+201);selected=null;pendingPort=null;
+  $('#cs-presets').value=state.example;
+  if(typeof sketch==='string'){codeDrafts[state.example]=sketch;codeLastExample=null;}
+  change('Devre ve Arduino kodu dosyadan açıldı.');storeCode();
+ }catch(err){status('Dosya açılamadı. Biçimi, bağlantıları ve 128 KB sınırını kontrol et. Mevcut devren korunuyor.','bad');}
+ finally{e.target.value='';}
+});
 $('#cs-example').addEventListener('click',()=>loadExample($('#cs-presets').value));
 $('#cs-undo').addEventListener('click',()=>{if(!history.length)return;stop();state=history.pop();selected=null;$('#cs-presets').value=state.example;change('Son işlem geri alındı.')});
 $('#cs-delete').addEventListener('click',removeSelected);$('#cs-clear').addEventListener('click',()=>{if(!confirm('Çalışma alanındaki bütün bileşenler ve kablolar silinsin mi?'))return;snap();state.parts=[];state.wires=[];selected=null;state.example='blank';$('#cs-presets').value='blank';change('Çalışma alanı temizlendi.')});
@@ -309,6 +323,10 @@ $('#cs-zoom-out').addEventListener('click',()=>setZoom(zoom/1.15));
 stage.addEventListener('pointerdown',e=>{if(e.target===stage){selected=null;pendingPort=null;showSelection();drawWires()}});
 document.addEventListener('keydown',e=>{const tag=document.activeElement?.tagName;if(['INPUT','TEXTAREA','SELECT'].includes(tag))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();$('#cs-undo').click()}if(e.key==='Escape'){selected=null;pendingPort=null;preview.setAttribute('d','');showSelection();drawWires()}if(e.key==='Delete'&&selected){e.preventDefault();removeSelected()}});
 // Auto-load the user's work, keep the known example ready for first-time visitors.
-initPalette();try{const saved=JSON.parse(localStorage.getItem('ege-circuit-v5'));if(saved&&Array.isArray(saved.parts)&&Array.isArray(saved.wires)&&saved.parts.length<=35&&saved.wires.length<=180){state=saved;state.parts=state.parts.filter(p=>TYPES.includes(p.type));state.wires=state.wires.filter(w=>state.parts.some(p=>p.id===w.from.part)&&state.parts.some(p=>p.id===w.to.part));state.example=codeSamples[state.example]?state.example:'blank';$('#cs-presets').value=state.example;const n=state.parts.map(p=>parseInt(p.id.replace(/^p/,''),36)).filter(Number.isFinite);seq=Math.max(seq,...n,0)+200;render();status('Önceki devren otomatik yüklendi.')}else loadExample('led')}catch(e){loadExample('led')}
+initPalette();try{
+ const raw=localStorage.getItem('ege-circuit-v5');
+ if(raw){const {sketch,...circuit}=safeState.normalize(safeState.parse(raw));state=circuit;seq=state.parts.length+201;$('#cs-presets').value=state.example;render();save();status('Önceki devren otomatik yüklendi.');}
+ else loadExample('led');
+}catch(e){loadExample('led');status('Yerel kayıt okunamadı; güvenli başlangıç devresi açıldı.','bad');}
 setZoom(innerWidth<750?.75:1);if(innerWidth<750){viewport.scrollLeft=20;viewport.scrollTop=120}
 })();

@@ -3,6 +3,8 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-01HQB9LT/qzVsr9DT+0sgKiQZfTjcfQ0miEG7pat8DU=' 'sha256-t034CoMWMO9/45/IZHfOdbVZZ6h0Hef2OoWAKs0HWSo='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action https://formsubmit.co; frame-src 'none'"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="light dark" name="color-scheme"/>
 <title>Hebil Ege Coşkun | Gömülü Sistemler ve Yazılım</title>
@@ -38,7 +40,7 @@
     ]
   }
   </script>
-<link href="interactive.css" rel="stylesheet"/><script>try { document.documentElement.dataset.theme=localStorage.getItem("ege-theme") === "dark" ? "dark" : "light"; } catch(e) { document.documentElement.dataset.theme="light"; }</script><link href="favicon.ico?v=20261030-2" rel="icon" type="image/x-icon"/>
+<link href="interactive.css" rel="stylesheet"/><script src="theme-init.js"></script><link href="favicon.ico?v=20261030-2" rel="icon" type="image/x-icon"/>
 <link href="assets/favicon-32.png?v=20261101" rel="icon" sizes="32x32" type="image/png"/>
 <link href="assets/favicon-16.png?v=20261101" rel="icon" sizes="16x16" type="image/png"/>
 <link href="assets/apple-touch-icon.png?v=20261030-2" rel="apple-touch-icon" sizes="180x180"/>
@@ -274,7 +276,7 @@
 <div class="contact-copy reveal"><span class="eyebrow eyebrow-dark"><span class="eyebrow-index">05</span> / İLETİŞİM</span><h2 id="contact-title">Bir fikrin mi var?<br/><span class="text-muted">Konuşalım.</span></h2><p>Bir proje, teknik soru veya iş birliği için aşağıdaki formdan bana mesaj gönderebilirsin.</p><div class="contact-social"><a href="https://instagram.com/00.e.ge00" rel="noopener noreferrer" target="_blank">Instagram <span aria-hidden="true">↗</span></a></div></div>
 <form action="https://formsubmit.co/egecoskun065@gmail.com" class="contact-form reveal" method="POST">
 <input name="_subject" type="hidden" value="Portfolyo üzerinden yeni mesaj"/>
-<input name="_captcha" type="hidden" value="false"/>
+<input name="_captcha" type="hidden" value="true"/>
 <input aria-hidden="true" autocomplete="off" class="hidden-field" name="_honey" tabindex="-1" type="text"/>
 <div class="form-field"><label for="contact-name">Adın</label><input autocomplete="name" id="contact-name" maxlength="100" name="name" placeholder="Adın ve soyadın" required="" type="text"/></div>
 <div class="form-field"><label for="contact-email">E-posta adresin</label><input autocomplete="email" id="contact-email" maxlength="180" name="email" placeholder="ornek@eposta.com" required="" type="email"/></div>

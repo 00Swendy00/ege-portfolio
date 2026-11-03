@@ -1,0 +1,12 @@
+exclude:
+  - _checks
+  - README.md
+  - SECURITY.md
+  - README-KURULUM.txt
+  - README-YAYIN.txt
+  - README-DEVRE-EDITORU-V6.1.txt
+  - README-LABORATUVAR-V6.2.txt
+  - YAYIN-KILAVUZU.txt
+  - FAVICON-GUNCELLEME.txt
+  - node_modules
+  - dist
