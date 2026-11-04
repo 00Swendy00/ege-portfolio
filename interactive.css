@@ -2,6 +2,9 @@
 .theme-toggle{flex:0 0 auto;display:inline-flex;gap:8px;align-items:center;justify-content:center;cursor:pointer;border:1px solid #3e4b62;border-radius:999px;background:#192236;color:#dce9ff;padding:9px 13px;font-size:12px;font-weight:650;transition:background .2s,transform .2s}
 .theme-toggle:hover{background:#273956;transform:translateY(-1px)}.theme-icon{font-size:17px;line-height:1}.theme-label{font-size:11px}
 .nav-shell{gap:18px}.nav-links{margin-left:auto;gap:clamp(12px,1.8vw,25px)}
+.autonomous-link{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:9px 13px;border:1px solid #3e4b62;border-radius:999px;background:#192236;color:#dce9ff;font-size:11px;font-weight:650;line-height:1.2;text-decoration:none;white-space:nowrap;transition:background .2s,transform .2s}
+.autonomous-link:hover,.autonomous-link[aria-current="page"]{background:#273956;border-color:#6a91cd}.autonomous-link:hover{transform:translateY(-1px)}
+@media(max-width:620px){.nav-shell .brand-name{display:none}.autonomous-link{padding:9px 10px;font-size:10px}}
 /* Tema değişimi: Koyu açılış her iki temada da korunur; açık bölümler dönüşür. */
 html[data-theme="dark"] {color-scheme:dark} html[data-theme="light"]{color-scheme:light}
 html[data-theme="dark"] body{--surface:#101722;--white:#101722;--ink:#edf2fb;--line:#293446;background:#101722;color:#edf2fb}

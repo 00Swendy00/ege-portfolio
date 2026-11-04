@@ -1,0 +1,24 @@
+.documents-content { padding: 64px 0 100px; background: var(--surface); }
+.documents-heading { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 28px; }
+.documents-heading p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.document-card { display: grid; grid-template-columns: 180px 1fr; gap: 48px; align-items: center; padding: clamp(28px, 5vw, 60px); background: var(--white); border: 1px solid var(--line); border-radius: 24px; }
+.document-icon { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; min-height: 206px; border: 1px solid #cddfff; border-radius: 20px; background: #edf4ff; color: #277bff; }
+.document-icon span { font-size: 11px; font-weight: 800; letter-spacing: .16em; }
+.document-label { color: #277bff; font-size: 10px; font-weight: 750; letter-spacing: .12em; line-height: 1.8; }
+.document-copy h2 { margin: 12px 0 18px; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.15; letter-spacing: -.05em; }
+.document-copy p { max-width: 490px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.document-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.document-download { border-color: var(--line); color: var(--ink); }
+.document-download:hover { background: var(--surface); }
+html[data-theme="dark"] .document-card { background: #172335; }
+html[data-theme="dark"] .document-icon { background: #1b3050; border-color: #344e76; color: #8fbaff; }
+html[data-theme="dark"] .document-label { color: #8fbaff; }
+html[data-theme="dark"] .documents-heading p, html[data-theme="dark"] .document-copy p { color: #a6b5cb; }
+@media (max-width: 620px) {
+  .documents-content { padding: 36px 0 64px; }
+  .documents-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .document-card { grid-template-columns: 1fr; gap: 28px; border-radius: 18px; }
+  .document-icon { min-height: 120px; width: 108px; gap: 12px; }
+  .document-icon svg { width: 32px; height: 36px; }
+  .document-actions .button { flex: 1 1 130px; }
+}

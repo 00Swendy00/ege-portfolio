@@ -2,7 +2,7 @@ import {readFileSync,writeFileSync,readdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 const base=path.resolve(import.meta.dirname,'..');
-function edit(file,fn){const full=path.join(base,file);writeFileSync(full,fn(readFileSync(full,'utf8')));}
+function edit(file,fn){const full=path.join(base,file);writeFileSync(full,fn(readFileSync(full,'utf8').replaceAll('\r\n','\n')));}
 const policy="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action https://formsubmit.co; frame-src 'none'";
 const pages=[...readdirSync(base).filter(f=>f.endsWith('.html')),...readdirSync(path.join(base,'projeler')).filter(f=>f.endsWith('.html')).map(f=>'projeler/'+f)];
 for(const file of pages)edit(file,html=>{
