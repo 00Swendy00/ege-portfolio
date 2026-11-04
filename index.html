@@ -274,15 +274,26 @@
 <canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
 <div class="container contact-layout">
 <div class="contact-copy reveal"><span class="eyebrow eyebrow-dark"><span class="eyebrow-index">05</span> / İLETİŞİM</span><h2 id="contact-title">Bir fikrin mi var?<br/><span class="text-muted">Konuşalım.</span></h2><p>Bir proje, teknik soru veya iş birliği için aşağıdaki formdan bana mesaj gönderebilirsin.</p><div class="contact-social"><a href="https://instagram.com/00.e.ge00" rel="noopener noreferrer" target="_blank">Instagram <span aria-hidden="true">↗</span></a></div></div>
-<form action="https://formsubmit.co/egecoskun065@gmail.com" class="contact-form reveal" method="POST">
+<form action="https://formsubmit.co/egecoskun065@gmail.com" class="contact-form reveal" method="POST" target="_blank" rel="noopener" aria-describedby="contact-form-note">
 <input name="_subject" type="hidden" value="Portfolyo üzerinden yeni mesaj"/>
 <input name="_captcha" type="hidden" value="true"/>
+<input name="_url" type="hidden" value="https://egecoskun.tech/"/>
 <input aria-hidden="true" autocomplete="off" class="hidden-field" name="_honey" tabindex="-1" type="text"/>
 <div class="form-field"><label for="contact-name">Adın</label><input autocomplete="name" id="contact-name" maxlength="100" name="name" placeholder="Adın ve soyadın" required="" type="text"/></div>
 <div class="form-field"><label for="contact-email">E-posta adresin</label><input autocomplete="email" id="contact-email" maxlength="180" name="email" placeholder="ornek@eposta.com" required="" type="email"/></div>
 <div class="form-field"><label for="contact-message">Mesajın</label><textarea id="contact-message" maxlength="5000" name="message" placeholder="Nasıl yardımcı olabilirim?" required="" rows="5"></textarea></div>
-<button class="button button-dark" type="submit">Mesaj gönder <span aria-hidden="true">↗</span></button>
-<p class="form-note">Form, mesajını FormSubmit üzerinden iletir.</p>
+<button class="button button-dark" type="submit" aria-label="Mesajı FormSubmit ile gönder (yeni sekmede)">Mesaj gönder <span aria-hidden="true">↗</span></button>
+<p class="form-note" id="contact-form-note">Gönderim sayfası yeni sekmede açılır. Açılmazsa aşağıdaki seçeneklerle e-posta gönderebilirsin; yazdıkların bu sayfada kalır.</p>
+<div class="contact-email-fallback" aria-labelledby="contact-fallback-title">
+<p id="contact-fallback-title">E-posta ile devam et</p>
+<div class="contact-email-actions">
+<a class="contact-email-link" data-contact-email href="mailto:egecoskun065@gmail.com?subject=Portfolyo%20%C3%BCzerinden%20yeni%20mesaj">E-posta uygulamasında aç <span aria-hidden="true">↗</span></a>
+<a class="contact-email-link" data-contact-gmail href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=egecoskun065%40gmail.com&amp;su=Portfolyo%20%C3%BCzerinden%20yeni%20mesaj" target="_blank" rel="noopener noreferrer">Gmail’de aç <span aria-hidden="true">↗</span></a>
+<button class="contact-email-copy" data-contact-copy type="button" hidden>Mesajı kopyala</button>
+</div>
+<p class="contact-email-help">Göndermek için açılan e-posta ekranında “Gönder”e bas. Alıcı: <a href="mailto:egecoskun065@gmail.com">egecoskun065@gmail.com</a></p>
+<p class="contact-email-status" data-contact-status role="status" aria-live="polite"></p>
+</div>
 </form>
 </div>
 </section>
@@ -293,5 +304,5 @@
 <div class="container footer-bottom"><span>© <span id="copyright-year">2026</span> Hebil Ege Coşkun. Tüm hakları saklıdır.</span><span>ESP32 · Arduino · IoT · Yazılım</span></div>
 </footer>
 <script defer="" src="script.js"></script>
-<script defer="True" src="interactive.js"></script><script defer="True" src="v4.js"></script></body>
+<script defer="True" src="interactive.js"></script><script defer="True" src="v4.js"></script><script defer src="contact-fallback.js"></script></body>
 </html>
