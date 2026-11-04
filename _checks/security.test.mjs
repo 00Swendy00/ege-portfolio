@@ -59,10 +59,13 @@ test('Exponential string growth stops before exhausting browser memory',()=>{
 test('HTML blocks inline script execution, restricts forms, and allows declared data scripts',()=>{
  const pages=[...readdirSync(base).filter(f=>f.endsWith('.html')),...readdirSync(path.join(base,'projeler')).filter(f=>f.endsWith('.html')).map(f=>'projeler/'+f)];
  for(const file of pages){const html=read(file),policy=html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
-  assert.match(policy,/object-src 'none'/);assert.match(policy,/base-uri 'none'/);assert.match(policy,/form-action https:\/\/formsubmit.co/);assert.doesNotMatch(policy.split(';').find(x=>x.trim().startsWith('script-src ')),/unsafe-inline|unsafe-eval/);
+  assert.match(policy,/object-src 'none'/);assert.match(policy,/base-uri 'none'/);
+  if(file==='index.html'){assert.match(policy,/form-action https:\/\/api\.web3forms\.com/);assert.match(policy,/connect-src https:\/\/api\.web3forms\.com/);}
+  else{assert.match(policy,/form-action 'none'/);assert.match(policy,/connect-src 'none'/);}
+  assert.doesNotMatch(policy,/formsubmit\.co/);assert.doesNotMatch(policy.split(';').find(x=>x.trim().startsWith('script-src ')),/unsafe-inline|unsafe-eval/);
   for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g))if(!m[1].includes('src='))assert.ok(policy.includes('sha256-'+createHash('sha256').update(m[2]).digest('base64')),file);
  }
- assert.doesNotMatch(read('index.html'),/name="_captcha"[^>]+value="false"/);
+ assert.match(read('index.html'),/class="h-captcha"/);
  assert.ok(read('laboratuvar.html').indexOf('src="circuit-state.js"')<read('laboratuvar.html').indexOf('src="circuit-editor.js"'));
 });
 test('Every local script and stylesheet referenced by a page exists',()=>{

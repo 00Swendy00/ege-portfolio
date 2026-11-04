@@ -224,6 +224,17 @@ button { cursor: pointer; }
 .form-field textarea { resize: vertical; min-height: 119px; }
 .contact-form .button { align-self: flex-start; border: none; padding-inline: 27px; }
 .form-note { color: #9b9fa8; font-size: 10px; line-height: 1.6; margin: -8px 0 0; }
+.contact-captcha { min-height: 144px; }
+.contact-result { color: #3f567b; font-size: 12px; line-height: 1.7; margin: -8px 0 0; }
+.contact-result:empty { display: none; }
+.contact-result[data-kind="error"] { color: #b52a3a; }
+.contact-result[data-kind="success"] { color: #18754c; }
+.contact-form .contact-button-label { font-size: inherit; line-height: inherit; }
+.contact-form button:disabled { opacity: .6; cursor: wait; transform: none; }
+.contact-form input:disabled, .contact-form textarea:disabled { opacity: .7; }
+html[data-theme="dark"] .contact-result { color: #bed1ee; }
+html[data-theme="dark"] .contact-result[data-kind="error"] { color: #ffb3bd; }
+html[data-theme="dark"] .contact-result[data-kind="success"] { color: #8ce0b8; }
 .hidden-field { position: absolute; left: -9999px; opacity: 0; width: 0; height: 0; pointer-events: none; }
 
 /* Footer */

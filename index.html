@@ -3,7 +3,7 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-01HQB9LT/qzVsr9DT+0sgKiQZfTjcfQ0miEG7pat8DU=' 'sha256-t034CoMWMO9/45/IZHfOdbVZZ6h0Hef2OoWAKs0HWSo='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action https://formsubmit.co; frame-src 'none'"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-01HQB9LT/qzVsr9DT+0sgKiQZfTjcfQ0miEG7pat8DU=' 'sha256-t034CoMWMO9/45/IZHfOdbVZZ6h0Hef2OoWAKs0HWSo=' https://hcaptcha.com https://*.hcaptcha.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; object-src 'none'; base-uri 'none'; form-action https://api.web3forms.com; frame-src https://hcaptcha.com https://*.hcaptcha.com"/>
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="light dark" name="color-scheme"/>
@@ -274,15 +274,19 @@
 <canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
 <div class="container contact-layout">
 <div class="contact-copy reveal"><span class="eyebrow eyebrow-dark"><span class="eyebrow-index">05</span> / İLETİŞİM</span><h2 id="contact-title">Bir fikrin mi var?<br/><span class="text-muted">Konuşalım.</span></h2><p>Bir proje, teknik soru veya iş birliği için aşağıdaki formdan bana mesaj gönderebilirsin.</p><div class="contact-social"><a href="https://instagram.com/00.e.ge00" rel="noopener noreferrer" target="_blank">Instagram <span aria-hidden="true">↗</span></a></div></div>
-<form action="https://formsubmit.co/egecoskun065@gmail.com" class="contact-form reveal" method="POST">
-<input name="_subject" type="hidden" value="Portfolyo üzerinden yeni mesaj"/>
-<input name="_captcha" type="hidden" value="true"/>
-<input aria-hidden="true" autocomplete="off" class="hidden-field" name="_honey" tabindex="-1" type="text"/>
+<form action="https://api.web3forms.com/submit" class="contact-form reveal" method="POST" aria-describedby="contact-result">
+<input name="access_key" type="hidden" value="57fb8314-2242-45c0-a4bb-e3abaf1adbcd"/>
+<input name="subject" type="hidden" value="Portfolyo üzerinden yeni mesaj"/>
+<input name="from_name" type="hidden" value="Ege Coşkun — Portfolyo"/>
+<input aria-hidden="true" autocomplete="off" class="hidden-field" name="botcheck" tabindex="-1" type="checkbox"/>
 <div class="form-field"><label for="contact-name">Adın</label><input autocomplete="name" id="contact-name" maxlength="100" name="name" placeholder="Adın ve soyadın" required="" type="text"/></div>
 <div class="form-field"><label for="contact-email">E-posta adresin</label><input autocomplete="email" id="contact-email" maxlength="180" name="email" placeholder="ornek@eposta.com" required="" type="email"/></div>
 <div class="form-field"><label for="contact-message">Mesajın</label><textarea id="contact-message" maxlength="5000" name="message" placeholder="Nasıl yardımcı olabilirim?" required="" rows="5"></textarea></div>
-<button class="button button-dark" type="submit">Mesaj gönder <span aria-hidden="true">↗</span></button>
-<p class="form-note">Form, mesajını FormSubmit üzerinden iletir.</p>
+<div class="contact-captcha"><div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2" data-size="compact"></div></div>
+<button class="button button-dark" type="submit"><span class="contact-button-label">Mesaj gönder</span> <span aria-hidden="true">↗</span></button>
+<p class="form-note">Mesajın Web3Forms aracılığıyla doğrudan bana iletilir.</p>
+<p class="contact-result" id="contact-result" role="status" aria-live="polite"></p>
+<noscript><p class="form-note">Mesaj göndermek için tarayıcında JavaScript’i etkinleştir.</p></noscript>
 </form>
 </div>
 </section>
@@ -293,5 +297,5 @@
 <div class="container footer-bottom"><span>© <span id="copyright-year">2026</span> Hebil Ege Coşkun. Tüm hakları saklıdır.</span><span>ESP32 · Arduino · IoT · Yazılım</span></div>
 </footer>
 <script defer="" src="script.js"></script>
-<script defer="True" src="interactive.js"></script><script defer="True" src="v4.js"></script></body>
+<script defer="True" src="interactive.js"></script><script defer="True" src="v4.js"></script><script defer src="contact-form.js"></script><script src="https://js.hcaptcha.com/1/api.js?hl=tr&amp;recaptchacompat=off" async defer></script></body>
 </html>
