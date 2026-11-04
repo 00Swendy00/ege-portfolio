@@ -47,8 +47,7 @@
       subject: 'Portfolyo üzerinden yeni mesaj',
       from_name: 'Ege Coşkun — Portfolyo',
       name, email, message,
-      'h-captcha-response': captcha,
-      botcheck: ''
+      'h-captcha-response': captcha
     };
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 20000);

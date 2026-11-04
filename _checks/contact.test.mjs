@@ -19,7 +19,7 @@ function setup({values={},valid=true,respond=async()=>({ok:true,status:200,json:
 test('Valid messages go directly to Web3Forms and clear only after confirmed success',async()=>{
  const ui=setup();await ui.send();assert.equal(ui.calls.length,1);assert.equal(ui.calls[0].url,'https://api.web3forms.com/submit');assert.equal(ui.calls[0].options.method,'POST');
  const payload=JSON.parse(ui.calls[0].options.body);assert.equal(payload.access_key,key);assert.equal(payload.email,'visitor@example.org');assert.equal(payload.message,'Merhaba');assert.equal(payload['h-captcha-response'],'captcha-token');
- assert.equal(ui.calls[0].options.credentials,'omit');assert.equal(ui.calls[0].options.redirect,'error');assert.equal(ui.result.dataset.kind,'success');assert.equal(ui.getResets(),1);assert.equal(ui.button.disabled,false);assert.equal(ui.label.textContent,'Mesaj gönder');
+ assert.equal(payload.botcheck,undefined);assert.equal(ui.calls[0].options.credentials,'omit');assert.equal(ui.calls[0].options.redirect,'error');assert.equal(ui.result.dataset.kind,'success');assert.equal(ui.getResets(),1);assert.equal(ui.button.disabled,false);assert.equal(ui.label.textContent,'Mesaj gönder');
 });
 test('Server rejection and rate limits preserve the original message',async()=>{
  for(const [ok,status,success] of [[false,400,false],[false,429,false],[true,200,false],[false,500,true]]){

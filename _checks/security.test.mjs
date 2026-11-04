@@ -5,7 +5,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 const base=path.resolve(import.meta.dirname,'..');
-const read=file=>readFileSync(path.join(base,file),'utf8');
+const read=file=>readFileSync(path.join(base,file),'utf8').replaceAll('\r\n','\n');
 const context=vm.createContext({TextEncoder,setTimeout,clearTimeout});
 context.window=context;
 vm.runInContext(read('circuit-state.js'),context);
