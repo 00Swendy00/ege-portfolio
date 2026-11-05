@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "description": "DOM integration tests only; not shipped to GitHub Pages",
+  "dependencies": {"jsdom": "^31.0.0"}
+}

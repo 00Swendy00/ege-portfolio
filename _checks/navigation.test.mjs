@@ -31,6 +31,6 @@ test('Every page links to the homepage without an explicit index filename',()=>{
  for(const file of pages){
   const html=readFileSync(path.join(base,file),'utf8');
   for(const link of html.matchAll(/\bhref="([^"]+)"/g))assert.doesNotMatch(link[1],/index\.html/i,file+': '+link[1]);
-  assert.match(html,/src="(?:\.\.\/)?theme-init\.js\?v=20261104-urls"/);
+  assert.match(html,/src="(?:\.\.\/)?theme-init\.js\?v=20261105"/);
  }
 });

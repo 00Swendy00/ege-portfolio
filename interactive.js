@@ -2,6 +2,7 @@
 /* Ege Coşkun • offline çalışan etkileşimli bileşenler. Gerçek sensör okumaz. */
 (() => {
   const doc = document;
+  const t=s=>window.SiteI18n?.t(s) ?? s;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const themeButton = doc.querySelector('.theme-toggle');
   const root = doc.documentElement;
@@ -85,7 +86,6 @@
   // Terminaldeki rakamlar cihazdan değil, açıkça işaretlenmiş demo verisinden gelir.
   const gpio = doc.getElementById('live-gpio');
   if (gpio) {
-    const tmp=doc.getElementById('live-temp');
     const uptime=doc.getElementById('live-uptime');
     const log=doc.getElementById('live-log');
     let seconds=0;
@@ -94,7 +94,6 @@
       seconds++;
       const signal = Math.round(1900 + 750*Math.sin(seconds*.41) + 260*Math.cos(seconds*.91));
       gpio.textContent = String(Math.max(0,Math.min(4095,signal)));
-      tmp.textContent = (24.2 + 1.25*Math.sin(seconds*.12)).toFixed(1) + '°C';
       uptime.textContent = new Date(seconds*1000).toISOString().slice(11,19);
       log.textContent = `> analogRead(GPIO34) => ${gpio.textContent}  ·  paket #${String(seconds).padStart(4,'0')}`;
     };
@@ -163,8 +162,8 @@
       const W=900,H=490,cx=450,cy=440,R=385;
       ctx.clearRect(0,0,W,H);
       const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#061824');bg.addColorStop(1,'#020911');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-      ctx.font='14px monospace';ctx.fillStyle='#62ad8b';ctx.fillText('RADAR / SİMÜLASYON',20,29);
-      ctx.textAlign='right';ctx.fillStyle='#589f8c';ctx.fillText(`AÇI ${Math.round(angle)}°   •   HEDEF ${range.value} cm`,880,29);ctx.textAlign='left';
+      ctx.font='14px monospace';ctx.fillStyle='#62ad8b';ctx.fillText(t('RADAR / SİMÜLASYON'),20,29);
+      ctx.textAlign='right';ctx.fillStyle='#589f8c';ctx.fillText(t(`AÇI ${Math.round(angle)}°   •   HEDEF ${range.value} cm`),880,29);ctx.textAlign='left';
       ctx.save();ctx.strokeStyle='rgba(41,184,117,.26)';ctx.lineWidth=1.5;
       [0.25,0.5,0.75,1].forEach(k=>{ctx.beginPath();ctx.arc(cx,cy,R*k,Math.PI,2*Math.PI);ctx.stroke();});
       [0,30,60,90,120,150,180].forEach(a=>{const [x,y]=xy(R,a);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.stroke();ctx.fillStyle='#4b8a74';ctx.font='12px monospace';ctx.fillText(a+'°',x-12,y-7);});
@@ -181,6 +180,7 @@
     }
     function frame(t){requestAnimationFrame(frame);if(doc.hidden||!running||!radarCanvas.getBoundingClientRect().width||t-last<32)return;const dt=Math.min(55,t-(last||t));last=t;angle+=dir*dt*.052;if(angle>=165){angle=165;dir=-1;}else if(angle<=15){angle=15;dir=1;}draw();}
     draw();requestAnimationFrame(frame);
+    doc.addEventListener('site:languagechange',draw);
     reduced.addEventListener?.('change',e=>{if(e.matches){running=false;btn.textContent='Taramayı başlat';draw();}});
   }
 

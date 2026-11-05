@@ -66,7 +66,7 @@ test('HTML blocks inline script execution, restricts forms, and allows declared 
   for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g))if(!m[1].includes('src='))assert.ok(policy.includes('sha256-'+createHash('sha256').update(m[2]).digest('base64')),file);
  }
  assert.match(read('index.html'),/class="h-captcha"/);
- assert.ok(read('laboratuvar.html').indexOf('src="circuit-state.js"')<read('laboratuvar.html').indexOf('src="circuit-editor.js"'));
+ assert.ok(read('laboratuvar.html').search(/src="circuit-state\.js(?:\?[^\"]*)?"/)<read('laboratuvar.html').search(/src="circuit-editor\.js(?:\?[^\"]*)?"/));
 });
 test('Every local script and stylesheet referenced by a page exists',()=>{
  const pages=[...readdirSync(base).filter(f=>f.endsWith('.html')),...readdirSync(path.join(base,'projeler')).filter(f=>f.endsWith('.html')).map(f=>'projeler/'+f)];

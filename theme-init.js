@@ -12,3 +12,8 @@ try {
 } catch (_) {
   document.documentElement.dataset.theme = 'light';
 }
+try {
+  document.documentElement.lang = localStorage.getItem('ege-language') === 'en' ? 'en' : 'tr';
+} catch (_) {
+  document.documentElement.lang = 'tr';
+}

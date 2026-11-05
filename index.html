@@ -3,7 +3,7 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-01HQB9LT/qzVsr9DT+0sgKiQZfTjcfQ0miEG7pat8DU=' 'sha256-t034CoMWMO9/45/IZHfOdbVZZ6h0Hef2OoWAKs0HWSo=' https://hcaptcha.com https://*.hcaptcha.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; object-src 'none'; base-uri 'none'; form-action https://api.web3forms.com; frame-src https://hcaptcha.com https://*.hcaptcha.com"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-01HQB9LT/qzVsr9DT+0sgKiQZfTjcfQ0miEG7pat8DU=' 'sha256-t034CoMWMO9/45/IZHfOdbVZZ6h0Hef2OoWAKs0HWSo=' https://hcaptcha.com https://*.hcaptcha.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com https://api.open-meteo.com; object-src 'none'; base-uri 'none'; form-action https://api.web3forms.com; frame-src https://hcaptcha.com https://*.hcaptcha.com"/>
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="light dark" name="color-scheme"/>
@@ -26,7 +26,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="style.css?v=20261104-contact-web3" rel="stylesheet"/>
+<link href="style.css?v=20261105" rel="stylesheet"/>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -40,11 +40,11 @@
     ]
   }
   </script>
-<link href="interactive.css" rel="stylesheet"/><script src="theme-init.js?v=20261104-urls"></script><link href="favicon.ico?v=20261030-2" rel="icon" type="image/x-icon"/>
+<link href="interactive.css?v=20261105" rel="stylesheet"/><script src="theme-init.js?v=20261105"></script><script src="captcha.js?v=20261105"></script><link href="favicon.ico?v=20261030-2" rel="icon" type="image/x-icon"/>
 <link href="assets/favicon-32.png?v=20261101" rel="icon" sizes="32x32" type="image/png"/>
 <link href="assets/favicon-16.png?v=20261101" rel="icon" sizes="16x16" type="image/png"/>
 <link href="assets/apple-touch-icon.png?v=20261030-2" rel="apple-touch-icon" sizes="180x180"/>
-<link href="v4.css" rel="stylesheet"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Ege Coşkun | Elektronik ve Yazılım","url":"https://egecoskun.tech/","inLanguage":"tr-TR","hasPart":[{"@type":"WebPage","url":"https://egecoskun.tech/laboratuvar.html","name":"Sanal Elektronik Laboratuvarı"},{"@type":"WebPage","url":"https://egecoskun.tech/esp32-pin-haritasi.html","name":"ESP32 Pin Haritası"}]}</script></head>
+<link href="v4.css?v=20261105" rel="stylesheet"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Ege Coşkun | Elektronik ve Yazılım","url":"https://egecoskun.tech/","inLanguage":"tr-TR","hasPart":[{"@type":"WebPage","url":"https://egecoskun.tech/laboratuvar.html","name":"Sanal Elektronik Laboratuvarı"},{"@type":"WebPage","url":"https://egecoskun.tech/esp32-pin-haritasi.html","name":"ESP32 Pin Haritası"}]}</script><link rel="stylesheet" href="site-upgrade.css?v=20261105"/><script defer src="i18n-catalog.js?v=20261105"></script><script defer src="i18n.js?v=20261105"></script></head>
 <body>
 <a class="skip-link" href="#main">İçeriğe geç</a>
 <div aria-hidden="true" class="scroll-progress"></div>
@@ -58,10 +58,10 @@
 <a href="#about">Hakkımda</a>
 <a href="#projects">Projeler</a>
 <a href="#skills">Yetkinlikler</a>
-<a href="laboratuvar.html">Laboratuvar</a><a href="esp32-pin-haritasi.html">ESP32 Pinleri</a><a href="#codes">Kod arşivi</a>
+<a href="laboratuvar.html">Laboratuvar</a><a href="esp32-pin-haritasi.html">ESP32 Pinleri</a><a href="hesaplayicilar.html">Hesaplayıcılar</a><a href="#codes">Kod arşivi</a>
 <a class="nav-contact" href="#contact">İletişim <span aria-hidden="true">↗</span></a>
 </div>
-<button aria-label="Koyu temaya geç" class="theme-toggle" title="Açık / koyu tema" type="button"><span aria-hidden="true" class="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="autonomous-link" href="otonom-sistemler.html">Otonom Sistemler <span aria-hidden="true">↗</span></a><button aria-controls="primary-nav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" type="button">
+<a class="nav-instagram" href="https://instagram.com/00.e.ge00" target="_blank" rel="noopener noreferrer" aria-label="Instagram profilimi aç" title="Instagram"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="6.7" r="1.1" fill="currentColor"/></svg></a><label class="language-control"><span class="sr-only">Dil seçimi</span><select class="language-select" aria-label="Dil seçimi"><option value="tr">TR</option><option value="en">EN</option></select></label><button aria-label="Koyu temaya geç" class="theme-toggle" title="Açık / koyu tema" type="button"><span aria-hidden="true" class="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="autonomous-link" href="otonom-sistemler.html">Otonom Sistemler <span aria-hidden="true">↗</span></a><button aria-controls="primary-nav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" type="button">
 <span></span><span></span>
 </button>
 </nav>
@@ -88,7 +88,7 @@
 <div aria-hidden="true" class="terminal-aura"></div>
 <div aria-label="Açılış önizlemesi" class="hero-switch" role="tablist">
 <button aria-controls="hero-panel-code" aria-selected="true" class="hero-tab is-active" data-panel="code" id="hero-tab-code" role="tab" type="button">Canlı terminal</button>
-<button aria-controls="hero-panel-board" aria-selected="false" class="hero-tab" data-panel="board" id="hero-tab-board" role="tab" tabindex="-1" type="button">3D devre</button></div><div aria-hidden="true" aria-labelledby="hero-tab-code" class="dev-console" id="hero-panel-code" role="tabpanel">
+<button aria-controls="hero-panel-board" aria-selected="false" class="hero-tab" data-panel="board" id="hero-tab-board" role="tab" tabindex="-1" type="button">3D devre</button></div><div aria-labelledby="hero-tab-code" class="dev-console" id="hero-panel-code" role="tabpanel">
 <div class="dev-console-top">
 <div class="dev-window-dots"><span></span><span></span><span></span></div>
 <span>embedded_systems.cpp</span>
@@ -127,7 +127,7 @@
 <span class="wave-scan"></span>
 </div>
 <div class="telemetry-bottom"><span><i></i> SERİ PORT ÖRNEĞİ</span><span>GPIO • SENSOR • IoT</span></div>
-</div><div aria-live="off" class="live-output"><div class="live-output-title"><span class="pulse-dot"></span> SERİ PORT / SİMÜLASYON <span>115200 baud</span></div><div class="live-values"><div>GPIO34 <strong id="live-gpio">2048</strong></div><div>SICAKLIK <strong id="live-temp">24.6°C</strong></div><div>UPTIME <strong id="live-uptime">00:00:01</strong></div></div><div class="live-log" id="live-log">&gt; system initialized · simulation running</div></div>
+</div><div aria-live="off" class="live-output"><div class="live-output-title"><span class="pulse-dot"></span> SERİ PORT DEMOSU + HAVA DURUMU <span>115200 baud</span></div><div class="live-values"><div>GPIO34 <strong id="live-gpio">2048</strong></div><div>BURDUR <strong id="live-temp">— °C</strong></div><div>UPTIME <strong id="live-uptime">00:00:01</strong></div></div><div class="live-log" id="live-log">&gt; system initialized · simulation running</div><section id="burdur-weather" class="burdur-weather" aria-label="Burdur hava durumu" aria-live="polite"><div class="weather-heading"><strong id="weather-summary">Burdur · Yükleniyor…</strong><button id="weather-retry" type="button">Yenile</button></div><p id="weather-meta" class="weather-meta">Güncel hava durumu alınıyor.</p><p class="weather-credit"><span>15 dakikalık model verisi ·</span> <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a></p></section></div>
 </div>
 </div><div aria-labelledby="hero-tab-board" class="board-panel" hidden="" id="hero-panel-board" role="tabpanel">
 <div class="circuit-heading"><span class="pulse-dot"></span> ESP32 DEVKIT · ETKİLEŞİMLİ MODEL <span>3D / DEMO</span></div>
@@ -220,9 +220,10 @@
 <h2 id="v4-discover-title">Dokun. Bağla. <span style="color:#5794fc">Deneyimle.</span></h2>
 <p class="v4-desc">Projelerin arkasındaki elektroniği keşfet. Sanal devre kur, bağlantıları doğrula veya ESP32 pinlerinin görevlerini incele.</p>
 <div class="v4-explore-grid">
-<a class="v4-explore-card reveal" href="laboratuvar.html"><span class="v4-topline">SANAL ELEKTRONİK LABORATUVARI</span><span aria-hidden="true" class="v4-card-icon">{ R }</span><strong>Bir devre kurmaya ne dersin?</strong><p>LED, buton ve HC-SR04 bağlantılarını seç. Hataları kontrol et, örnek çıkışları çalıştır.</p><span class="v4-card-foot">Laboratuvara gir ↗</span></a>
-<a class="v4-explore-card reveal" href="esp32-pin-haritasi.html"><span class="v4-topline">ESP32 DEVKIT V1 / PIN REHBERİ</span><span aria-hidden="true" class="v4-card-icon">GPIO</span><strong>Her pinin bir görevi var.</strong><p>30 pinli ESP32 kartını keşfet. ADC, PWM, I²C ve başlangıç pinlerini filtrele.</p><span class="v4-card-foot">Pin haritasını aç ↗</span></a>
+<a class="v4-explore-card reveal" href="laboratuvar.html"><div class="explore-image-wrap"><img class="explore-visual" src="assets/lab-workbench.svg" alt="Arduino, breadboard ve bileşenlerle sanal laboratuvar görselleştirmesi" width="1200" height="760" loading="lazy" decoding="async"/></div><div class="explore-card-copy"><span class="v4-topline">SANAL ELEKTRONİK LABORATUVARI</span><strong>Bir devre kurmaya ne dersin?</strong><p>LED, buton ve HC-SR04 bağlantılarını seç. Hataları kontrol et, örnek çıkışları çalıştır.</p><span class="v4-card-foot">Laboratuvara gir ↗</span></div></a>
+<a class="v4-explore-card reveal" href="esp32-pin-haritasi.html"><div class="explore-image-wrap"><img class="explore-visual" src="assets/esp32-pin-studio.svg" alt="ESP32 kartı ve renklerle ayrılmış pin bağlantıları" width="1200" height="760" loading="lazy" decoding="async"/></div><div class="explore-card-copy"><span class="v4-topline">ESP32 DEVKIT V1 / PIN REHBERİ</span><strong>Her pinin bir görevi var.</strong><p>30 pinli ESP32 kartını keşfet. ADC, PWM, I²C ve başlangıç pinlerini filtrele.</p><span class="v4-card-foot">Pin haritasını aç ↗</span></div></a>
 </div>
+<div class="toolkit-promo"><div><h3>Devren için doğru değerler.</h3><p>Direnç renkleri, Ohm Kanunu, gerilim bölücü, LED direnci ve pil süresi. Beş araç, tek yerde.</p></div><a class="button button-primary" href="hesaplayicilar.html">Araç kutusunu aç <span aria-hidden="true">↗</span></a></div>
 </div></section>
 <section aria-labelledby="about-title" class="about-section matrix-host matrix-dark" id="about">
 <canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
@@ -234,8 +235,10 @@
 </div>
 <div class="about-right reveal">
 <div class="about-kicker">MERHABA, BEN EGE.</div>
-<p>Elektronik, gömülü sistemler, IoT teknolojileri ve web geliştirme alanlarında çalışıyorum. Özellikle <strong>ESP32 ve Arduino</strong> tabanlı projeler geliştirerek donanım ile yazılımı bir araya getiriyorum.</p>
-<p>Bu siteyi projelerimi, teknik deneyimlerimi ve kaynak kodlarımı paylaşmak için oluşturdum. Geliştirme sürecimi belgeliyor, benzer alanlarda çalışanlarla öğrendiklerimi paylaşıyorum.</p>
+<p>Elektronik ve yazılımı, bir fikri çalışan bir sisteme dönüştürmenin iki tamamlayıcı parçası olarak görüyorum. ESP32 ve Arduino tabanlı projelerimde sensör verilerini okumaya, donanımla haberleşmeye ve anlaşılır kullanıcı arayüzleri oluşturmaya odaklanıyorum.</p>
+<p>Çalışmalarımda devre bağlantılarından mikrodenetleyici koduna, seri haberleşmeden web arayüzüne kadar sürecin farklı katmanlarını birlikte ele alıyorum. Spotify Dot Matrix ve Servo Radar gibi projeler üzerinden veriyi görünür ve etkileşimli hale getiren uygulamalar geliştiriyorum.</p>
+<p>Geliştirme yaklaşımım; küçük bir prototiple başlamak, bağlantıları ve kodu adım adım doğrulamak, ardından sonucu anlaşılır biçimde belgelemek üzerine kurulu. Bağlantı şemalarını, malzeme listelerini ve kaynak kodlarını paylaşarak projelerin incelenebilir ve yeniden üretilebilir olmasını önemsiyorum.</p>
+<p>Bu portfolyo, tamamlanan projelerimin yanında öğrenme ve geliştirme sürecimin de bir kaydı. Elektronik, gömülü sistemler ve web teknolojileri üzerine yeni fikirler deniyor; teknik sorulara ve birlikte geliştirme fırsatlarına açık bir alan oluşturuyorum.</p>
 <a class="inline-link" href="#contact">Birlikte bir şey geliştirelim <span aria-hidden="true">↗</span></a>
 <div aria-label="Portfolyo istatistikleri" class="about-metrics" id="stats">
 <div><strong>20<span>+</span></strong><span>Proje</span></div>
@@ -296,6 +299,6 @@
 <div class="container footer-main"><a aria-label="En üste dön" class="footer-logo" href="#top"><img alt="" height="42" src="assets/ec-logo-small.webp" width="42"/> Ege Coşkun<span>.</span></a><div class="footer-right"><a href="#projects">Projeler</a><a href="#about">Hakkımda</a><a href="#contact">İletişim</a><a aria-label="Sayfanın en üstüne dön" href="#top">↑</a></div></div>
 <div class="container footer-bottom"><span>© <span id="copyright-year">2026</span> Hebil Ege Coşkun. Tüm hakları saklıdır.</span><span>ESP32 · Arduino · IoT · Yazılım</span></div>
 </footer>
-<script defer="" src="script.js"></script>
-<script defer="True" src="interactive.js"></script><script defer="True" src="v4.js"></script><script defer src="contact-form.js"></script><script src="https://js.hcaptcha.com/1/api.js?hl=tr&amp;recaptchacompat=off" async defer></script></body>
+<script defer="" src="script.js?v=20261105"></script>
+<script defer="True" src="interactive.js?v=20261105"></script><script defer="True" src="v4.js?v=20261105"></script><script defer src="contact-form.js?v=20261105"></script><script defer src="weather.js?v=20261105"></script><script src="https://js.hcaptcha.com/1/api.js?render=explicit&amp;onload=siteCaptchaReady&amp;recaptchacompat=off" async defer></script></body>
 </html>

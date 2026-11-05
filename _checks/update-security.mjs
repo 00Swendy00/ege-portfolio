@@ -14,7 +14,7 @@ for(const file of pages)edit(file,html=>{
  if(file==='index.html')pagePolicy=pagePolicy
   .replace("script-src 'self'", "script-src 'self' https://hcaptcha.com https://*.hcaptcha.com")
   .replace("https://fonts.googleapis.com;", "https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com;")
-  .replace("connect-src 'none'", "connect-src https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com")
+  .replace("connect-src 'none'", "connect-src https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com https://api.open-meteo.com")
   .replace("frame-src 'none'", "frame-src https://hcaptcha.com https://*.hcaptcha.com")
   .replace("form-action 'none'", "form-action https://api.web3forms.com");
  const csp=pagePolicy.replace("script-src 'self'", "script-src 'self' "+hashes.join(' '));

@@ -2,6 +2,7 @@
 /* EC Circuit Studio V6.2 — learning-oriented wire editor. NOT a SPICE simulation or arbitrary Arduino interpreter. */
 (() => {
 const root=document.getElementById('circuit-studio'); if(!root)return;
+const t=s=>window.SiteI18n?.t(s) ?? s;
 const $=s=>root.querySelector(s);
 const stage=$('#cs-stage'),partArea=$('#cs-parts'),wireSvg=$('#cs-wirepaths'),preview=$('#cs-previewwire'),viewport=$('#cs-viewport');
 const W=1160,H=720, TYPES=['arduino','breadboard','led','resistor','button','sonar','servo','buzzer'];
@@ -92,9 +93,9 @@ servo:'<svg viewBox="0 0 100 64" aria-hidden="true"><rect x="26" y="19" width="4
 buzzer:'<svg viewBox="0 0 100 64" aria-hidden="true"><circle cx="50" cy="32" r="25" fill="#2c3949" stroke="#566879" stroke-width="3"/><circle cx="50" cy="32" r="14" fill="#111b29"/><circle cx="50" cy="32" r="5" fill="#394959"/></svg>'
 };
 let currentCategory='all';
-function applyPaletteFilter(){const q=$('#cs-search').value.toLocaleLowerCase('tr');let visible=0;$('#cs-palette').querySelectorAll('.cs-palette-item').forEach(el=>{const show=(currentCategory==='all'||el.dataset.category===currentCategory)&&el.dataset.name.includes(q);el.hidden=!show;if(show)visible++});$('#cs-palette-count').textContent=visible+' bileşen gösteriliyor.'}
+function applyPaletteFilter(){const q=$('#cs-search').value.toLocaleLowerCase('tr');let visible=0;$('#cs-palette').querySelectorAll('.cs-palette-item').forEach(el=>{const show=(currentCategory==='all'||el.dataset.category===currentCategory)&&(el.dataset.name+' '+el.dataset.english).includes(q);el.hidden=!show;if(show)visible++});$('#cs-palette-count').textContent=visible+' bileşen gösteriliyor.'}
 function initPalette(){const pal=$('#cs-palette');pal.replaceChildren();tiles.forEach(([type,name,sub,category])=>{
-  const b=document.createElement('button');b.type='button';b.className='cs-palette-item';b.dataset.name=(name+' '+sub).toLocaleLowerCase('tr');b.dataset.category=category;
+  const b=document.createElement('button');b.type='button';b.className='cs-palette-item';b.dataset.name=(name+' '+sub).toLocaleLowerCase('tr');b.dataset.english=((window.SiteI18n?.t(name,'en') ?? name)+' '+(window.SiteI18n?.t(sub,'en') ?? sub)).toLocaleLowerCase('tr');b.dataset.category=category;
   b.innerHTML=`<span class="cs-item-icon" aria-hidden="true">${thumbs[type]}</span><strong>${name}</strong><small>${sub}</small>`;
   b.addEventListener('pointerdown',e=>{
     e.preventDefault();const ghost=document.createElement('div');ghost.className='cs-ghost';ghost.innerHTML='<span class="cs-ghost-picture">'+thumbs[type]+'</span><span class="cs-ghost-copy"><strong>'+name+'</strong><small>Çalışma alanına bırak</small></span>';document.body.append(ghost);ghost.style.left=e.clientX+16+'px';ghost.style.top=e.clientY+15+'px';paletteDrag={type,ghost,startX:e.clientX,startY:e.clientY};
@@ -167,12 +168,19 @@ function codeMessage(message,kind=''){
  const el=$('#cs-code-result');el.textContent=message;el.className='cs-code-result'+(kind?' '+kind:'');
 }
 const serialEl=$('#cs-serial');
-function serialWrite(value){
- if(serialEl.textContent==='Çalıştırınca komut çıktıları burada görünecek.')serialEl.textContent='';
- serialEl.textContent=(serialEl.textContent+value).slice(-6500);
+let serialChunks=[];
+let serialHasOutput=false;
+function renderSerial(){
+ serialEl.textContent=serialHasOutput?serialChunks.map(chunk=>chunk.app?t(chunk.text):chunk.text).join('').slice(-6500):t('Çalıştırınca komut çıktıları burada görünecek.');
  serialEl.scrollTop=serialEl.scrollHeight;
 }
-$('#cs-serial-clear').addEventListener('click',()=>serialEl.textContent='');
+function serialWrite(value,app=false){
+ serialHasOutput=true;serialChunks.push({text:value,app});
+ while(serialChunks.length>1 && serialChunks.reduce((n,chunk)=>n+chunk.text.length,0)>6500)serialChunks.shift();
+ renderSerial();
+}
+renderSerial();document.addEventListener('site:languagechange',renderSerial);
+$('#cs-serial-clear').addEventListener('click',()=>{serialHasOutput=true;serialChunks=[];renderSerial();});
 $('#cs-code').addEventListener('input',()=>{
  if(codeRuntime){stop();codeMessage('Kod değişti. Yeniden başlatabilirsin.');}
  storeCode();
@@ -182,7 +190,7 @@ $('#cs-code').addEventListener('keydown',e=>{
  if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();$('#cs-code-run').click();}
 });
 $('#cs-code-reset').addEventListener('click',()=>{
- if(!confirm('Bu örnek için yazdığın kodun yerine başlangıç örneği yüklensin mi?'))return;
+ if(!confirm(t('Bu örnek için yazdığın kodun yerine başlangıç örneği yüklensin mi?')))return;
  stop();delete codeDrafts[state.example];
  $('#cs-code').value=codeSamples[state.example]||codeSamples.blank;
  try{localStorage.setItem('ege-arduino-code-v62',JSON.stringify(codeDrafts));}catch(_){}
@@ -226,7 +234,7 @@ function runCurrentCode(){
  const hardware=makeCodeHardware();
  const outputPins=new Map();
  let serialEvents=0;
- serialEl.textContent='[EC Arduino simülasyonu başlatıldı]\n';
+ serialHasOutput=true;serialChunks=[];serialWrite('[EC Arduino simülasyonu başlatıldı]\n',true);
  const visualOutput=(pin,value)=>{
   outputPins.set(pin,value);
   const on=Number(value)>0;
@@ -251,7 +259,7 @@ function runCurrentCode(){
   tone:(pin,freq)=>visualOutput(pin,freq>0?1:0),
   serial:text=>{if(serialEvents++<500)serialWrite(text);},
   error:err=>{
-    serialWrite('\n[Simülasyon durdu: '+err.message+']\n');
+    serialWrite('\n[Simülasyon durdu: '+err.message+']\n',true);
     codeMessage('Çalışma zamanı hatası: '+err.message,'bad');
     status('Kod çalıştırma hatası: '+err.message,'bad');
     stop();
@@ -295,7 +303,7 @@ $('#cs-import').addEventListener('change',async e=>{
 });
 $('#cs-example').addEventListener('click',()=>loadExample($('#cs-presets').value));
 $('#cs-undo').addEventListener('click',()=>{if(!history.length)return;stop();state=history.pop();selected=null;$('#cs-presets').value=state.example;change('Son işlem geri alındı.')});
-$('#cs-delete').addEventListener('click',removeSelected);$('#cs-clear').addEventListener('click',()=>{if(!confirm('Çalışma alanındaki bütün bileşenler ve kablolar silinsin mi?'))return;snap();state.parts=[];state.wires=[];selected=null;state.example='blank';$('#cs-presets').value='blank';change('Çalışma alanı temizlendi.')});
+$('#cs-delete').addEventListener('click',removeSelected);$('#cs-clear').addEventListener('click',()=>{if(!confirm(t('Çalışma alanındaki bütün bileşenler ve kablolar silinsin mi?')))return;snap();state.parts=[];state.wires=[];selected=null;state.example='blank';$('#cs-presets').value='blank';change('Çalışma alanı temizlendi.')});
 function setZoom(z,anchor){
  const prev=zoom;
  const rect=stage.getBoundingClientRect();

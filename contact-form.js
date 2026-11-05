@@ -13,7 +13,7 @@
     result.dataset.kind = kind;
   }
   function resetCaptcha() {
-    try { window.hcaptcha?.reset(); } catch (_) {}
+    try { window.hcaptcha?.reset(window.SiteCaptcha?.getId() ?? undefined); } catch (_) {}
   }
 
   form.addEventListener('submit', async event => {
@@ -84,6 +84,7 @@
       fields.forEach(field => { field.disabled = false; });
       form.removeAttribute('aria-busy');
       label.textContent = 'Mesaj gönder';
+      window.SiteCaptcha?.render();
     }
   });
 })();

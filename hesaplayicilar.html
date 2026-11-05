@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' ; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#08090c"/>
+<title>Elektronik Hesaplayıcılar | Ege Coşkun</title>
+<meta name="description" content="Direnç renk kodu, Ohm Kanunu, yüklü gerilim bölücü, LED direnci ve pil çalışma süresi için etkileşimli elektronik hesaplayıcılar."/>
+<link rel="canonical" href="https://egecoskun.tech/hesaplayicilar.html"/>
+<link rel="icon" href="favicon.ico"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"/>
+<link rel="stylesheet" href="style.css?v=20261105"/>
+<link rel="stylesheet" href="interactive.css?v=20261105"/>
+<link rel="stylesheet" href="calculators.css"/>
+<script src="theme-init.js?v=20261105"></script>
+<link rel="stylesheet" href="site-upgrade.css?v=20261105"/><script defer src="i18n-catalog.js?v=20261105"></script><script defer src="i18n.js?v=20261105"></script></head>
+<body class="tools-page">
+<a class="skip-link" href="#main">İçeriğe geç</a>
+<div class="scroll-progress" aria-hidden="true"></div>
+<header class="site-header" id="top">
+<nav aria-label="Ana menü" class="nav-shell">
+<a aria-label="Hebil Ege Coşkun — ana sayfa" class="brand" href="/">
+<span aria-hidden="true" class="brand-mark"><img alt="" height="48" src="assets/ec-logo-small.webp" width="48"/></span>
+<span class="brand-name">Ege Coşkun<span class="brand-dot">.</span></span>
+</a>
+<div class="nav-links" id="primary-nav">
+<a href="/#about">Hakkımda</a>
+<a href="/#projects">Projeler</a>
+<a href="/#skills">Yetkinlikler</a>
+<a href="laboratuvar.html">Laboratuvar</a><a href="esp32-pin-haritasi.html">ESP32 Pinleri</a><a href="hesaplayicilar.html">Hesaplayıcılar</a><a href="/#codes">Kod arşivi</a>
+<a class="nav-contact" href="/#contact">İletişim <span aria-hidden="true">↗</span></a>
+</div>
+<a class="nav-instagram" href="https://instagram.com/00.e.ge00" target="_blank" rel="noopener noreferrer" aria-label="Instagram profilimi aç" title="Instagram"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="6.7" r="1.1" fill="currentColor"/></svg></a><label class="language-control"><span class="sr-only">Dil seçimi</span><select class="language-select" aria-label="Dil seçimi"><option value="tr">TR</option><option value="en">EN</option></select></label><button aria-label="Koyu temaya geç" class="theme-toggle" title="Açık / koyu tema" type="button"><span aria-hidden="true" class="theme-icon">◐</span><span class="theme-label">Tema</span></button><a class="autonomous-link" href="otonom-sistemler.html">Otonom Sistemler <span aria-hidden="true">↗</span></a><button aria-controls="primary-nav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" type="button">
+<span></span><span></span>
+</button>
+</nav>
+</header>
+<main id="main">
+<section class="tools-hero"><div class="container">
+<span class="tools-overline">ELEKTRONİK / ARAÇ KUTUSU</span>
+<h1>Hesapla. Tasarla. Üret.</h1>
+<p>Devreni kurmadan önce değerleri kontrol et. Birimleri seç, parametreleri değiştir ve sonuçları anında gör.</p>
+</div></section>
+<div class="container tools-layout">
+<nav class="tools-nav" aria-label="Hesaplayıcı seçimi">
+<a class="tool-tab" href="#resistor" data-tool="resistor"><span aria-hidden="true">Ω</span><span>Direnç renk kodu</span></a>
+<a class="tool-tab" href="#ohm" data-tool="ohm"><span aria-hidden="true">V</span><span>Ohm Kanunu</span></a>
+<a class="tool-tab" href="#divider" data-tool="divider"><span aria-hidden="true">÷</span><span>Gerilim bölücü</span></a>
+<a class="tool-tab" href="#led" data-tool="led"><span aria-hidden="true">↗</span><span>LED direnci</span></a>
+<a class="tool-tab" href="#battery" data-tool="battery"><span aria-hidden="true">▰</span><span>Pil çalışma süresi</span></a>
+</nav>
+<div class="tools-panels">
+<noscript><p>Hesaplama yapmak için tarayıcında JavaScript’i etkinleştir.</p></noscript>
+<section class="tool-panel" id="resistor" aria-labelledby="resistor-title">
+<h2 id="resistor-title">Direnç renk kodu</h2>
+<p class="tool-lead">4 veya 5 bantlı direncin renklerini soldan sağa seç. Nominal direnç ve tolerans aralığı birlikte hesaplanır.</p>
+<form id="resistor-form" novalidate>
+<label class="tool-field"><span>Bant sayısı</span><select name="bandCount"><option value="4">4 bant</option><option value="5">5 bant</option></select></label>
+<div class="resistor-display"><svg viewBox="0 0 760 220" role="img" aria-label="Seçilen renk bantlarının direnç üzerindeki görünümü"><defs><linearGradient id="res-body" x2="0" y2="1"><stop stop-color="#f2dfb5"/><stop offset=".5" stop-color="#d6b77c"/><stop offset="1" stop-color="#b28b50"/></linearGradient><linearGradient id="res-wire" x2="0" y2="1"><stop stop-color="#dbe4ee"/><stop offset="1" stop-color="#7c8c9d"/></linearGradient></defs><path d="M40 110H220M540 110H720" stroke="url(#res-wire)" stroke-width="9" stroke-linecap="round"/><path d="M208 76Q208 60 226 60H257L275 72H485L503 60H534Q552 60 552 76V144Q552 160 534 160H503L485 148H275L257 160H226Q208 160 208 144Z" fill="url(#res-body)"/><g id="resistor-bands"></g><path d="M225 72H252M280 83H480" stroke="#fff" stroke-opacity=".32" stroke-width="4" stroke-linecap="round"/></svg></div>
+<div class="tool-fields resistor-band-selects" id="resistor-selects"></div>
+<button class="tool-calculate" type="submit">Hesapla</button>
+</form>
+<div class="tool-result" id="resistor-result" role="status" aria-live="polite"></div>
+<p class="tool-error" id="resistor-error" role="alert"></p>
+<div class="tool-formula">R = (d₁d₂[ d₃ ]) × 10ⁿ Ω</div>
+<p class="tool-note">Tolerans bandı genellikle diğer bantlardan daha uzaktadır. Okuma yönünü ve bileşen üzerindeki işaretleri kontrol et.</p>
+</section>
+<section class="tool-panel" id="ohm" aria-labelledby="ohm-title">
+<h2 id="ohm-title">Ohm Kanunu</h2>
+<p class="tool-lead">Bildiğin iki değeri gir; gerilim, akım veya direnci ve devrede harcanan gücü hesapla.</p>
+<form id="ohm-form" novalidate>
+<div class="tool-fields">
+<label class="tool-field tool-wide"><span>Hesaplanacak değer</span><select name="mode"><option value="current">Akım (I)</option><option value="voltage">Gerilim (V)</option><option value="resistance">Direnç (R)</option></select></label>
+<label class="tool-field"><span id="ohm-a-label">Gerilim</span><div class="tool-input-unit"><input name="a" value="5" inputmode="decimal" autocomplete="off" aria-labelledby="ohm-a-label"/><select name="aUnit" aria-label="Birinci değerin birimi"></select></div></label>
+<label class="tool-field"><span id="ohm-b-label">Direnç</span><div class="tool-input-unit"><input name="b" value="220" inputmode="decimal" autocomplete="off" aria-labelledby="ohm-b-label"/><select name="bUnit" aria-label="İkinci değerin birimi"></select></div></label>
+</div><button class="tool-calculate" type="submit">Hesapla</button>
+</form>
+<div class="tool-result" id="ohm-result" role="status" aria-live="polite"></div><p class="tool-error" id="ohm-error" role="alert"></p>
+<div class="tool-formula">V = I × R · P = V × I</div>
+<p class="tool-note">Pozitif doğru akım değerleri için hesaplanır. Virgül veya nokta ile ondalık değer girebilirsin.</p>
+</section>
+<section class="tool-panel" id="divider" aria-labelledby="divider-title">
+<h2 id="divider-title">Gerilim bölücü</h2>
+<p class="tool-lead">R1 üstte, R2 ise çıkış ile GND arasındadır. İstersen çıkışa paralel yük direncini de hesaba kat.</p>
+<form id="divider-form" novalidate><div class="tool-fields">
+<label class="tool-field"><span>Giriş gerilimi (V)</span><input name="voltage" value="5" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field"><span>Direnç birimi</span><select name="unit"><option value="1">Ω</option><option value="1000" selected>kΩ</option><option value="1000000">MΩ</option></select></label>
+<label class="tool-field"><span>R1 — üst direnç</span><input name="r1" value="10" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field"><span>R2 — alt direnç</span><input name="r2" value="20" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field tool-wide"><span>Yük direnci (isteğe bağlı)</span><input name="load" value="" inputmode="decimal" autocomplete="off" placeholder="Yüksüz hesap için boş bırak"/><small>R1 ve R2 ile aynı birimde. Boş bırakıldığında ideal, yüksüz bölücü hesaplanır.</small></label>
+</div><button class="tool-calculate" type="submit">Hesapla</button></form>
+<div class="tool-result" id="divider-result" role="status" aria-live="polite"></div><p class="tool-error" id="divider-error" role="alert"></p>
+<div class="tool-formula">R₂′ = R₂ ∥ Ryük · Vout = Vin × R₂′ / (R₁ + R₂′)</div>
+<p class="tool-note">Gerilim bölücü bir regülatör değildir. Yük değiştiğinde çıkış gerilimi değişir; besleme kaynağı yerine kullanma.</p>
+</section>
+<section class="tool-panel" id="led" aria-labelledby="led-title">
+<h2 id="led-title">LED direnç hesabı</h2>
+<p class="tool-lead">Tek bir seri LED kolu için gereken direnci bul. Hedef akımı aşmayan bir üst E24 standart değeri de önerilir.</p>
+<form id="led-form" novalidate><div class="tool-fields">
+<label class="tool-field"><span>Besleme gerilimi (V)</span><input name="supply" value="5" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field"><span>LED ileri gerilimi — Vf (V)</span><input name="forward" value="2" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field"><span>Hedef akım (mA)</span><input name="current" value="20" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field"><span>Seri bağlı LED sayısı</span><input name="count" value="1" inputmode="numeric" autocomplete="off"/></label>
+</div><button class="tool-calculate" type="submit">Hesapla</button></form>
+<div class="tool-result" id="led-result" role="status" aria-live="polite"></div><p class="tool-error" id="led-error" role="alert"></p>
+<div class="tool-formula">R = (Vs − n × Vf) / I · P = I² × R</div>
+<p class="tool-note">Önerilen güç sınıfı, hesaplanan direnç kaybının en az 2 katıdır. Nominal değerler kullanılır; gerçek Vf, tolerans ve sıcaklığı kontrol et. Her paralel LED kolu için ayrı direnç gerekir.</p>
+</section>
+<section class="tool-panel" id="battery" aria-labelledby="battery-title">
+<h2 id="battery-title">Pil çalışma süresi</h2>
+<p class="tool-lead">Pil ve cihaz farklı gerilimlerde çalışsa bile enerji üzerinden tahmin yap. Ortalama tüketim ve dönüştürücü verimini kullan.</p>
+<form id="battery-form" novalidate><div class="tool-fields">
+<label class="tool-field"><span>Pil kapasitesi (mAh)</span><input name="capacity" value="2000" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field"><span>Pil nominal gerilimi (V)</span><input name="batteryVoltage" value="3.7" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field"><span>Cihaz çalışma gerilimi (V)</span><input name="loadVoltage" value="3.3" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field"><span>Ortalama cihaz akımı (mA)</span><input name="loadCurrent" value="100" inputmode="decimal" autocomplete="off"/></label>
+<label class="tool-field"><span>Kullanılabilir kapasite (%)</span><input name="usable" value="80" inputmode="decimal" autocomplete="off"/><small>Kesme gerilimi ve kapasite kaybı için ayrılan pay.</small></label>
+<label class="tool-field"><span>Dönüştürücü verimi (%)</span><input name="efficiency" value="90" inputmode="decimal" autocomplete="off"/><small>Doğrudan, aynı gerilimde besleme için %100 kullan.</small></label>
+</div><button class="tool-calculate" type="submit">Hesapla</button></form>
+<div class="tool-result" id="battery-result" role="status" aria-live="polite"></div><p class="tool-error" id="battery-error" role="alert"></p>
+<div class="tool-formula">t = (C / 1000 × Vpil × k × η) / (Vcihaz × I / 1000)</div>
+<p class="tool-note">Bu süre bir tahmindir. Pil kimyası, sıcaklık, yaşlanma, anlık akım, dönüştürücünün boşta tüketimi ve kendi kendine deşarj sonucu değiştirebilir. k ve η formülde 0–1 aralığındadır.</p>
+</section>
+<p class="tools-footnote">Hesaplamalar tarayıcında yapılır. Bileşen değerlerini ve üretici veri sayfalarını gerçek devre üzerinde doğrula.</p>
+<p class="tools-footnote"><a href="laboratuvar.html">Sanal laboratuvarda dene ↗</a></p>
+</div></div>
+</main>
+<footer class="site-footer matrix-host matrix-dark">
+<canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
+<div class="container footer-main"><a aria-label="En üste dön" class="footer-logo" href="/#top"><img alt="" height="42" src="assets/ec-logo-small.webp" width="42"/> Ege Coşkun<span>.</span></a><div class="footer-right"><a href="/#projects">Projeler</a><a href="/#about">Hakkımda</a><a href="/#contact">İletişim</a><a aria-label="Sayfanın en üstüne dön" href="/#top">↑</a></div></div>
+<div class="container footer-bottom"><span>© <span id="copyright-year">2026</span> Hebil Ege Coşkun. Tüm hakları saklıdır.</span><span>ESP32 · Arduino · IoT · Yazılım</span></div>
+</footer>
+<script defer src="script.js?v=20261105"></script><script defer src="interactive.js?v=20261105"></script><script defer src="electronics-math.js"></script><script defer src="calculators.js"></script>
+</body></html>
