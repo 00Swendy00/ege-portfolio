@@ -1,0 +1,10 @@
+{
+  "name": "ege-site-asistani",
+  "main": "assistant-worker.mjs",
+  "compatibility_date": "2026-11-05",
+  "workers_dev": true,
+  "ai": {"binding": "AI", "remote": true},
+  "durable_objects": {"bindings": [{"name":"ASSISTANT_QUOTA","class_name":"AssistantQuota"}]},
+  "migrations": [{"tag":"v1","new_sqlite_classes":["AssistantQuota"]}],
+  "observability": {"enabled":false}
+}

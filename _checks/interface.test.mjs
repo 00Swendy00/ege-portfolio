@@ -27,7 +27,7 @@ async function open(file,{language='tr',response=null}={}) {
 test('Every page has a working language selector, metadata, Instagram and calculator navigation',async()=>{
   for(const file of pages){const ui=await open(file,{language:'en'});try{
     assert.equal(ui.d.documentElement.lang,'en',file);assert.equal(ui.d.querySelector('.language-select').value,'en',file);
-    assert.ok(ui.d.querySelector('.nav-instagram[href="https://instagram.com/00.e.ge00"]'),file);
+    assert.ok(ui.d.querySelector('.footer-instagram[href="https://instagram.com/00.e.ge00"]'),file);
     assert.ok([...ui.d.querySelectorAll('.nav-links a')].some(a=>a.textContent==='Calculators'),file);
     assert.equal(ui.d.querySelector('.skip-link').textContent,'Skip to content',file);
     assert.equal(ui.d.querySelector('.theme-toggle').getAttribute('aria-label'),'Switch to dark theme',file);
@@ -84,21 +84,36 @@ test('Lab English search, confirmations, diagnostics and language switching pres
     ui.d.querySelector('#cs-code-stop').click();ui.w.SiteI18n.setLanguage('en');code.value='void setup(){oops();} void loop(){}';ui.d.querySelector('#cs-code-verify').click();await settle();assert.match(ui.d.querySelector('#cs-code-result').textContent,/Unsupported/);assert.doesNotMatch(ui.d.querySelector('#cs-code-result').textContent,/Desteklenmeyen/);
   }finally{ui.close();}
 });
-test('Weather shows current model data, translates conditions and keeps simulated GPIO separate',async()=>{
-  const now=Math.floor(Date.now()/1000);const data={current:{time:now,temperature_2m:13.2,relative_humidity_2m:70,weather_code:0,wind_speed_10m:8},current_units:{temperature_2m:'°C',relative_humidity_2m:'%',wind_speed_10m:'km/h'}};
-  const ui=await open('index.html',{response:async()=>({ok:true,json:async()=>data})});try{
-    assert.equal(ui.d.getElementById('live-temp').textContent,'13,2 °C');assert.match(ui.d.getElementById('weather-summary').textContent,/Burdur/);assert.equal(ui.d.getElementById('burdur-weather').dataset.state,'ready');
-    ui.w.SiteI18n.setLanguage('en');await settle();assert.equal(ui.d.getElementById('live-temp').textContent,'13.2 °C');assert.match(ui.d.getElementById('weather-summary').textContent,/Clear/);assert.match(ui.d.getElementById('weather-meta').textContent,/Humidity/);
-    assert.equal(ui.outbound.length,1);assert.equal(ui.outbound[0].options.credentials,'omit');
-  }finally{ui.close();}
-});
-test('Weather failure never shows a fabricated temperature; cached data is explicitly marked after failure',async()=>{
-  const ui=await open('index.html');try{assert.equal(ui.d.getElementById('live-temp').textContent,'— °C');assert.equal(ui.d.getElementById('burdur-weather').dataset.state,'error');assert.equal(ui.d.getElementById('weather-retry').disabled,false);}finally{ui.close();}
-});
 test('hCaptcha renders and rerenders in selected language without reloading or clearing the contact form',async()=>{
   const ui=await open('index.html');try{
     const renders=[],removals=[];ui.w.hcaptcha={render:(el,options)=>{renders.push(options);return renders.length;},remove:id=>removals.push(id)};
     ui.w.siteCaptchaReady();assert.equal(renders[0].hl,'tr');ui.d.querySelector('#contact-name').value='Ege';
     ui.w.SiteI18n.setLanguage('en');assert.equal(renders[1].hl,'en');assert.deepEqual(removals,[1]);assert.equal(ui.d.querySelector('#contact-name').value,'Ege');
+  }finally{ui.close();}
+});
+test('Simplified header keeps all destinations in Explore and places Instagram outside the navigation',async()=>{
+  for(const file of pages){const ui=await open(file);try{
+    const nav=ui.d.querySelector('#primary-nav');assert.equal([...nav.children].filter(el=>el.tagName==='A').length,3,file);
+    assert.equal(ui.d.querySelector('.nav-shell .nav-instagram'),null,file);assert.equal(ui.d.querySelector('.nav-shell .autonomous-link'),null,file);
+    assert.equal(nav.querySelectorAll('.nav-dropdown a').length,6,file);assert.ok(ui.d.querySelector('.footer-instagram'),file);
+    const details=nav.querySelector('details');details.open=true;ui.d.body.dispatchEvent(new ui.w.Event('pointerdown',{bubbles:true}));assert.equal(details.open,false,file);
+    if(file==='index.html')assert.ok(ui.d.querySelector('.hero-instagram'),file);
+  }finally{ui.close();}}
+});
+test('Assistant calls the real backend only on demand and renders model output as safe text',async()=>{
+  const ui=await open('index.html',{language:'en',response:async()=>({ok:true,status:200,json:async()=>({answer:'<img src=x onerror=alert(1)> A real model answer.',kind:'ai',links:[{label:'Bad',url:'javascript:alert(1)'},{label:'Weather source',url:'https://open-meteo.com/'}]})})});try{
+    assert.equal(ui.outbound.length,0);assert.equal(ui.d.querySelector('#burdur-weather'),null);assert.equal(ui.d.querySelector('#live-gpio'),null);
+    ui.w.SiteAssistantConfig={endpoint:'https://portfolio-test.workers.dev/chat'};
+    const input=ui.d.getElementById('assistant-question');input.value='What projects are here?';ui.d.getElementById('assistant-form').dispatchEvent(new ui.w.Event('submit',{bubbles:true,cancelable:true}));await settle();
+    assert.equal(ui.outbound.length,1);const payload=JSON.parse(ui.outbound[0].options.body);assert.equal(payload.language,'en');assert.equal(payload.messages.at(-1).content,'What projects are here?');assert.equal(ui.outbound[0].options.credentials,'omit');
+    const answer=ui.d.querySelector('.assistant-message-assistant');assert.match(answer.textContent,/<img src=x/);assert.equal(answer.querySelector('img'),null);assert.equal(answer.querySelectorAll('a').length,1);assert.equal(answer.querySelector('a').origin,'https://open-meteo.com');
+    ui.w.SiteI18n.setLanguage('tr');await settle();assert.match(answer.textContent,/<img src=x/);assert.equal(ui.d.getElementById('assistant-form').getAttribute('aria-busy'),'false');
+  }finally{ui.close();}
+});
+test('Assistant quota errors preserve the question and clearing chat rejects a late response',async()=>{
+  const ui=await open('index.html',{response:async()=>({ok:false,status:429,json:async()=>({code:'quota'})})});try{
+    ui.w.SiteAssistantConfig={endpoint:'https://portfolio-test.workers.dev/chat'};const input=ui.d.getElementById('assistant-question');input.value='Projeler neler?';ui.d.getElementById('assistant-form').dispatchEvent(new ui.w.Event('submit',{cancelable:true}));await settle();
+    assert.equal(input.value,'Projeler neler?');assert.match(ui.d.getElementById('assistant-status').textContent,/Ücretsiz kullanım/);assert.equal(ui.d.querySelector('.assistant-message-assistant'),null);
+    let resolve;ui.w.fetch=()=>new Promise(r=>resolve=r);ui.d.getElementById('assistant-form').dispatchEvent(new ui.w.Event('submit',{cancelable:true}));ui.d.getElementById('assistant-clear').click();resolve({ok:true,status:200,json:async()=>({answer:'Late answer'})});await settle();assert.equal(ui.d.getElementById('assistant-messages').children.length,0);assert.equal(input.disabled,false);
   }finally{ui.close();}
 });

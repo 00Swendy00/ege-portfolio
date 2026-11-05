@@ -83,23 +83,6 @@
     e.currentTarget.textContent = 'LED: ' + (off ? 'Kapalı' : 'Açık');
   });
 
-  // Terminaldeki rakamlar cihazdan değil, açıkça işaretlenmiş demo verisinden gelir.
-  const gpio = doc.getElementById('live-gpio');
-  if (gpio) {
-    const uptime=doc.getElementById('live-uptime');
-    const log=doc.getElementById('live-log');
-    let seconds=0;
-    const update = () => {
-      if (doc.hidden || reduced.matches) return;
-      seconds++;
-      const signal = Math.round(1900 + 750*Math.sin(seconds*.41) + 260*Math.cos(seconds*.91));
-      gpio.textContent = String(Math.max(0,Math.min(4095,signal)));
-      uptime.textContent = new Date(seconds*1000).toISOString().slice(11,19);
-      log.textContent = `> analogRead(GPIO34) => ${gpio.textContent}  ·  paket #${String(seconds).padStart(4,'0')}`;
-    };
-    window.setInterval(update, 1000);
-  }
-
   // Ekran görüntüsünü büyütme: yeni pencereye bağımlı olmadan modal. JS kapalıysa bağlantı dosyayı açar.
   const gallery = [...doc.querySelectorAll('[data-lightbox]')];
   if (gallery.length) {

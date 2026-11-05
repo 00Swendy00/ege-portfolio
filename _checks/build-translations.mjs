@@ -3,7 +3,7 @@ import path from 'node:path';
 const root=path.resolve(import.meta.dirname,'..');
 const read=file=>JSON.parse(readFileSync(path.join(import.meta.dirname,file),'utf8'));
 const staticMap=read('static-translations.json'),dynamic=read('dynamic-translations.json');
-const exact={...staticMap,...dynamic.exact};
+const exact={...staticMap,...dynamic.exact,...read('assistant-translations.json')};
 const extra={
   'Burdur hava durumu':'Burdur weather',
   'TR':'TR','EN':'EN',

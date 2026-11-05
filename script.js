@@ -6,6 +6,8 @@
   const menu = document.querySelector('.nav-links');
   const progressBar = document.querySelector('.scroll-progress');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const discover = document.querySelector('.nav-discover');
+  const closeDiscover = () => { if (discover) discover.open = false; };
 
   function closeMenu() {
     if (!menu || !menuButton) return;
@@ -14,6 +16,7 @@
     menuButton.setAttribute('aria-expanded', 'false');
     menuButton.setAttribute('aria-label', 'Menüyü aç');
     document.body.classList.remove('menu-open');
+    closeDiscover();
   }
 
   if (menuButton && menu) {
@@ -41,9 +44,15 @@
       if (menu.classList.contains('is-open') && !header.contains(event.target)) closeMenu();
     });
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 1120) closeMenu();
+      if (window.innerWidth > 900) closeMenu();
     });
   }
+  document.addEventListener('pointerdown', event => {
+    if (discover?.open && !discover.contains(event.target)) closeDiscover();
+  });
+  discover?.addEventListener('focusout', () => {
+    requestAnimationFrame(() => { if (!discover.contains(document.activeElement)) closeDiscover(); });
+  });
 
   let pending = false;
   function onScroll() {

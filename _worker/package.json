@@ -1,0 +1,1 @@
+{"name":"egecoskun-tech","private":true,"description":"Free-plan Cloudflare backend for the portfolio assistant","scripts":{"deploy":"wrangler deploy","login":"wrangler login"},"devDependencies":{"wrangler":"4.158.0"}}

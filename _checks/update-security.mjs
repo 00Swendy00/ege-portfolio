@@ -14,9 +14,13 @@ for(const file of pages)edit(file,html=>{
  if(file==='index.html')pagePolicy=pagePolicy
   .replace("script-src 'self'", "script-src 'self' https://hcaptcha.com https://*.hcaptcha.com")
   .replace("https://fonts.googleapis.com;", "https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com;")
-  .replace("connect-src 'none'", "connect-src https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com https://api.open-meteo.com")
+  .replace("connect-src 'none'", "connect-src https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com")
   .replace("frame-src 'none'", "frame-src https://hcaptcha.com https://*.hcaptcha.com")
   .replace("form-action 'none'", "form-action https://api.web3forms.com");
+ if(file==='index.html'){
+  const endpoint=readFileSync(path.join(base,'site-assistant-config.js'),'utf8').match(/endpoint:\s*'([^']*)'/)?.[1];
+  if(endpoint){const url=new URL(endpoint);if(url.protocol!=='https:' || !url.hostname.endsWith('.workers.dev') || url.pathname!=='/chat')throw Error('Invalid assistant origin');pagePolicy=pagePolicy.replace('connect-src https://api.web3forms.com',`connect-src https://api.web3forms.com ${url.origin}`);}
+ }
  const csp=pagePolicy.replace("script-src 'self'", "script-src 'self' "+hashes.join(' '));
  html=html.replace(/(<meta\s+charset=[^>]+\/?>)/i,`$1\n<meta http-equiv="Content-Security-Policy" content="${csp.trim()}"/>\n<meta name="referrer" content="strict-origin-when-cross-origin"/>`);
  if(file==='laboratuvar.html'){

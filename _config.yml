@@ -1,4 +1,5 @@
 exclude:
+  - _worker
   - _checks
   - README.md
   - SECURITY.md
