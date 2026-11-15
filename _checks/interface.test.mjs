@@ -62,6 +62,25 @@ test('Repeated language switching preserves contact inputs, source code, handler
     assert.equal(ui.outbound.filter(call=>call.options?.method==='POST').length,0);
   }finally{ui.close();}
 });
+test('Homepage showcase supports manual navigation when motion is reduced',async()=>{
+  const ui=await open('index.html',{language:'en'});
+  try {
+    const root=ui.d.querySelector('[data-showcase]');
+    const active=()=>root.querySelector('.showcase-slide:not([hidden])');
+    const next=root.querySelector('[data-showcase-step="1"]');
+    const toggle=root.querySelector('[data-showcase-toggle]');
+    assert.equal(toggle.getAttribute('aria-label'),'Start automatic rotation');
+    next.click();
+    assert.equal(active().id,'showcase-slide-2');
+    assert.equal(active().querySelector('a').getAttribute('href'),'atolye/elektronik.html');
+    root.querySelector('[data-showcase-index="7"]').click();
+    next.click();
+    assert.equal(active().id,'showcase-slide-1');
+    next.dispatchEvent(new ui.w.KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true}));
+    assert.equal(active().id,'showcase-slide-8');
+    assert.equal(root.querySelector('[data-showcase-index="7"]').getAttribute('aria-current'),'true');
+  } finally { ui.close(); }
+});
 test('Calculator forms convert units, preserve values across languages, reject bad input and support keyboard tabs',async()=>{
   const ui=await open('hesaplayicilar.html');try{
     const change=element=>element.dispatchEvent(new ui.w.Event('change',{bubbles:true}));
