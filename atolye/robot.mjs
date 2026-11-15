@@ -1,5 +1,6 @@
 import {createGround,createScene,THREE} from './sahne.mjs?v=2';
 import {baseHeight,forward,inverse,lengths,limits} from './kinematik.mjs';
+import {playbackSteps} from './hareket.mjs';
 
 const get = id => document.getElementById(id);
 const status = get('status');
@@ -78,7 +79,8 @@ for (const [id,direction] of Object.entries({camera:[.72,.57,1.38],front:[0,0,1]
 }
 get('camera').click();
 
-let angles = [0,49,-69], poses = [], animation;
+const homePose = [0,49,-69];
+let angles = [...homePose], poses = [], motion;
 const axisValues = get('position').querySelectorAll('dd');
 const sliders = ['Taban','Omuz','Dirsek'].map((name,i) => {
   const label = document.createElement('label');
@@ -98,7 +100,7 @@ const sliders = ['Taban','Omuz','Dirsek'].map((name,i) => {
   slider.max = limits[i];
   slider.step = .1;
   slider.oninput = () => {
-    stop();
+    interrupt();
     angles[i] = slider.valueAsNumber;
     update();
   };
@@ -120,8 +122,8 @@ function update() {
   view?.draw();
 }
 function stop() {
-  cancelAnimationFrame(animation);
-  animation = undefined;
+  if (motion) cancelAnimationFrame(motion.frame);
+  motion = undefined;
   get('stop').disabled = true;
   get('poses').querySelector('[aria-current]')?.removeAttribute('aria-current');
 }
@@ -129,19 +131,61 @@ function report(element,message,state='') {
   element.dataset.state = state;
   element.textContent = message;
 }
+function interrupt() {
+  if (!motion) return;
+  report(motion.kind === 'target' ? status : timelineStatus,'Hareket durduruldu.');
+  stop();
+}
+function animate(steps,kind) {
+  const feedback = kind === 'target' ? status : timelineStatus;
+  const entries = get('poses').children;
+  let index = 0, startTime, startPose, duration;
+  motion = {kind};
+  get('stop').disabled = false;
+  report(feedback,kind === 'target' ? 'Hedefe gidiliyor…' : 'Hareket oynatılıyor.');
+
+  function step(now) {
+    const {pose,index:entry} = steps[index];
+    if (startTime === undefined) {
+      startTime = now;
+      startPose = angles;
+      const change = Math.max(...pose.map((angle,i) => Math.abs(angle-startPose[i])));
+      duration = Math.min(1800,Math.max(550,change*9));
+      get('poses').querySelector('[aria-current]')?.removeAttribute('aria-current');
+      entries[entry]?.setAttribute('aria-current','step');
+    }
+    const progress = Math.min(1,(now-startTime)/duration);
+    const eased = progress*progress*(3-2*progress);
+    angles = progress === 1 ? [...pose] : startPose.map((angle,i) => angle+(pose[i]-angle)*eased);
+    update();
+    if (progress === 1) {
+      index++;
+      startTime = undefined;
+      if (index === steps.length) {
+        stop();
+        report(feedback,kind === 'target' ? 'Hedefe ulaşıldı.' : 'Hareket tamamlandı.','success');
+        return;
+      }
+    }
+    motion.frame = requestAnimationFrame(step);
+  }
+  motion.frame = requestAnimationFrame(step);
+}
 function updateTimeline() {
   get('pose-count').textContent = poses.length;
   get('play').disabled = get('clear').disabled = !poses.length;
 }
 get('target').onsubmit = event => {
   event.preventDefault();
-  stop();
   const target = ['x','y','z'].map(axis=>event.currentTarget.elements.namedItem(axis).valueAsNumber);
   const pose = inverse(target,angles);
+  interrupt();
   if (!pose) { report(status,'Hedef, kolun çalışma hacmi veya eklem sınırları dışında.','error'); return; }
-  angles = pose;
-  update();
-  report(status,'Hedefe ulaşıldı.','success');
+  if (Math.hypot(...forward(angles).map((value,i) => value-target[i])) < .001) {
+    report(status,'Kol zaten hedefte.','success');
+    return;
+  }
+  animate([{pose}],'target');
 };
 get('record').onclick = () => {
   if (poses.length===30) { report(timelineStatus,'En fazla 30 poz eklenebilir.','error'); return; }
@@ -152,38 +196,22 @@ get('record').onclick = () => {
   updateTimeline();
 };
 get('clear').onclick = () => {
-  stop();
+  if (motion?.kind === 'playback') stop();
   poses = [];
   get('poses').replaceChildren();
   updateTimeline();
   report(timelineStatus,'Dizi temizlendi.');
 };
-get('stop').onclick = () => { stop(); report(timelineStatus,'Hareket durduruldu.'); };
+get('stop').onclick = interrupt;
 get('play').onclick = () => {
-  stop();
+  interrupt();
   if (!poses.length) return;
-  const route = [[...angles],...poses];
-  const start = performance.now();
-  const entries = get('poses').children;
-  let active = -1;
-  get('stop').disabled = false;
-  report(timelineStatus,'Hareket oynatılıyor.');
-  function step(now) {
-    const elapsed = (now-start)/900;
-    const index = Math.min(route.length-2,Math.floor(elapsed));
-    if (index !== active) {
-      entries[active]?.removeAttribute('aria-current');
-      entries[index]?.setAttribute('aria-current','step');
-      active = index;
-    }
-    const t = Math.min(1,elapsed-index);
-    const smooth = t*t*(3-2*t);
-    angles = route[index].map((angle,i)=>angle+(route[index+1][i]-angle)*smooth);
-    update();
-    if (elapsed < route.length-1) animation = requestAnimationFrame(step);
-    else { stop(); report(timelineStatus,'Hareket tamamlandı.','success'); }
+  const steps = playbackSteps(angles,poses,homePose);
+  if (!steps.length) {
+    report(timelineStatus,'Hareket oluşturmak için eklemleri değiştir veya farklı bir poz ekle.');
+    return;
   }
-  animation = requestAnimationFrame(step);
+  animate(steps,'playback');
 };
 update();
 updateTimeline();

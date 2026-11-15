@@ -2,11 +2,24 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {solve} from '../atolye/devre.mjs';
 import {forward,inverse,limits} from '../atolye/kinematik.mjs';
+import {playbackSteps} from '../atolye/hareket.mjs';
 
 const source = {id:'p1',type:'source',value:5};
 const resistor = {id:'p2',type:'resistor',value:220};
 const led = {id:'p3',type:'led',value:2};
 const series = [['p1a','p2a'],['p2b','p3a'],['p3b','p1b']];
+
+test('Playing the sole pose from its own position animates via the starting pose', () => {
+  const home = [0,49,-69];
+  const saved = [40,25,-55];
+  assert.deepEqual(playbackSteps(saved,[saved],home),[{pose:home},{pose:saved,index:0}]);
+  assert.deepEqual(playbackSteps(home,[home],home),[]);
+});
+
+test('Playback keeps the order of distinct recorded poses and skips stationary steps', () => {
+  const home = [0,49,-69], a = [40,25,-55], b = [-50,55,-83];
+  assert.deepEqual(playbackSteps(home,[home,a,a,b],home),[{pose:a,index:1},{pose:b,index:3}]);
+});
 
 test('DC solver matches the series LED model and cuts off reverse current', () => {
   const readings = solve([source,resistor,led],series);
