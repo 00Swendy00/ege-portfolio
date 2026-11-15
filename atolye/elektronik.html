@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta name="description" content="Devreyi kur, uçları bağla ve doğru akım değerlerini ölç.">
+<title>Elektronik Laboratuvarı | Ege Coşkun</title>
+<link rel="icon" href="../favicon.ico">
+<link rel="stylesheet" href="atolye.css">
+<script type="module" src="elektronik.mjs"></script>
+</head>
+<body>
+<header><nav aria-label="Atölye"><a class="brand" href="../">Ege Coşkun</a><a href="elektronik.html" aria-current="page">Elektronik</a><a href="robot.html">Robot kol</a><a href="model.html">3D model</a></nav></header>
+<main><h1>Elektronik Laboratuvarı</h1><p class="intro">Devreyi kur, uçları bağla ve doğru akım değerlerini ölç.</p><div class="layout"><aside class="panel"><h2>Bileşenler</h2><div id="palette" class="tools"><button data-add="source">DC kaynak</button><button data-add="resistor">Direnç</button><button data-add="led">LED</button><button data-add="switch">Anahtar</button></div><p><a href="../laboratuvar.html">Arduino, breadboard ve kod editörü ↗</a></p><p>Bir kablonun iki ucunu sırayla seç. Bileşenleri taşımak için başlığını sürükle.</p><button id="example">LED örneğini yükle</button></aside><section class="panel"><h2>Devre çalışma alanı</h2><div id="board"></div><ul id="wires" class="wire-list" aria-label="Kablolar"></ul></section><aside class="panel"><h2>Ölçümler</h2><button id="run">Devreyi çöz</button><div id="result" aria-live="polite"></div><h2>Proje</h2><button id="save">JSON indir</button><label>JSON aç <input id="load" type="file" accept=".json"></label></aside></div></main>
+</body>
+</html>

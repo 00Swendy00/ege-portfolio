@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta name="description" content="SolidWorks dışa aktarımlarını tarayıcıda aç, parçaları incele ve mesafe ölç.">
+<title>3D Model Görüntüleyici | Ege Coşkun</title>
+<link rel="icon" href="../favicon.ico">
+<link rel="stylesheet" href="atolye.css">
+<script type="module" src="model.mjs"></script>
+</head>
+<body>
+<header><nav aria-label="Atölye"><a class="brand" href="../">Ege Coşkun</a><a href="elektronik.html">Elektronik</a><a href="robot.html">Robot kol</a><a href="model.html" aria-current="page">3D model</a></nav></header>
+<main><h1>3D Model Görüntüleyici</h1><p class="intro">SolidWorks dışa aktarımlarını tarayıcıda aç, parçaları incele ve mesafe ölç.</p><div class="layout scene-layout"><section class="panel"><h2>3D görüntü</h2><div class="viewport" id="scene"></div><div class="tools"><button id="camera">Kamerayı sıfırla</button><button id="measure" aria-pressed="false">İki nokta ölç</button><button id="demo">Örnek montaj</button></div><p id="distance" role="status"></p></section><aside class="panel"><h2>Model aç</h2><label>STEP, STP veya STL<input id="file" type="file" accept=".step,.stp,.stl"></label><label>STL kaynak birimi <select id="unit"><option value="1">mm</option><option value="10">cm</option><option value="25.4">inç</option><option value="1000">m</option></select></label><p>En fazla 25 MB. Dosya bu tarayıcıda işlenir. Montaj ağacı için STEP kullan.</p><p id="status" role="status"></p><p id="bounds"></p><label>Parçaları ayır<input id="explode" type="range" min="0" max="100" value="0" disabled></label><h2>Parçalar</h2><div id="parts"></div></aside></div></main>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta name="description" content="Eklem açılarını değiştir, uç noktayı hedefe taşı ve hareket dizisini oynat.">
+<title>Robot Kol Simülatörü | Ege Coşkun</title>
+<link rel="icon" href="../favicon.ico">
+<link rel="stylesheet" href="atolye.css">
+<script type="module" src="robot.mjs"></script>
+</head>
+<body>
+<header><nav aria-label="Atölye"><a class="brand" href="../">Ege Coşkun</a><a href="elektronik.html">Elektronik</a><a href="robot.html" aria-current="page">Robot kol</a><a href="model.html">3D model</a></nav></header>
+<main><h1>Robot Kol Simülatörü</h1><p class="intro">Eklem açılarını değiştir, uç noktayı hedefe taşı ve hareket dizisini oynat.</p><div class="layout scene-layout"><section class="panel"><h2>3D çalışma alanı</h2><div class="viewport" id="scene"></div><p>Sürükleyerek döndür, tekerlekle yakınlaş. <button id="camera">Kamerayı sıfırla</button></p></section><aside class="panel"><h2>Eklem kontrolü</h2><div id="joints"></div><p id="position"></p><h2>Uç nokta hedefi</h2><form id="target"><div class="coordinates"><label>X (mm)<input name="x" type="number" step="any" value="260" required></label><label>Y (mm)<input name="y" type="number" step="any" value="180" required></label><label>Z (mm)<input name="z" type="number" step="any" value="0" required></label></div><button>Hedefe git</button></form><h2>Hareket dizisi</h2><div class="tools"><button id="record">Poz ekle</button><button id="play">Oynat</button><button id="stop">Durdur</button><button id="clear">Diziyi sil</button></div><ol id="poses"></ol><p id="status" role="status"></p></aside></div></main>
+</body>
+</html>

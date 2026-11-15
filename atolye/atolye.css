@@ -1,0 +1,39 @@
+:root{color-scheme:dark;font:16px/1.5 Inter,system-ui,sans-serif;background:#0d1118;color:#eef3fb}
+*{box-sizing:border-box}
+body{margin:0}
+header{border-bottom:1px solid #293649;background:#111925}
+nav,main{max-width:1500px;margin:auto;padding:1rem clamp(1rem,3vw,3rem)}
+nav{display:flex;align-items:center;gap:clamp(.6rem,2vw,1.5rem);flex-wrap:wrap}
+a{color:#8de5ff}
+nav a{text-decoration:none}
+nav a[aria-current]{border-bottom:2px solid #8de5ff}
+.brand{font-weight:750;margin-right:auto;color:inherit}
+h1{font-size:clamp(2rem,4vw,3.5rem);letter-spacing:-.04em;margin:1rem 0 .25rem}
+h2{font-size:1rem;margin:0 0 .6rem}
+.intro,p{color:#b7c9de}
+.layout{display:grid;grid-template-columns:minmax(155px,1fr) minmax(320px,4fr) minmax(185px,1.35fr);gap:1rem;align-items:start}
+.scene-layout{grid-template-columns:minmax(0,3fr) minmax(240px,1fr)}
+.panel{min-width:0;background:#151e2b;border:1px solid #29394d;padding:1rem;border-radius:.9rem}
+button,select,input{font:inherit}
+button,select,input[type=number]{color:inherit;background:#1e3045;border:1px solid #476079;border-radius:.45rem;padding:.35rem .65rem}
+button{cursor:pointer}
+button:hover,button[aria-pressed=true]{background:#315877}
+:focus-visible{outline:2px solid #91e8ff;outline-offset:3px}
+input{max-width:100%;accent-color:#7de1ff}
+label{display:block;margin:.55rem 0}
+label input[type=file],label input[type=range]{display:block;width:100%}
+.tools,.coordinates{display:flex;gap:.4rem;flex-wrap:wrap;margin:.5rem 0}
+.coordinates input{display:block;width:5.2rem}
+.viewport{height:clamp(300px,62vh,680px);background:#0a1422;border-radius:.5rem;overflow:hidden}
+.viewport canvas{display:block;width:100%;height:100%;touch-action:none}
+#board{position:relative;height:430px;overflow:hidden;background-color:#0b1421;background-image:radial-gradient(#38526a 1px,transparent 1px);background-size:16px 16px;border-radius:.5rem}
+#board svg{width:100%;height:100%;position:absolute;inset:0;pointer-events:none}
+.component{position:absolute;width:122px;background:#1b2c40;border:1px solid #4b6680;border-radius:.5rem;padding:.3rem}
+.component.lit{border-color:#ffd967;box-shadow:0 0 13px #ffd96766}
+.component strong{display:block;font-size:.82rem;cursor:grab;touch-action:none}
+.component button,.component input{font-size:.78rem;padding:.2rem .3rem}
+.component label{font-size:.75rem;margin:.2rem 0}
+.wire-list{padding-left:1.3rem}
+.wire-list button{margin:.12rem 0}
+#result{overflow-wrap:anywhere}
+@media(max-width:850px){.layout,.scene-layout{grid-template-columns:1fr}.viewport{height: min(52vh,470px)}}

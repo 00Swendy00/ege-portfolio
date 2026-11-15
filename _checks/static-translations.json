@@ -1,4 +1,9 @@
 {
+  "Dijital Atölye": "Digital Workshop",
+  "DC devresi kur, robot kolunu hareket ettir veya SolidWorks dışa aktarımını incele.": "Build a DC circuit, move the robot arm, or inspect a SolidWorks export.",
+  "Elektronik laboratuvarı": "Electronics lab",
+  "Robot kol simülatörü": "Robot arm simulator",
+  "3D model görüntüleyici": "3D model viewer",
   "ESP32 Etkileşimli Pin Haritası | Ege Coşkun": "Interactive ESP32 Pin Map | Ege Coşkun",
   "ESP32 DevKit V1 30 pinli kartın GPIO, ADC, PWM, I2C, SPI ve besleme pinlerini etkileşimli incele.": "Explore the GPIO, ADC, PWM, I2C, SPI and power pins of the 30-pin ESP32 DevKit V1 interactively.",
   "İçeriğe geç": "Skip to content",
