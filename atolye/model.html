@@ -1,17 +1,67 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
-<meta name="description" content="SolidWorks dışa aktarımlarını tarayıcıda aç, parçaları incele ve mesafe ölç.">
-<title>3D Model Görüntüleyici | Ege Coşkun</title>
-<link rel="icon" href="../favicon.ico">
-<link rel="stylesheet" href="atolye.css">
-<script type="module" src="model.mjs"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <meta name="description" content="SolidWorks dışa aktarımlarını aç, montajı incele ve ölç.">
+  <title>3D Model Görüntüleyici | Ege Coşkun</title>
+  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="atolye.css?v=2">
+  <script type="module" src="model.mjs?v=2"></script>
 </head>
-<body>
-<header><nav aria-label="Atölye"><a class="brand" href="../">Ege Coşkun</a><a href="elektronik.html">Elektronik</a><a href="robot.html">Robot kol</a><a href="model.html" aria-current="page">3D model</a></nav></header>
-<main><h1>3D Model Görüntüleyici</h1><p class="intro">SolidWorks dışa aktarımlarını tarayıcıda aç, parçaları incele ve mesafe ölç.</p><div class="layout scene-layout"><section class="panel"><h2>3D görüntü</h2><div class="viewport" id="scene"></div><div class="tools"><button id="camera">Kamerayı sıfırla</button><button id="measure" aria-pressed="false">İki nokta ölç</button><button id="demo">Örnek montaj</button></div><p id="distance" role="status"></p></section><aside class="panel"><h2>Model aç</h2><label>STEP, STP veya STL<input id="file" type="file" accept=".step,.stp,.stl"></label><label>STL kaynak birimi <select id="unit"><option value="1">mm</option><option value="10">cm</option><option value="25.4">inç</option><option value="1000">m</option></select></label><p>En fazla 25 MB. Dosya bu tarayıcıda işlenir. Montaj ağacı için STEP kullan.</p><p id="status" role="status"></p><p id="bounds"></p><label>Parçaları ayır<input id="explode" type="range" min="0" max="100" value="0" disabled></label><h2>Parçalar</h2><div id="parts"></div></aside></div></main>
+<body class="model-page">
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+  <header class="site-bar">
+    <nav aria-label="Atölye">
+      <a class="brand" href="../#dijital-atolye"><span class="brand-mark" aria-hidden="true">EC</span><span>Dijital Atölye</span></a>
+      <div class="app-nav"><a href="elektronik.html">Elektronik</a><a href="robot.html">Robot kol</a><a href="model.html" aria-current="page">3D model</a></div>
+      <a class="site-link" href="../">Siteye dön <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main id="main">
+    <header class="work-top">
+      <div><h1>3D Model Görüntüleyici</h1><p>SolidWorks dışa aktarımlarını aç, montajı incele ve ölç.</p></div>
+      <div class="actions">
+          <button id="demo">Örnek montaj</button>
+          <label class="button primary file-button">Model aç <span aria-hidden="true">↑</span><input id="file" type="file" accept=".step,.stp,.stl"></label>
+        </div>
+    </header>
+    <div class="workspace scene-layout">
+      <section class="pane canvas-pane" aria-labelledby="scene-title">
+        <div class="pane-head">
+          <h2 id="scene-title">3D sahne</h2>
+          <div class="view-controls" aria-label="Sahne araçları">
+            <button id="camera" title="Kamerayı sıfırla">Görünüme sığdır</button>
+            <button id="measure" aria-pressed="false">İki nokta ölç</button>
+          </div>
+        </div>
+        <div class="stage">
+          <div class="viewport" id="scene"></div>
+          <div class="stage-legend"><span class="axis x">X</span><span class="axis y">Y</span><span class="axis z">Z</span></div>
+          <p id="distance" class="measure-note" role="status"></p>
+        </div>
+        <div class="canvas-footer"><p id="bounds" class="mono"></p><span class="tag">mm</span></div>
+      </section>
+      <aside class="pane inspector">
+        <div class="pane-head"><h2>Model</h2><span id="format" class="tag"></span></div>
+        <div class="inspector-body">
+          <button id="drop-model" class="drop-zone"><strong>Dosya seç veya sürükle</strong><small>STEP / STP / STL · 25 MB</small></button>
+          <p id="status" class="feedback" role="status"></p>
+          <label class="unit-field">STL kaynak birimi
+            <select id="unit"><option value="1">mm</option><option value="10">cm</option><option value="25.4">inç</option><option value="1000">m</option></select>
+          </label>
+        </div>
+        <div class="inspector-body section-divider">
+          <label class="range-field" for="explode"><span>Parçaları ayır</span><output id="explode-value" for="explode">0%</output></label>
+          <input id="explode" type="range" min="0" max="100" value="0" disabled>
+        </div>
+        <div class="inspector-body section-divider">
+          <h3>Parça ağacı <span id="part-count" class="tag"></span></h3>
+          <div id="parts"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
 </body>
 </html>

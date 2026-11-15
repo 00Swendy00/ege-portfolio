@@ -1,17 +1,58 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
-<meta name="description" content="Devreyi kur, uçları bağla ve doğru akım değerlerini ölç.">
-<title>Elektronik Laboratuvarı | Ege Coşkun</title>
-<link rel="icon" href="../favicon.ico">
-<link rel="stylesheet" href="atolye.css">
-<script type="module" src="elektronik.mjs"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <meta name="description" content="DC devrelerini kur, kablola ve ölç.">
+  <title>Elektronik Laboratuvarı | Ege Coşkun</title>
+  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="atolye.css?v=2">
+  <script type="module" src="elektronik.mjs?v=2"></script>
 </head>
-<body>
-<header><nav aria-label="Atölye"><a class="brand" href="../">Ege Coşkun</a><a href="elektronik.html" aria-current="page">Elektronik</a><a href="robot.html">Robot kol</a><a href="model.html">3D model</a></nav></header>
-<main><h1>Elektronik Laboratuvarı</h1><p class="intro">Devreyi kur, uçları bağla ve doğru akım değerlerini ölç.</p><div class="layout"><aside class="panel"><h2>Bileşenler</h2><div id="palette" class="tools"><button data-add="source">DC kaynak</button><button data-add="resistor">Direnç</button><button data-add="led">LED</button><button data-add="switch">Anahtar</button></div><p><a href="../laboratuvar.html">Arduino, breadboard ve kod editörü ↗</a></p><p>Bir kablonun iki ucunu sırayla seç. Bileşenleri taşımak için başlığını sürükle.</p><button id="example">LED örneğini yükle</button></aside><section class="panel"><h2>Devre çalışma alanı</h2><div id="board"></div><ul id="wires" class="wire-list" aria-label="Kablolar"></ul></section><aside class="panel"><h2>Ölçümler</h2><button id="run">Devreyi çöz</button><div id="result" aria-live="polite"></div><h2>Proje</h2><button id="save">JSON indir</button><label>JSON aç <input id="load" type="file" accept=".json"></label></aside></div></main>
+<body class="elektronik-page">
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+  <header class="site-bar">
+    <nav aria-label="Atölye">
+      <a class="brand" href="../#dijital-atolye"><span class="brand-mark" aria-hidden="true">EC</span><span>Dijital Atölye</span></a>
+      <div class="app-nav"><a href="elektronik.html" aria-current="page">Elektronik</a><a href="robot.html">Robot kol</a><a href="model.html">3D model</a></div>
+      <a class="site-link" href="../">Siteye dön <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main id="main">
+    <header class="work-top">
+      <div><h1>Elektronik Laboratuvarı</h1><p>DC devrelerini kur, kablola ve ölç.</p></div>
+      <div class="actions">
+          <label class="button file-button">JSON aç<input id="load" type="file" accept=".json"></label>
+          <button id="save">JSON indir</button>
+          <button class="primary" id="run"><span class="play-icon" aria-hidden="true"></span>Devreyi çöz</button>
+        </div>
+    </header>
+    <div class="workspace circuit-layout">
+      <aside class="pane library">
+        <div class="pane-head"><h2>Bileşenler</h2></div>
+        <div id="palette" class="palette">
+          <button data-add="source"><span class="symbol source" aria-hidden="true"></span><span><strong>DC kaynak</strong><small>Gerilim</small></span><span class="add-mark" aria-hidden="true">+</span></button>
+          <button data-add="resistor"><span class="symbol resistor" aria-hidden="true"></span><span><strong>Direnç</strong><small>Pasif bileşen</small></span><span class="add-mark" aria-hidden="true">+</span></button>
+          <button data-add="led"><span class="symbol led" aria-hidden="true"></span><span><strong>LED</strong><small>Diyot</small></span><span class="add-mark" aria-hidden="true">+</span></button>
+          <button data-add="switch"><span class="symbol switch" aria-hidden="true"></span><span><strong>Anahtar</strong><small>İki konumlu</small></span><span class="add-mark" aria-hidden="true">+</span></button>
+        </div>
+        <div class="library-footer">
+          <button id="example" class="quiet">LED örneğini yükle <span aria-hidden="true">↺</span></button>
+          <a class="external-link" href="../laboratuvar.html">Arduino çalışma alanı <span aria-hidden="true">↗</span></a>
+        </div>
+      </aside>
+      <section class="pane canvas-pane" aria-labelledby="board-title">
+        <div class="pane-head"><h2 id="board-title">Devre tuvali</h2><span class="tag">DC</span></div>
+        <div id="board"></div>
+        <div class="canvas-footer"><p id="wire-hint" role="status">Bağlamak için iki uç seç.</p><span id="board-count" class="mono"></span></div>
+        <details class="connections"><summary>Bağlantılar</summary><ul id="wires" class="wire-list" aria-label="Kablolar"></ul></details>
+      </section>
+      <aside class="pane inspector">
+        <div class="pane-head"><h2>Ölçümler</h2><span class="tag">V / mA</span></div>
+        <div id="result" class="inspector-body" aria-live="polite"></div>
+      </aside>
+    </div>
+  </main>
 </body>
 </html>

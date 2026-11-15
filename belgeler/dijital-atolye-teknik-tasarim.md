@@ -28,7 +28,7 @@ Paylaşılan katman, stil dosyası ve WebGL kamera/ışık düzeniyle sınırlı
   └────────────────┴─────────────────────┴───────────────┘
 ```
 
-Ekran bir LED örneğiyle açılır. Kullanıcı bileşen ekler, başlığını sürükler, iki uca sırayla basarak kablo çizer ve ölçümleri çalıştırır. A ve B, DC kaynağında artı ve eksi, LED'de anot ve katottur. Açık anahtar iletimden çıkar. Kısa devrede çözüm durur. LED akımı 20 mA üstünde uyarı gösterilir. Arduino, breadboard, kod düzenleyici ve seri monitör mevcut laboratuvar adresinden açılır.
+Ekran bir LED örneği ve ölçüm tablosuyla açılır. Kullanıcı bileşen ekler, başlığını sürükler, iki uca sırayla basarak kablo çizer ve ölçümleri çalıştırır. Kaynak uçlarında +/−, LED'de anot ve katot için A/K gösterilir. Açık anahtar iletimden çıkar. Kısa devrede çözüm durur. LED akımı 20 mA üstünde uyarı gösterilir. Arduino, breadboard, kod düzenleyici ve seri monitör mevcut laboratuvar adresinden açılır.
 
 Çözümleyici kabloları düğümlere birleştirir ve tek ideal gerilim kaynağı için değiştirilmiş düğüm analizi uygular. LED için eşik ve 10 Ω dinamik direnç kullanan parçalı doğrusal model vardır. Yüzen düğümleri sayısal olarak sabitlemek için küçük referans iletkenliği kullanılır. Yakınsama sağlanmazsa ölçüm yerine açık hata gösterilir. Bu model sabit durum eğitim örnekleri içindir.
 

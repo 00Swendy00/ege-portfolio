@@ -4,9 +4,12 @@ const get = id => document.getElementById(id);
 const board = get('board');
 const result = get('result');
 let parts = [], wires = [], selected, next = 0;
+const wireColors = ['#72e6bc','#9ab5ff','#d7a8fa','#ffc68f'];
+const pinNames = {source:['+','−'],led:['A','K']};
+const pinLabel = (type,pin) => pinNames[type]?.[pin==='a'?0:1] ?? pin.toUpperCase();
 const label = id => {
   const part = parts.find(item => item.id === id.slice(0,-1));
-  return catalog[part.type].label + ' ' + part.id.slice(1) + ' / ' + (id.endsWith('a') ? 'A' : 'B');
+  return catalog[part.type].label+' '+part.id.slice(1)+' / '+pinLabel(part.type,id.at(-1));
 };
 const button = (text, action) => {
   const element = document.createElement('button');
@@ -15,7 +18,10 @@ const button = (text, action) => {
   return element;
 };
 const clear = () => {
-  result.textContent = '';
+  const message = document.createElement('p');
+  message.className = 'empty-state';
+  message.textContent = 'Gerilim ve akım değerlerini görmek için devreyi çöz.';
+  result.replaceChildren(message);
   board.querySelectorAll('.lit').forEach(part => part.classList.remove('lit'));
 };
 function drawWires() {
@@ -26,12 +32,14 @@ function drawWires() {
     const rect = document.getElementById(pin).getBoundingClientRect();
     return [rect.left-bounds.left+rect.width/2,rect.top-bounds.top+rect.height/2];
   };
-  for (const [a,b] of wires) {
+  for (const [i,[a,b]] of wires.entries()) {
     const [x1,y1] = point(a), [x2,y2] = point(b);
     const line = document.createElementNS('http://www.w3.org/2000/svg','path');
-    line.setAttribute('d',`M ${x1} ${y1} C ${x1} ${Math.max(y1,y2)+38}, ${x2} ${Math.max(y1,y2)+38}, ${x2} ${y2}`);
-    line.setAttribute('stroke','#76d9fc');
-    line.setAttribute('stroke-width','3');
+    const bend = Math.min(bounds.height-4,Math.max(y1,y2)+24+(i%3)*8);
+    line.setAttribute('d',`M ${x1} ${y1} C ${x1} ${bend}, ${x2} ${bend}, ${x2} ${y2}`);
+    line.setAttribute('stroke',wireColors[i%wireColors.length]);
+    line.setAttribute('stroke-width','2.5');
+    line.setAttribute('stroke-linecap','round');
     line.setAttribute('fill','none');
     svg.append(line);
   }
@@ -41,6 +49,8 @@ function render() {
   const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
   svg.setAttribute('aria-hidden','true');
   board.replaceChildren(svg);
+  get('board-count').textContent = `${parts.length} bileşen · ${wires.length} kablo`;
+  get('wire-hint').textContent = selected ? `${label(selected)} seçildi. Diğer ucu seç.` : 'Bağlamak için iki uç seç.';
   get('wires').replaceChildren();
   wires.forEach(([a,b],i) => {
     const li = document.createElement('li');
@@ -53,23 +63,29 @@ function render() {
     box.className = 'component';
     box.dataset.part = part.id;
     const position = () => {
-      box.style.left = `calc((100% - 122px) * ${part.x})`;
-      box.style.top = `calc((100% - 105px) * ${part.y})`;
+      box.style.left = `calc(9px + (100% - var(--board-card-width) - 18px) * ${part.x})`;
+      box.style.top = `calc(9px + (100% - var(--board-card-height) - 18px) * ${part.y})`;
     };
     position();
     const heading = document.createElement('strong');
     heading.textContent = spec.label+' '+part.id.slice(1);
-    heading.onpointerdown = event => {
-      heading.setPointerCapture(event.pointerId);
+    const handle = document.createElement('div');
+    handle.className = 'component-handle';
+    const symbol = document.createElement('span');
+    symbol.className = 'symbol '+part.type;
+    symbol.setAttribute('aria-hidden','true');
+    handle.append(symbol,heading);
+    handle.onpointerdown = event => {
+      handle.setPointerCapture(event.pointerId);
       const start = { x:event.clientX, y:event.clientY, px:part.x, py:part.y };
-      heading.onpointermove = move => {
+      handle.onpointermove = move => {
         const clamp = value => Math.max(0,Math.min(1,value));
-        part.x = clamp(start.px + (move.clientX-start.x)/Math.max(1,board.clientWidth-122));
-        part.y = clamp(start.py + (move.clientY-start.y)/Math.max(1,board.clientHeight-105));
+        part.x = clamp(start.px + (move.clientX-start.x)/Math.max(1,board.clientWidth-box.offsetWidth-18));
+        part.y = clamp(start.py + (move.clientY-start.y)/Math.max(1,board.clientHeight-box.offsetHeight-18));
         position();
         drawWires();
       };
-      heading.onlostpointercapture = () => { heading.onpointermove = null; };
+      handle.onlostpointercapture = () => { handle.onpointermove = null; };
     };
     const value = document.createElement('input');
     value.type = part.type === 'switch' ? 'checkbox' : 'number';
@@ -85,11 +101,15 @@ function render() {
       clear();
     };
     const field = document.createElement('label');
-    field.append(spec.unit || 'Kapalı devre', ' ', value);
-    box.append(heading,field);
+    field.className = 'component-input';
+    field.append(spec.unit || 'Kapalı', value);
+    value.setAttribute('aria-label',heading.textContent+' '+(spec.unit || 'kapalı devre'));
+    const ports = document.createElement('div');
+    ports.className = 'component-ports';
+    box.append(handle,field,ports);
     for (const pin of ['a','b']) {
       const id = part.id+pin;
-      const port = button(pin.toUpperCase(), () => {
+      const port = button(pinLabel(part.type,pin), () => {
         if (selected && selected !== id && !wires.some(wire => wire.includes(id) && wire.includes(selected))) wires.push([selected,id]);
         selected = selected ? undefined : id;
         render();
@@ -98,16 +118,17 @@ function render() {
       port.id = id;
       port.setAttribute('aria-label',label(id));
       port.setAttribute('aria-pressed',String(id===selected));
-      box.append(port);
+      ports.append(port);
     }
-    const remove = button('Sil', () => {
+    const remove = button('×', () => {
       parts = parts.filter(item => item !== part);
       wires = wires.filter(wire => wire.every(pin => pin.slice(0,-1) !== part.id));
       selected = undefined;
       render();
     });
     remove.setAttribute('aria-label',heading.textContent+' bileşenini sil');
-    box.append(remove);
+    remove.className = 'remove-part';
+    ports.append(remove);
     board.append(box);
   }
   drawWires();
@@ -117,37 +138,60 @@ function add(type,x,y) {
 }
 function example() {
   parts = []; wires = []; next = 0; selected = undefined;
-  add('source',.06,.1); add('resistor',.87,.17); add('led',.64,.64);
+  add('source',.12,.20); add('resistor',.88,.20); add('led',.57,.65);
   wires = [['p1a','p2a'],['p2b','p3a'],['p3b','p1b']];
   render();
+  showReadings();
 }
 get('palette').onclick = ({target}) => {
-  const type = target.dataset.add;
+  const type = target.closest('[data-add]')?.dataset.add;
   if (!type) return;
   if (parts.length >= 24) { result.textContent = 'En fazla 24 bileşen eklenebilir.'; return; }
   add(type, (next % 3)/2, (Math.floor(next/3)%4)/3);
   render();
 };
 get('example').onclick = example;
-get('run').onclick = () => {
-  clear();
+function showReadings() {
+  board.querySelectorAll('.lit').forEach(part => part.classList.remove('lit'));
+  result.replaceChildren();
   try {
-    const list = document.createElement('ul');
+    const table = document.createElement('table');
+    table.className = 'readings';
+    const header = table.createTHead().insertRow();
+    for (const text of ['Bileşen','V','mA']) {
+      const cell = document.createElement('th');
+      cell.scope = 'col';
+      cell.textContent = text;
+      header.append(cell);
+    }
+    const rows = table.createTBody();
+    const format = new Intl.NumberFormat('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2});
     let overloaded = false;
     for (const reading of solve(parts,wires)) {
       const part = parts.find(item => item.id === reading.id);
-      const item = document.createElement('li');
-      item.textContent = `${catalog[part.type].label} ${part.id.slice(1)} · ${reading.volts.toFixed(2)} V · ${(1000*reading.amps).toFixed(2)} mA`;
-      list.append(item);
+      const row = rows.insertRow();
+      const cell = document.createElement('th');
+      cell.scope = 'row';
+      cell.textContent = `${catalog[part.type].label} ${part.id.slice(1)}`;
+      row.append(cell);
+      row.insertCell().textContent = format.format(reading.volts);
+      row.insertCell().textContent = format.format(1000*reading.amps);
       if (part.type==='led' && reading.amps>.001) {
         board.querySelector(`[data-part="${part.id}"]`).classList.add('lit');
         overloaded ||= reading.amps > .02;
       }
     }
-    if (overloaded) result.append('LED akımı 20 mA üzerinde. Seri direnci kontrol et.');
-    result.append(list);
+    result.append(table);
+    if (overloaded) {
+      const warning = document.createElement('p');
+      warning.className = 'feedback';
+      warning.dataset.state = 'error';
+      warning.textContent = 'LED akımı 20 mA üzerinde. Seri direnci kontrol et.';
+      result.append(warning);
+    }
   } catch (error) { result.textContent = error.message; }
-};
+}
+get('run').onclick = showReadings;
 get('save').onclick = () => {
   const url = URL.createObjectURL(new Blob([JSON.stringify({version:1,parts,wires},null,2)],{type:'application/json'}));
   const link = document.createElement('a');
