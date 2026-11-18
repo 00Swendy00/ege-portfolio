@@ -24,7 +24,7 @@
     try { localStorage.setItem('ege-theme', next); } catch (_) {}
   });
 
-  // Açılıştaki sekmeler; gerçek 3D perspektifli CSS kartı ile terminal arasında geçiş.
+  // Çalışma alanları ve site asistanı arasında klavyeyle gezilebilir sekmeler.
   const tabs = [...doc.querySelectorAll('.hero-tab')];
   const showPanel = (panel) => {
     tabs.forEach(tab => {
@@ -44,43 +44,6 @@
       const next = tabs[(index + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
       showPanel(next.dataset.panel); next.focus();
     });
-  });
-  const board = doc.getElementById('pcb-board');
-  const stage = doc.getElementById('circuit-stage');
-  let rx = 15, ry = -19, drag = null;
-  const rotate = () => {
-    if (!board) return;
-    board.style.setProperty('--rx', `${rx}deg`);
-    board.style.setProperty('--ry', `${ry}deg`);
-  };
-  stage?.addEventListener('pointerdown', e => {
-    if (e.button !== 0 && e.pointerType === 'mouse') return;
-    drag = { x: e.clientX, y: e.clientY, rx, ry, id: e.pointerId };
-    stage.setPointerCapture(e.pointerId);
-  });
-  stage?.addEventListener('pointermove', e => {
-    if (!drag || drag.id !== e.pointerId) return;
-    ry = Math.max(-65, Math.min(65, drag.ry + (e.clientX - drag.x) * .34));
-    rx = Math.max(-50, Math.min(50, drag.rx - (e.clientY - drag.y) * .34));
-    rotate();
-  });
-  const endDrag = () => { drag = null; };
-  stage?.addEventListener('pointerup', endDrag);
-  stage?.addEventListener('pointercancel', endDrag);
-  stage?.addEventListener('keydown', e => {
-    if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) return;
-    e.preventDefault();
-    if (e.key === 'ArrowLeft') ry -= 9;
-    else if (e.key === 'ArrowRight') ry += 9;
-    else if (e.key === 'ArrowUp') rx -= 9;
-    else rx += 9;
-    rx = Math.max(-50, Math.min(50, rx)); ry = Math.max(-65, Math.min(65, ry)); rotate();
-  });
-  doc.getElementById('board-reset')?.addEventListener('click', () => { rx=15; ry=-19; rotate(); });
-  const led = doc.getElementById('pcb-led');
-  doc.getElementById('board-led-toggle')?.addEventListener('click', e => {
-    const off = led.classList.toggle('is-off');
-    e.currentTarget.textContent = 'LED: ' + (off ? 'Kapalı' : 'Açık');
   });
 
   // Ekran görüntüsünü büyütme: yeni pencereye bağımlı olmadan modal. JS kapalıysa bağlantı dosyayı açar.

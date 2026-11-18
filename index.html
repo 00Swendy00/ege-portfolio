@@ -6,8 +6,8 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-01HQB9LT/qzVsr9DT+0sgKiQZfTjcfQ0miEG7pat8DU=' 'sha256-t034CoMWMO9/45/IZHfOdbVZZ6h0Hef2OoWAKs0HWSo=' https://hcaptcha.com https://*.hcaptcha.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://api.web3forms.com https://ege-site-asistani.egecoskun-tech.workers.dev https://hcaptcha.com https://*.hcaptcha.com; object-src 'none'; base-uri 'none'; form-action https://api.web3forms.com; frame-src https://hcaptcha.com https://*.hcaptcha.com"/>
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
 <link rel="stylesheet" href="atolye/giris.css?v=2"/>
-<link rel="stylesheet" href="home-showcase.css?v=1"/>
-<script defer src="home-showcase.js?v=1"></script>
+<link rel="stylesheet" href="home-showcase.css?v=20261118-cards"/>
+<script defer src="home-showcase.js?v=20261118-cards"></script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="light dark" name="color-scheme"/>
 <title>Hebil Ege Coşkun | Gömülü Sistemler ve Yazılım</title>
@@ -47,8 +47,8 @@
 <link href="assets/favicon-32.png?v=20261101" rel="icon" sizes="32x32" type="image/png"/>
 <link href="assets/favicon-16.png?v=20261101" rel="icon" sizes="16x16" type="image/png"/>
 <link href="assets/apple-touch-icon.png?v=20261030-2" rel="apple-touch-icon" sizes="180x180"/>
-<link href="v4.css?v=20261105" rel="stylesheet"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Ege Coşkun | Elektronik ve Yazılım","url":"https://egecoskun.tech/","inLanguage":"tr-TR","hasPart":[{"@type":"WebPage","url":"https://egecoskun.tech/laboratuvar.html","name":"Sanal Elektronik Laboratuvarı"},{"@type":"WebPage","url":"https://egecoskun.tech/esp32-pin-haritasi.html","name":"ESP32 Pin Haritası"}]}</script><link rel="stylesheet" href="site-upgrade.css?v=20261105-chat"/><script defer src="i18n-catalog.js?v=20261115-showcase"></script><script defer src="i18n.js?v=20261105"></script><link rel="stylesheet" href="navigation.css?v=20261105-chat"/><link rel="stylesheet" href="site-assistant.css?v=20261105-chat"/></head>
-<body>
+<link href="v4.css?v=20261105" rel="stylesheet"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Ege Coşkun | Elektronik ve Yazılım","url":"https://egecoskun.tech/","inLanguage":"tr-TR","hasPart":[{"@type":"WebPage","url":"https://egecoskun.tech/laboratuvar.html","name":"Sanal Elektronik Laboratuvarı"},{"@type":"WebPage","url":"https://egecoskun.tech/esp32-pin-haritasi.html","name":"ESP32 Pin Haritası"}]}</script><link rel="stylesheet" href="site-upgrade.css?v=20261105-chat"/><script defer src="i18n-catalog.js?v=20261118"></script><script defer src="i18n.js?v=20261105"></script><link rel="stylesheet" href="navigation.css?v=20261105-chat"/><link rel="stylesheet" href="site-assistant.css?v=20261105-chat"/></head>
+<body class="home-page">
 <a class="skip-link" href="#main">İçeriğe geç</a>
 <div aria-hidden="true" class="scroll-progress"></div>
 <header class="site-header" id="top"><nav aria-label="Ana menü" class="nav-shell">
@@ -67,157 +67,133 @@
 <!-- Açılış -->
 <section aria-labelledby="hero-title" class="home-showcase">
   <h1 id="hero-title" class="sr-only">Fikirden devreye.<br/><span>Devreden geleceğe.</span></h1>
-  <div class="container">
-    <div class="showcase" data-showcase>
-      <div class="showcase-slides">
-      <article class="showcase-slide showcase-intro" id="showcase-slide-1" aria-labelledby="showcase-title-1">
-        <div class="showcase-copy">
-          <p class="showcase-category">Elektronik ve yazılım portfolyosu</p>
-          <h2 id="showcase-title-1">Fikirden devreye.<span>Devreden geleceğe.</span></h2>
-          <p class="showcase-description">ESP32, Arduino ve gömülü sistemler üzerine projelerimi ve tarayıcıda çalışan araçları keşfet.</p>
-          <div class="showcase-links">
-            <a class="showcase-action" href="#projects">Projelerimi keşfet <span aria-hidden="true">↗</span></a>
-            <a class="showcase-secondary" href="#site-asistani">Site asistanı <span aria-hidden="true">↓</span></a>
+  <div class="showcase" data-showcase>
+    <div class="showcase-heading"><h2>Dijital Atölye.<span>Projeler ve araçlar.</span></h2></div>
+    <div class="showcase-slides" tabindex="0" role="region" aria-label="Projeler ve araçlar">
+      <article class="showcase-slide showcase-robot" id="showcase-slide-1" aria-labelledby="showcase-title-1">
+        <a class="showcase-action" href="atolye/robot.html" aria-label="Simülatörü aç">
+          <div class="showcase-copy">
+            <p class="showcase-category">Robotik</p>
+            <h3 id="showcase-title-1">Robot Kol Simülatörü</h3>
+            <p class="showcase-description">Hedef belirle, hareketini programla.</p>
           </div>
-        </div>
-        <div class="showcase-media" aria-hidden="true">
-          <img src="assets/atolye-robot.webp" alt="" class="showcase-main-image" fetchpriority="high" width="640" height="360" decoding="async"/>
-          <img src="assets/atolye-elektronik.webp" alt="" class="showcase-mini" width="640" height="360" decoding="async"/>
-        </div>
+          <div class="showcase-media" aria-hidden="true">
+            <img src="assets/vitrin-robot.png" alt="" width="900" height="820" fetchpriority="high" decoding="async"/>
+          </div>
+          <span class="showcase-card-arrow" aria-hidden="true">↗</span>
+        </a>
       </article>
-      <article class="showcase-slide showcase-circuit" id="showcase-slide-2" aria-labelledby="showcase-title-2" hidden>
-        <div class="showcase-copy">
-          <p class="showcase-category">Dijital Atölye</p>
-          <h2 id="showcase-title-2">Elektronik Laboratuvarı</h2>
-          <p class="showcase-description">Kabloları bağla, DC devresi kur ve akımı ölç.</p>
-          <div class="showcase-links">
-            <a class="showcase-action" href="atolye/elektronik.html">Laboratuvarı aç <span aria-hidden="true">↗</span></a>
+      <article class="showcase-slide showcase-circuit" id="showcase-slide-2" aria-labelledby="showcase-title-2">
+        <a class="showcase-action" href="atolye/elektronik.html" aria-label="Laboratuvarı aç">
+          <div class="showcase-copy">
+            <p class="showcase-category">Elektronik</p>
+            <h3 id="showcase-title-2">Elektronik Laboratuvarı</h3>
+            <p class="showcase-description">Devreni kur, gerilimi ve akımı ölç.</p>
           </div>
-        </div>
-        <div class="showcase-media" aria-hidden="true">
-          <img src="assets/atolye-elektronik.webp" alt="" loading="lazy" decoding="async"/>
-        </div>
+          <div class="showcase-media" aria-hidden="true">
+            <img src="assets/atolye-elektronik.webp" alt="" width="640" height="360" loading="lazy" decoding="async"/>
+          </div>
+          <span class="showcase-card-arrow" aria-hidden="true">↗</span>
+        </a>
       </article>
-      <article class="showcase-slide showcase-robot" id="showcase-slide-3" aria-labelledby="showcase-title-3" hidden>
-        <div class="showcase-copy">
-          <p class="showcase-category">Dijital Atölye</p>
-          <h2 id="showcase-title-3">Robot Kol Simülatörü</h2>
-          <p class="showcase-description">Eklem açılarını değiştir, hedefe git ve hareket dizini oynat.</p>
-          <div class="showcase-links">
-            <a class="showcase-action" href="atolye/robot.html">Simülatörü aç <span aria-hidden="true">↗</span></a>
+      <article class="showcase-slide showcase-cad" id="showcase-slide-3" aria-labelledby="showcase-title-3">
+        <a class="showcase-action" href="atolye/model.html" aria-label="Görüntüleyiciyi aç">
+          <div class="showcase-copy">
+            <p class="showcase-category">3D tasarım</p>
+            <h3 id="showcase-title-3">3D Model Görüntüleyici</h3>
+            <p class="showcase-description">Modelini aç, parçalarını incele.</p>
           </div>
-        </div>
-        <div class="showcase-media" aria-hidden="true">
-          <img src="assets/atolye-robot.webp" alt="" loading="lazy" decoding="async"/>
-        </div>
+          <div class="showcase-media" aria-hidden="true">
+            <img src="assets/vitrin-model.png" alt="" width="900" height="820" loading="lazy" decoding="async"/>
+          </div>
+          <span class="showcase-card-arrow" aria-hidden="true">↗</span>
+        </a>
       </article>
-      <article class="showcase-slide showcase-cad" id="showcase-slide-4" aria-labelledby="showcase-title-4" hidden>
-        <div class="showcase-copy">
-          <p class="showcase-category">Dijital Atölye</p>
-          <h2 id="showcase-title-4">3D Model Görüntüleyici</h2>
-          <p class="showcase-description">STEP ve STL modellerini aç, parçaları ayır ve mesafe ölç.</p>
-          <div class="showcase-links">
-            <a class="showcase-action" href="atolye/model.html">Görüntüleyiciyi aç <span aria-hidden="true">↗</span></a>
+      <article class="showcase-slide showcase-esp" id="showcase-slide-4" aria-labelledby="showcase-title-4">
+        <a class="showcase-action" href="esp32-pin-haritasi.html" aria-label="Pin haritasını aç">
+          <div class="showcase-copy">
+            <p class="showcase-category">Gömülü sistemler</p>
+            <h3 id="showcase-title-4">ESP32 Pin Haritası</h3>
+            <p class="showcase-description">GPIO, ADC ve PWM uçlarını keşfet.</p>
           </div>
-        </div>
-        <div class="showcase-media" aria-hidden="true">
-          <img src="assets/atolye-model.webp" alt="" loading="lazy" decoding="async"/>
-        </div>
+          <div class="showcase-media" aria-hidden="true">
+            <img src="assets/esp32-pin-studio.svg" alt="" width="640" height="360" loading="lazy" decoding="async"/>
+          </div>
+          <span class="showcase-card-arrow" aria-hidden="true">↗</span>
+        </a>
       </article>
-      <article class="showcase-slide showcase-esp" id="showcase-slide-5" aria-labelledby="showcase-title-5" hidden>
-        <div class="showcase-copy">
-          <p class="showcase-category">ESP32</p>
-          <h2 id="showcase-title-5">ESP32 Pin Haritası</h2>
-          <p class="showcase-description">GPIO, ADC, PWM ve besleme uçlarını etkileşimli olarak incele.</p>
-          <div class="showcase-links">
-            <a class="showcase-action" href="esp32-pin-haritasi.html">Pin haritasını aç <span aria-hidden="true">↗</span></a>
+      <article class="showcase-slide showcase-math" id="showcase-slide-5" aria-labelledby="showcase-title-5">
+        <a class="showcase-action" href="hesaplayicilar.html" aria-label="Hesaplayıcıları aç">
+          <div class="showcase-copy">
+            <p class="showcase-category">Hesaplama</p>
+            <h3 id="showcase-title-5">Elektronik Hesaplayıcılar</h3>
+            <p class="showcase-description">Dirençten pil ömrüne, devreni hesapla.</p>
           </div>
-        </div>
-        <div class="showcase-media" aria-hidden="true">
-          <img src="assets/esp32-pin-studio.svg" alt="" loading="lazy" decoding="async"/>
-        </div>
+          <div class="showcase-media" aria-hidden="true">
+            <div class="showcase-equation"><span>I</span><span>=</span><span class="showcase-fraction"><span>V</span><span>R</span></span></div>
+            <p class="showcase-example">5 V / 220 Ω ≈ 22,73 mA</p>
+          </div>
+          <span class="showcase-card-arrow" aria-hidden="true">↗</span>
+        </a>
       </article>
-      <article class="showcase-slide showcase-math" id="showcase-slide-6" aria-labelledby="showcase-title-6" hidden>
-        <div class="showcase-copy">
-          <p class="showcase-category">Elektronik araçları</p>
-          <h2 id="showcase-title-6">Elektronik Hesaplayıcılar</h2>
-          <p class="showcase-description">Ohm kanunu, LED direnci ve gerilim bölücü hesaplarını yap.</p>
-          <div class="showcase-links">
-            <a class="showcase-action" href="hesaplayicilar.html">Hesaplayıcıları aç <span aria-hidden="true">↗</span></a>
+      <article class="showcase-slide showcase-spotify" id="showcase-slide-6" aria-labelledby="showcase-title-6">
+        <a class="showcase-action" href="projeler/spotify-dotmatrix.html" aria-label="Projeyi incele">
+          <div class="showcase-copy">
+            <p class="showcase-category">Arduino projesi</p>
+            <h3 id="showcase-title-6">Spotify Dot Matrix</h3>
+            <p class="showcase-description">Çalan parçayı LED matrisine taşı.</p>
           </div>
-        </div>
-        <div class="showcase-media" aria-hidden="true">
-          <div class="showcase-meter">
-            <p>Ohm Kanunu</p>
-            <div><span>V</span><strong>5,00 <small>V</small></strong></div>
-            <div><span>R</span><strong>220 <small>Ω</small></strong></div>
-            <div class="showcase-meter-result"><span>I</span><strong>22,73 <small>mA</small></strong></div>
+          <div class="showcase-media" aria-hidden="true">
+            <img src="assets/spotify.webp" alt="" width="640" height="360" loading="lazy" decoding="async"/>
           </div>
-        </div>
+          <span class="showcase-card-arrow" aria-hidden="true">↗</span>
+        </a>
       </article>
-      <article class="showcase-slide showcase-spotify" id="showcase-slide-7" aria-labelledby="showcase-title-7" hidden>
-        <div class="showcase-copy">
-          <p class="showcase-category">Arduino projesi</p>
-          <h2 id="showcase-title-7">Spotify Dot Matrix</h2>
-          <p class="showcase-description">Spotify’da çalan parçayı Arduino ve LED matrisle ekrana aktar.</p>
-          <div class="showcase-links">
-            <a class="showcase-action" href="projeler/spotify-dotmatrix.html">Projeyi incele <span aria-hidden="true">↗</span></a>
+      <article class="showcase-slide showcase-radar" id="showcase-slide-7" aria-labelledby="showcase-title-7">
+        <a class="showcase-action" href="projeler/servo-radar.html" aria-label="Projeyi incele">
+          <div class="showcase-copy">
+            <p class="showcase-category">Arduino projesi</p>
+            <h3 id="showcase-title-7">Arduino Servo Radar</h3>
+            <p class="showcase-description">Sensörle çevreni tara.</p>
           </div>
-        </div>
-        <div class="showcase-media" aria-hidden="true">
-          <img src="assets/spotify.webp" alt="" loading="lazy" decoding="async"/>
-        </div>
-      </article>
-      <article class="showcase-slide showcase-radar" id="showcase-slide-8" aria-labelledby="showcase-title-8" hidden>
-        <div class="showcase-copy">
-          <p class="showcase-category">Arduino projesi</p>
-          <h2 id="showcase-title-8">Arduino Servo Radar</h2>
-          <p class="showcase-description">Ultrasonik sensörle açıya bağlı mesafe ölçümünü incele.</p>
-          <div class="showcase-links">
-            <a class="showcase-action" href="projeler/servo-radar.html">Projeyi incele <span aria-hidden="true">↗</span></a>
+          <div class="showcase-media" aria-hidden="true">
+            <img src="assets/servo-radar.webp" alt="" width="640" height="360" loading="lazy" decoding="async"/>
           </div>
-        </div>
-        <div class="showcase-media" aria-hidden="true">
-          <img src="assets/servo-radar.webp" alt="" loading="lazy" decoding="async"/>
-        </div>
+          <span class="showcase-card-arrow" aria-hidden="true">↗</span>
+        </a>
       </article>
-      </div>
-      <div class="showcase-controls" hidden>
-        <div class="showcase-count" aria-hidden="true"><strong data-showcase-current>01</strong><span> / 08</span></div>
-        <div class="showcase-progress" role="group" aria-label="Tanıtım ekranları">
-          <button type="button" data-showcase-index="0" aria-label="Fikirden devreye." aria-controls="showcase-slide-1" aria-current="true"><span></span></button>
-          <button type="button" data-showcase-index="1" aria-label="Elektronik Laboratuvarı" aria-controls="showcase-slide-2"><span></span></button>
-          <button type="button" data-showcase-index="2" aria-label="Robot Kol Simülatörü" aria-controls="showcase-slide-3"><span></span></button>
-          <button type="button" data-showcase-index="3" aria-label="3D Model Görüntüleyici" aria-controls="showcase-slide-4"><span></span></button>
-          <button type="button" data-showcase-index="4" aria-label="ESP32 Pin Haritası" aria-controls="showcase-slide-5"><span></span></button>
-          <button type="button" data-showcase-index="5" aria-label="Elektronik Hesaplayıcılar" aria-controls="showcase-slide-6"><span></span></button>
-          <button type="button" data-showcase-index="6" aria-label="Spotify Dot Matrix" aria-controls="showcase-slide-7"><span></span></button>
-          <button type="button" data-showcase-index="7" aria-label="Arduino Servo Radar" aria-controls="showcase-slide-8"><span></span></button>
-        </div>
-        <div class="showcase-buttons">
-          <button type="button" data-showcase-toggle aria-label="Otomatik geçişi duraklat" title="Otomatik geçişi duraklat"><span class="showcase-play-symbol" aria-hidden="true"></span></button>
-          <button type="button" data-showcase-step="-1" aria-label="Önceki ekran" title="Önceki ekran"><span aria-hidden="true">‹</span></button>
-          <button type="button" data-showcase-step="1" aria-label="Sonraki ekran" title="Sonraki ekran"><span aria-hidden="true">›</span></button>
-        </div>
-      </div>
-      <span class="sr-only" data-showcase-announcement aria-live="polite"></span>
     </div>
+    <div class="showcase-controls" hidden>
+      <div class="showcase-progress" role="group" aria-label="Tanıtım ekranları">
+        <button type="button" data-showcase-index="0" aria-label="Robot Kol Simülatörü" aria-controls="showcase-slide-1" aria-current="true"><span></span></button>
+        <button type="button" data-showcase-index="1" aria-label="Elektronik Laboratuvarı" aria-controls="showcase-slide-2"><span></span></button>
+        <button type="button" data-showcase-index="2" aria-label="3D Model Görüntüleyici" aria-controls="showcase-slide-3"><span></span></button>
+        <button type="button" data-showcase-index="3" aria-label="ESP32 Pin Haritası" aria-controls="showcase-slide-4"><span></span></button>
+        <button type="button" data-showcase-index="4" aria-label="Elektronik Hesaplayıcılar" aria-controls="showcase-slide-5"><span></span></button>
+        <button type="button" data-showcase-index="5" aria-label="Spotify Dot Matrix" aria-controls="showcase-slide-6"><span></span></button>
+        <button type="button" data-showcase-index="6" aria-label="Arduino Servo Radar" aria-controls="showcase-slide-7"><span></span></button>
+      </div>
+      <div class="showcase-buttons">
+        <button type="button" data-showcase-toggle aria-label="Otomatik geçişi duraklat" title="Otomatik geçişi duraklat"><span class="showcase-play-symbol" aria-hidden="true"></span></button>
+        <button type="button" data-showcase-step="-1" aria-label="Önceki ekran" title="Önceki ekran"><span aria-hidden="true">‹</span></button>
+        <button type="button" data-showcase-step="1" aria-label="Sonraki ekran" title="Sonraki ekran"><span aria-hidden="true">›</span></button>
+      </div>
+    </div>
+    <span class="sr-only" data-showcase-announcement aria-live="polite"></span>
   </div>
 </section>
-<section id="site-asistani" aria-labelledby="quick-demo-title" class="quick-demo matrix-host matrix-dark">
-<canvas aria-hidden="true" class="matrix-rain-layer"></canvas>
+<section id="site-asistani" aria-labelledby="quick-demo-title" class="quick-demo">
 <div class="container hero-layout">
 <div class="quick-demo-copy">
-<h2 id="quick-demo-title">Site asistanı ve 3D devre</h2>
-<p>Asistana bir soru sor veya ESP32 kartını üç boyutlu incele.</p>
+<h2 id="quick-demo-title">Ne üretmek istersin?</h2>
+<p>Bir çalışma alanı seçerek başla. Projeler ve araçlarla ilgili sorularını site asistanına sor.</p>
 <div class="hero-actions"><a class="button button-quiet" href="#about">Beni tanı <span aria-hidden="true">↓</span></a></div>
 <a class="hero-instagram" href="https://instagram.com/00.e.ge00" target="_blank" rel="noopener noreferrer" aria-label="Instagram profilimi aç"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="6.7" r="1.1" fill="currentColor"/></svg><span><strong>Instagram</strong><span>@00.e.ge00</span></span><span class="social-arrow" aria-hidden="true">↗</span></a>
 </div>
-<div aria-label="Site asistanı ve etkileşimli kart modeli" class="hero-art">
-<div aria-hidden="true" class="terminal-aura"></div>
-<div aria-label="Açılış önizlemesi" class="hero-switch" role="tablist">
-<button aria-controls="hero-panel-code" aria-selected="true" class="hero-tab is-active" data-panel="code" id="hero-tab-code" role="tab" type="button">Site asistanı</button>
-<button aria-controls="hero-panel-board" aria-selected="false" class="hero-tab" data-panel="board" id="hero-tab-board" role="tab" tabindex="-1" type="button">3D devre</button></div><div aria-labelledby="hero-tab-code" class="dev-console site-assistant" id="hero-panel-code" role="tabpanel">
+<div aria-label="Çalışma alanları ve site asistanı" class="hero-art">
+<div aria-label="Keşif paneli" class="hero-switch" role="tablist">
+<button aria-controls="hero-panel-tools" aria-selected="true" class="hero-tab is-active" data-panel="tools" id="hero-tab-tools" role="tab" type="button">Çalışma alanları</button>
+<button aria-controls="hero-panel-code" aria-selected="false" class="hero-tab" data-panel="code" id="hero-tab-code" role="tab" tabindex="-1" type="button">Site asistanı</button></div><div aria-labelledby="hero-tab-code" class="dev-console site-assistant" id="hero-panel-code" role="tabpanel" hidden>
 <div class="dev-console-top"><div class="dev-window-dots" aria-hidden="true"><span></span><span></span><span></span></div><span>ec_assistant</span><span class="assistant-online"><i aria-hidden="true"></i> Yapay zekâ</span></div>
 <div class="assistant-content"><div class="assistant-eyebrow"><span>SİTENİN İÇİNDEN BİR YARDIMCI</span><button type="button" id="assistant-clear" class="assistant-clear">Sohbeti temizle</button></div>
 <div class="assistant-intro"><div class="assistant-emblem" aria-hidden="true">EC</div><h2>Merak ettiğini sor.</h2><p>Projeler, site araçları, teknoloji veya Burdur’un hava durumu. Birlikte keşfedelim.</p></div>
@@ -225,19 +201,24 @@
 <div id="assistant-messages" class="assistant-messages" role="log" aria-live="polite" aria-label="Asistanla sohbet" aria-relevant="additions"></div>
 <form id="assistant-form" class="assistant-form" aria-describedby="assistant-status assistant-privacy"><label class="sr-only" for="assistant-question">Asistana sor</label><input id="assistant-question" type="text" maxlength="600" placeholder="Bir soru yaz…" autocomplete="off" required/><button type="submit" aria-label="Soruyu gönder">↑</button></form>
 <p id="assistant-status" class="assistant-status" role="status">Bir soru seç veya yaz.</p><p id="assistant-privacy" class="assistant-privacy">Soruların yanıt için Cloudflare’a iletilir. Kişisel veya gizli bilgi paylaşma. Yapay zekâ yanıtları hata içerebilir.</p>
-</div></div><div aria-labelledby="hero-tab-board" class="board-panel" hidden="" id="hero-panel-board" role="tabpanel">
-<div class="circuit-heading"><span class="pulse-dot"></span> ESP32 DEVKIT · ETKİLEŞİMLİ MODEL <span>3D / DEMO</span></div>
-<div aria-label="Fare veya dokunarak döndürülebilen üç boyutlu ESP32 kart maketi" class="circuit-stage" id="circuit-stage" tabindex="0">
-<div class="pcb-board" id="pcb-board"><div aria-hidden="true" class="pcb-side"></div><div class="pcb-face">
-<svg aria-hidden="true" class="pcb-traces" preserveaspectratio="none" viewbox="0 0 550 340"><g fill="none" opacity=".58" stroke="#33c6b5" stroke-width="1.7"><path d="M54 42H150V102H213 M54 65H128V133H204 M470 45H400V116H350 M480 69H417V167H354 M53 280H146V234H204 M500 287H418V230H353 M73 165H183 M365 186H485 M92 295H184 M351 68H468"></path><path d="M45 215H106V195H178M486 214H439V199H372"></path></g><g fill="#56e5ca"><circle cx="54" cy="42" r="5"></circle><circle cx="54" cy="65" r="5"></circle><circle cx="470" cy="45" r="5"></circle><circle cx="480" cy="69" r="5"></circle><circle cx="53" cy="280" r="5"></circle><circle cx="500" cy="287" r="5"></circle></g></svg>
-<div class="pcb-port">USB-C</div><span class="pcb-label pcb-label-top">ESP32 DEVKIT V1</span><div aria-hidden="true" class="pcb-pin pcb-pin-left"></div><div aria-hidden="true" class="pcb-pin pcb-pin-right"></div>
-<div class="pcb-module"><span>ESPRESSIF</span><strong>ESP32</strong><small>Wi-Fi + Bluetooth</small></div>
-<div aria-hidden="true" class="pcb-led" id="pcb-led"></div><div class="pcb-cap cap-one"></div><div class="pcb-cap cap-two"></div><span class="pcb-label pcb-label-bottom">IoT / CONTROL · GPIO 34</span>
-<span class="pcb-mark pin-label-l">3V3 · GND · D13 · D12</span><span class="pcb-mark pin-label-r">VIN · GND · RX · TX</span>
 </div></div>
-</div>
-<div class="board-controls"><div><strong>ESP32 kart modeli</strong><span>Sürükle veya ok tuşlarıyla döndür.</span></div><button id="board-led-toggle" type="button">LED: Açık</button><button id="board-reset" type="button">Görünümü sıfırla ↺</button></div>
-<p class="board-disclaimer">Görsel bir 3D canlandırmadır; fiziksel kart bağlantısı içermez.</p>
+<div aria-labelledby="hero-tab-tools" class="discovery-panel" id="hero-panel-tools" role="tabpanel">
+  <div class="discovery-heading"><h3>Çalışma alanını seç</h3><p>Tarayıcıda aç, denemeye başla.</p></div>
+  <div class="discovery-list">
+    <a class="discovery-link discovery-robot" href="atolye/robot.html">
+      <img src="assets/atolye-robot.webp" width="640" height="360" alt="" loading="lazy" decoding="async"/>
+      <span><strong>Robot Kol Simülatörü</strong><small>Hedef belirle, hareketini programla.</small></span><span class="discovery-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="discovery-link discovery-circuit" href="atolye/elektronik.html">
+      <img src="assets/atolye-elektronik.webp" width="640" height="360" alt="" loading="lazy" decoding="async"/>
+      <span><strong>Elektronik Laboratuvarı</strong><small>Devreni kur, gerilimi ve akımı ölç.</small></span><span class="discovery-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="discovery-link discovery-model" href="atolye/model.html">
+      <img src="assets/atolye-model.webp" width="640" height="360" alt="" loading="lazy" decoding="async"/>
+      <span><strong>3D Model Görüntüleyici</strong><small>Modelini aç, parçalarını incele.</small></span><span class="discovery-arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
+  <a class="discovery-more" href="#dijital-atolye">Dijital Atölye <span aria-hidden="true">↓</span></a>
 </div>
 </div>
 </div>
@@ -403,5 +384,5 @@
 <div class="container footer-bottom"><span>© <span id="copyright-year">2026</span> Hebil Ege Coşkun. Tüm hakları saklıdır.</span><span>ESP32 · Arduino · IoT · Yazılım</span></div>
 </footer>
 <script defer="" src="script.js?v=20261105-chat"></script>
-<script defer="True" src="interactive.js?v=20261105-chat"></script><script defer="True" src="v4.js?v=20261105"></script><script defer src="contact-form.js?v=20261105"></script><script defer src="site-assistant-config.js?v=20261105-chat"></script><script defer src="site-assistant.js?v=20261105-chat"></script><script src="https://js.hcaptcha.com/1/api.js?render=explicit&amp;onload=siteCaptchaReady&amp;recaptchacompat=off" async defer></script></body>
+<script defer="True" src="interactive.js?v=20261118"></script><script defer="True" src="v4.js?v=20261105"></script><script defer src="contact-form.js?v=20261105"></script><script defer src="site-assistant-config.js?v=20261105-chat"></script><script defer src="site-assistant.js?v=20261105-chat"></script><script src="https://js.hcaptcha.com/1/api.js?render=explicit&amp;onload=siteCaptchaReady&amp;recaptchacompat=off" async defer></script></body>
 </html>

@@ -62,23 +62,31 @@ test('Repeated language switching preserves contact inputs, source code, handler
     assert.equal(ui.outbound.filter(call=>call.options?.method==='POST').length,0);
   }finally{ui.close();}
 });
-test('Homepage showcase supports manual navigation when motion is reduced',async()=>{
+test('Homepage shelf keeps all tools accessible and supports reduced-motion navigation',async()=>{
   const ui=await open('index.html',{language:'en'});
   try {
     const root=ui.d.querySelector('[data-showcase]');
-    const active=()=>root.querySelector('.showcase-slide:not([hidden])');
+    const rail=root.querySelector('.showcase-slides');
+    Object.defineProperties(rail,{clientWidth:{value:900},scrollWidth:{value:2800}});
+    rail.scrollTo=({left})=>{rail.scrollLeft=Math.min(left,1900);};
+    [...rail.children].forEach((card,i)=>Object.defineProperty(card,'offsetLeft',{value:i*395}));
+    const active=()=>root.querySelector('[data-showcase-index][aria-current]');
     const next=root.querySelector('[data-showcase-step="1"]');
     const toggle=root.querySelector('[data-showcase-toggle]');
     assert.equal(toggle.getAttribute('aria-label'),'Start automatic rotation');
     next.click();
-    assert.equal(active().id,'showcase-slide-2');
-    assert.equal(active().querySelector('a').getAttribute('href'),'atolye/elektronik.html');
-    root.querySelector('[data-showcase-index="7"]').click();
+    assert.equal(active().getAttribute('aria-controls'),'showcase-slide-2');
+    assert.equal(root.querySelector('#showcase-slide-2 a').getAttribute('href'),'atolye/elektronik.html');
+    root.querySelector('[data-showcase-index="6"]').click();
     next.click();
-    assert.equal(active().id,'showcase-slide-1');
+    assert.equal(active().getAttribute('aria-controls'),'showcase-slide-1');
     next.dispatchEvent(new ui.w.KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true}));
-    assert.equal(active().id,'showcase-slide-8');
-    assert.equal(root.querySelector('[data-showcase-index="7"]').getAttribute('aria-current'),'true');
+    assert.equal(active().getAttribute('aria-controls'),'showcase-slide-7');
+    assert.equal(root.querySelectorAll('.showcase-slide[hidden]').length,0);
+    assert.equal(ui.d.querySelector('#hero-panel-tools').hidden,false);
+    ui.d.querySelector('#hero-tab-code').click();
+    assert.equal(ui.d.querySelector('#hero-panel-code').hidden,false);
+    assert.equal(ui.d.querySelector('#hero-panel-tools').hidden,true);
   } finally { ui.close(); }
 });
 test('Calculator forms convert units, preserve values across languages, reject bad input and support keyboard tabs',async()=>{

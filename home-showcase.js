@@ -2,45 +2,39 @@
 (() => {
   const root = document.querySelector('[data-showcase]');
   if (!root) return;
-  const slides = [...root.querySelectorAll('.showcase-slide')];
+  const rail = root.querySelector('.showcase-slides');
+  const slides = [...rail.querySelectorAll('.showcase-slide')];
   const indicators = [...root.querySelectorAll('[data-showcase-index]')];
-  const controls = root.querySelector('.showcase-controls');
-  const number = root.querySelector('[data-showcase-current]');
   const toggle = root.querySelector('[data-showcase-toggle]');
   const announcement = root.querySelector('[data-showcase-announcement]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const duration = 6500;
-  let index = 0, elapsed = 0, frame, previousTime, swipe;
-  let inView = !('IntersectionObserver' in window), hovering = false, paused = reducedMotion.matches;
+  let index = 0, elapsed = 0, frame, previousTime, scrollTimer;
+  let inView = !('IntersectionObserver' in window);
+  let hovering = false, touching = false, paused = reducedMotion.matches;
 
-  function drawProgress() {
-    indicators[index].style.setProperty('--showcase-progress',String(Math.min(1,elapsed/duration)));
-  }
-  function preloadNext() {
-    slides[(index+1)%slides.length].querySelector('img[loading="lazy"]')?.removeAttribute('loading');
-  }
-  function select(next,direction,announce = false) {
-    const old = index;
-    index = (next+slides.length)%slides.length;
+  function mark(next,announce = false) {
+    indicators[index].removeAttribute('aria-current');
+    indicators[index].style.removeProperty('--showcase-progress');
+    index = next;
     elapsed = 0;
     previousTime = undefined;
-    indicators[old].style.removeProperty('--showcase-progress');
-    if (old !== index) {
-      slides[old].hidden = true;
-      delete slides[old].dataset.enter;
-      indicators[old].removeAttribute('aria-current');
-      slides[index].hidden = false;
-      slides[index].dataset.enter = direction;
-      indicators[index].setAttribute('aria-current','true');
-      number.textContent = String(index+1).padStart(2,'0');
-      preloadNext();
-    }
+    indicators[index].setAttribute('aria-current','true');
     if (announce) announcement.textContent = indicators[index].getAttribute('aria-label');
-    drawProgress();
+    const following = slides[(index+1)%slides.length].querySelector('img');
+    following?.removeAttribute('loading');
+  }
+  function offset(i) {
+    return slides[i].offsetLeft-slides[0].offsetLeft;
+  }
+  function goTo(next,announce = true) {
+    mark((next+slides.length)%slides.length,announce);
+    rail.scrollTo({left:offset(index),behavior:reducedMotion.matches?'instant':'smooth'});
+    syncTimer();
   }
   function running() {
     return inView && !document.hidden && !paused && !hovering &&
-      !slides[index].contains(document.activeElement) && !swipe;
+      !touching && !rail.contains(document.activeElement);
   }
   function syncTimer() {
     if (running()) {
@@ -52,19 +46,14 @@
   }
   function tick(now) {
     frame = undefined;
-    if (!running()) {
-      previousTime = undefined;
-      return;
-    }
+    if (!running()) { previousTime = undefined; return; }
     elapsed += now-(previousTime ?? now);
     previousTime = now;
-    if (elapsed >= duration) select(index+1,'forward');
-    else drawProgress();
-    syncTimer();
-  }
-  function move(next,direction) {
-    if (slides[index].contains(document.activeElement)) indicators[index].focus();
-    select(next,direction,true);
+    indicators[index].style.setProperty('--showcase-progress',String(Math.min(1,elapsed/duration)));
+    if (elapsed >= duration) {
+      const atEnd = rail.scrollLeft >= rail.scrollWidth-rail.clientWidth-2;
+      goTo(atEnd?0:index+1,false);
+    }
     syncTimer();
   }
   function setPlayButton() {
@@ -74,12 +63,25 @@
     toggle.title = label;
     toggle.toggleAttribute('data-paused',paused);
   }
-
-  for (const button of root.querySelectorAll('[data-showcase-step]')) {
-    const offset = Number(button.dataset.showcaseStep);
-    button.addEventListener('click',()=>move(index+offset,offset<0?'back':'forward'));
+  function syncScroll() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(()=>{
+      // Keep the selected card when it is visible at the clamped end of the rail.
+      const left = offset(index), right = left+slides[index].offsetWidth;
+      if (left>=rail.scrollLeft-2 && right<=rail.scrollLeft+rail.clientWidth+2) return;
+      const nearest = slides.reduce((best,_,i)=>
+        Math.abs(offset(i)-rail.scrollLeft)<Math.abs(offset(best)-rail.scrollLeft)?i:best,0);
+      if (nearest !== index) mark(nearest);
+    },180);
   }
-  indicators.forEach((button,i)=>button.addEventListener('click',()=>move(i,i<index?'back':'forward')));
+  for (const button of root.querySelectorAll('[data-showcase-step]')) {
+    const step = Number(button.dataset.showcaseStep);
+    button.addEventListener('click',()=>{
+      const atEnd = rail.scrollLeft >= rail.scrollWidth-rail.clientWidth-2;
+      goTo(step>0 && atEnd?0:index+step);
+    });
+  }
+  indicators.forEach((button,i)=>button.addEventListener('click',()=>goTo(i)));
   toggle.addEventListener('click',()=>{
     paused = !paused;
     setPlayButton();
@@ -88,34 +90,23 @@
   root.addEventListener('keydown',event=>{
     if (!['ArrowLeft','ArrowRight'].includes(event.key) || event.altKey || event.ctrlKey || event.metaKey) return;
     event.preventDefault();
-    const offset = event.key==='ArrowLeft'?-1:1;
-    move(index+offset,offset<0?'back':'forward');
+    goTo(index+(event.key==='ArrowLeft'?-1:1));
   });
   root.addEventListener('pointerenter',event=>{
     if (event.pointerType !== 'mouse') return;
     hovering = true;
     syncTimer();
   });
-  root.addEventListener('pointerleave',()=>{
-    hovering = false;
+  root.addEventListener('pointerleave',()=>{ hovering = false; syncTimer(); });
+  rail.addEventListener('pointerdown',event=>{
+    if (event.pointerType !== 'touch') return;
+    touching = true;
     syncTimer();
   });
-  root.addEventListener('pointerdown',event=>{
-    if (event.pointerType !== 'touch' || !event.isPrimary || event.target.closest('a,button')) return;
-    swipe = {id:event.pointerId,x:event.clientX,y:event.clientY};
-    syncTimer();
-  });
-  root.addEventListener('pointerup',event=>{
-    if (swipe?.id !== event.pointerId) return;
-    const x = event.clientX-swipe.x, y = event.clientY-swipe.y;
-    swipe = undefined;
-    if (Math.abs(x)>45 && Math.abs(x)>Math.abs(y)*1.3) move(index+(x>0?-1:1),x>0?'back':'forward');
-    else syncTimer();
-  });
-  root.addEventListener('pointercancel',()=>{
-    swipe = undefined;
-    syncTimer();
-  });
+  const finishTouch = ()=>{ touching = false; syncTimer(); };
+  window.addEventListener('pointerup',finishTouch);
+  window.addEventListener('pointercancel',finishTouch);
+  rail.addEventListener('scroll',syncScroll,{passive:true});
   root.addEventListener('focusin',syncTimer);
   root.addEventListener('focusout',()=>queueMicrotask(syncTimer));
   document.addEventListener('visibilitychange',syncTimer);
@@ -126,13 +117,9 @@
     syncTimer();
   });
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([entry])=>{
-      inView = entry.isIntersecting;
-      syncTimer();
-    }).observe(root);
+    new IntersectionObserver(([entry])=>{ inView = entry.isIntersecting; syncTimer(); }).observe(root);
   }
-  controls.hidden = false;
-  preloadNext();
+  root.querySelector('.showcase-controls').hidden = false;
   setPlayButton();
   syncTimer();
 })();
