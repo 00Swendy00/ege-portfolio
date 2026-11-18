@@ -1,10 +1,11 @@
 'use strict';
-// Keep bookmarked index URLs on the clean directory address without reloading.
+// Keep bookmarked HTML URLs on their published directory addresses.
 (() => {
   const {protocol, pathname, search, hash} = window.location;
-  if (!/^https?:$/.test(protocol) || !/\/index\.html$/i.test(pathname)) return;
+  if (!/^https?:$/.test(protocol) || !/\.html$/i.test(pathname)) return;
   try {
-    window.history.replaceState(window.history.state, '', pathname.slice(0, -10) + search + hash);
+    const clean=/\/index\.html$/i.test(pathname)?pathname.slice(0,-10):pathname.slice(0,-5)+'/';
+    window.history.replaceState(window.history.state, '', clean + search + hash);
   } catch (_) {}
 })();
 try {

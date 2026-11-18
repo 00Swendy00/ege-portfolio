@@ -284,6 +284,13 @@
     "ESP32 kartı ve renklerle ayrılmış pin bağlantıları": "ESP32 board with color-coded pin connections"
   },
   "patterns": [
+    {"source":"^(.+) seçildi\\. Diğer ucu seç\\.$","flags":"u","replacement":"$1 selected. Select the other terminal."},
+    {"source":"^(.+) bileşenini sil$","flags":"u","replacement":"Delete $1"},
+    {"source":"^(.+) açıldı\\.$","flags":"u","replacement":"$1 opened."},
+    {"source":"^(.+) üçgen$","flags":"u","replacement":"$1 triangles"},
+    {"source":"^Yaklaşık ağ mesafesi: (.+)$","flags":"u","replacement":"Approximate mesh distance: $1"},
+    {"source":"^(Taban|Omuz|Dirsek) açısı$","flags":"u","replacement":"Joint angle"},
+    {"source":"^Parça (\\d+)$","flags":"u","replacement":"Part $1"},
     {"source":"^> analogRead\\(GPIO34\\) => (\\d+) · paket #(\\d+)$","flags":"u","replacement":"> analogRead(GPIO34) => $1 · packet #$2"},
     {"source":"^AÇI (.+?)° • HEDEF (.+?) cm$","flags":"u","replacement":"ANGLE $1° • TARGET $2 cm"},
     {"source":"^(.+?) → (.+?) bağlantısını sil$","flags":"u","replacement":"Delete connection $1 → $2"},
@@ -317,6 +324,9 @@
     {"source":"^Tanımlanmamış değişken: (.*)$","flags":"u","replacement":"Undefined variable: $1"},
     {"source":"^Geçersiz Arduino pin numarası: (.*)$","flags":"u","replacement":"Invalid Arduino pin number: $1"},
     {"source":"^Desteklenmeyen çağrı: (.*)$","flags":"u","replacement":"Unsupported call: $1"},
-    {"source":"^([123])\\. rakam$","flags":"u","replacement":"Digit $1"}
+    {"source":"^([123])\\. rakam$","flags":"u","replacement":"Digit $1"},
+    {"source":"^DC kaynak (\\d+)(.*)$","flags":"u","replacement":"DC source $1$2"},
+    {"source":"^Direnç (\\d+)(.*)$","flags":"u","replacement":"Resistor $1$2"},
+    {"source":"^Anahtar (\\d+)(.*)$","flags":"u","replacement":"Switch $1$2"}
   ]
 }

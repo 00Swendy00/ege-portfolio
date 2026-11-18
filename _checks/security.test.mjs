@@ -17,6 +17,17 @@ test('Valid v5 imports get new IDs and preserve endpoint mapping',()=>{
  assert.equal(result.parts[0].id,'p1');assert.equal(result.wires[0].from.part,'p1');assert.equal(result.wires[0].to.part,'p2');assert.equal(result.sketch,data.sketch);
  assert.equal(safe.normalize(result).parts.length,2);
 });
+test('Routed wires and unfinished endpoints survive export normalization safely',()=>{
+ const data=circuit();data.wires[0].points=[{x:500,y:320}];
+ data.draftWire={from:{part:'old-board',port:'D10'},points:[{x:600,y:360}],color:'#e54c56'};
+ const result=safe.normalize(data,true);
+ assert.equal(result.wires[0].points[0].x,500);
+ assert.equal(result.draftWire.from.part,'p1');
+ assert.equal(safe.normalize(result).draftWire.points[0].y,360);
+ for(const value of [[{x:Infinity,y:10}],Array(65).fill({x:1,y:1}),[{x:1200,y:1}]]){
+   data.wires[0].points=value;assert.throws(()=>safe.normalize(data));
+ }
+});
 test('Reject selector-breaking IDs, duplicate IDs, unknown types and malformed parts',()=>{
  for(const mutate of [d=>d.parts[0].id='x"]',d=>d.parts[1].id=d.parts[0].id,d=>d.parts[0].type='__proto__',d=>d.parts[0]=null,d=>d.parts[0].x='70',d=>d.parts[0].x=Infinity]){
   const data=circuit();mutate(data);assert.throws(()=>safe.normalize(data,true));
@@ -66,7 +77,7 @@ test('HTML blocks inline script execution, restricts forms, and allows declared 
   for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g))if(!m[1].includes('src='))assert.ok(policy.includes('sha256-'+createHash('sha256').update(m[2]).digest('base64')),file);
  }
  assert.match(read('index.html'),/class="h-captcha"/);
- assert.ok(read('laboratuvar.html').search(/src="circuit-state\.js(?:\?[^\"]*)?"/)<read('laboratuvar.html').search(/src="circuit-editor\.js(?:\?[^\"]*)?"/));
+ assert.ok(read('laboratuvar.html').search(/src="\/?circuit-state\.js(?:\?[^\"]*)?"/)<read('laboratuvar.html').search(/src="\/?circuit-editor\.js(?:\?[^\"]*)?"/));
 });
 test('Every local script and stylesheet referenced by a page exists',()=>{
  const pages=[...readdirSync(base).filter(f=>f.endsWith('.html')),...readdirSync(path.join(base,'projeler')).filter(f=>f.endsWith('.html')).map(f=>'projeler/'+f)];

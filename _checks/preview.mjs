@@ -6,7 +6,7 @@ const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=
 http.createServer(async(req,res)=>{
  try{
   const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
-  const file=path.resolve(root,'.'+(pathname==='/'?'/index.html':pathname));
+  const file=path.resolve(root,'.'+(pathname.endsWith('/')?pathname+'index.html':pathname));
   const relative=path.relative(root,file);
   if(relative.startsWith('..')||relative.split(/[\\/]/).some(p=>p.startsWith('.')||p.startsWith('_')))throw Error();
   res.setHeader('Content-Type',types[path.extname(file)]||'text/plain; charset=utf-8');

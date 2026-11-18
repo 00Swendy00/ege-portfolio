@@ -20,8 +20,9 @@ test('Index filenames disappear for both root and directory landing pages',()=>{
  assert.equal(visit('https://egecoskun.tech/index.html').calls[0].url,'/');
  assert.equal(visit('https://egecoskun.tech/example/index.html#top').calls[0].url,'/example/#top');
 });
-test('Other pages, clean addresses and local file previews keep their address',()=>{
- for(const url of ['https://egecoskun.tech/#projects','https://egecoskun.tech/otonom-sistemler.html','https://egecoskun.tech/projeler/servo-radar.html','file:///C:/site/index.html'])assert.equal(visit(url).calls.length,0,url);
+test('Clean addresses and local file previews keep their address',()=>{
+ for(const url of ['https://egecoskun.tech/#projects','https://egecoskun.tech/otonom-sistemler/','https://egecoskun.tech/projeler/servo-radar/','file:///C:/site/index.html'])assert.equal(visit(url).calls.length,0,url);
+ assert.equal(visit('https://egecoskun.tech/hesaplayicilar.html#led').calls[0].url,'/hesaplayicilar/#led');
 });
 test('An unavailable history API does not prevent theme initialization',()=>{
  assert.equal(visit('https://egecoskun.tech/index.html',{denyHistory:true}).theme,'dark');
@@ -31,6 +32,14 @@ test('Every page links to the homepage without an explicit index filename',()=>{
  for(const file of pages){
   const html=readFileSync(path.join(base,file),'utf8');
   for(const link of html.matchAll(/\bhref="([^"]+)"/g))assert.doesNotMatch(link[1],/index\.html/i,file+': '+link[1]);
-  assert.match(html,/src="(?:\.\.\/)?theme-init\.js\?v=20261105"/);
+  assert.match(html,/src="(?:\/|\.\.\/)?theme-init\.js\?v=20261118-r2"/);
+ }
+});
+test('Clean directory pages match their legacy entry points',()=>{
+ const pages=[...readdirSync(base).filter(f=>f.endsWith('.html')&&f!=='index.html'),...['projeler/servo-radar.html','projeler/spotify-dotmatrix.html','atolye/elektronik.html','atolye/robot.html','atolye/model.html']];
+ for(const file of pages){
+  const legacy=readFileSync(path.join(base,file),'utf8');
+  assert.equal(readFileSync(path.join(base,file.slice(0,-5),'index.html'),'utf8'),legacy,file);
+  for(const link of legacy.matchAll(/href="([^"]+)"/g))assert.doesNotMatch(link[1],/\.html(?:[?#]|$)/i,file);
  }
 });

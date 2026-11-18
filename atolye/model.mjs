@@ -17,7 +17,15 @@ function startViewer({scene,camera,renderer,frame,draw}) {
   let radius = 1, parts = [], points = [], measuring = false, generation = 0, activeWorker, stl;
   const palette = [0x9a98c7,0x70a7bb,0xb3a0d6,0xc5a490];
   const partMaterial = (color,metalness=.24,roughness=.46) => new THREE.MeshStandardMaterial({color,metalness,roughness,side:THREE.DoubleSide});
-  const format = number => new Intl.NumberFormat('tr-TR',{maximumSignificantDigits:6}).format(number);
+  const format = number => new Intl.NumberFormat(window.SiteI18n?.getLanguage()==='en'?'en-US':'tr-TR',{maximumSignificantDigits:6}).format(number);
+  let dimensions;
+  function showDimensions(){
+    if(dimensions)get('bounds').textContent=dimensions.size.map(format).join(' × ')+' mm · '+format(dimensions.triangles)+' üçgen';
+  }
+  document.addEventListener('site:languagechange',()=>{
+    showDimensions();
+    if(points.length===2)get('distance').textContent='Yaklaşık ağ mesafesi: '+format(points[0].distanceTo(points[1]))+' mm';
+  });
   function dispose(object) {
     object.traverse(child => {
       child.geometry?.dispose();
@@ -46,7 +54,8 @@ function startViewer({scene,camera,renderer,frame,draw}) {
     model.traverse(({geometry}) => {
       if (geometry) triangles += (geometry.index?.count || geometry.attributes.position.count)/3;
     });
-    get('bounds').textContent = size.toArray().map(format).join(' × ')+' mm · '+format(triangles)+' üçgen';
+    dimensions={size:size.toArray(),triangles};
+    showDimensions();
     ground(center.x,bounds.min.y-radius*.015,center.z,radius*5.3);
     for (const [i,mesh] of parts.entries()) {
       mesh.userData.original = mesh.position.clone();

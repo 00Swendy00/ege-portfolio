@@ -30,6 +30,14 @@
       return {id,type:p.type,x:Math.round(Math.max(0,Math.min(1160-sizes[p.type][0],p.x))),y:Math.round(Math.max(0,Math.min(720-sizes[p.type][1],p.y))),value:p.type==='resistor'?Math.max(100,Math.min(10000,p.value??220)):null};
     });
     const connections = new Set();
+    const points=value=>{
+      if(value===undefined)return [];
+      if(!Array.isArray(value)||value.length>64)fail();
+      return value.map(p=>{
+        if(!object(p)||!Number.isFinite(p.x)||!Number.isFinite(p.y)||p.x<0||p.x>1160||p.y<0||p.y>720)fail();
+        return {x:p.x,y:p.y};
+      });
+    };
     const wires = data.wires.map((w,index) => {
       if (!object(w) || !object(w.from) || !object(w.to)) fail();
       const a=ids.get(w.from.part), b=ids.get(w.to.part);
@@ -38,10 +46,19 @@
       const key=ends.join('|');
       if (ends[0]===ends[1] || connections.has(key)) fail();
       connections.add(key);
-      return {id:'w'+(index+1).toString(36),from:{part:a.id,port:w.from.port},to:{part:b.id,port:w.to.port},color:colors.includes(w.color)?w.color:colors[2]};
+      const wire={id:'w'+(index+1).toString(36),from:{part:a.id,port:w.from.port},to:{part:b.id,port:w.to.port},color:colors.includes(w.color)?w.color:colors[2]};
+      if(w.points!==undefined)wire.points=points(w.points);
+      return wire;
     });
     if (data.sketch !== undefined && (typeof data.sketch !== 'string' || data.sketch.length > 14000)) fail();
     const result={parts,wires,example:examples.includes(data.example)?data.example:'blank'};
+    if(data.draftWire!=null){
+      const draft=data.draftWire,source=object(draft)&&object(draft.from)&&ids.get(draft.from.part);
+      if(!source||!validPort(source.type,draft.from.port))fail();
+      const route=points(draft.points);
+      if(!route.length)fail();
+      result.draftWire={from:{part:source.id,port:draft.from.port},points:route,color:colors.includes(draft.color)?draft.color:colors[2]};
+    }
     if (typeof data.sketch === 'string') result.sketch=data.sketch;
     return result;
   }

@@ -209,6 +209,23 @@ html[data-theme=dark] .cs-mode{background:#19243a;color:#9ab3cf}
 @media(max-width:550px){.cs-viewport{padding:8px}.cs-palette{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.cs-palette-item{min-height:109px;padding:7px 4px}.cs-palette-item .cs-item-icon{height:52px}.cs-mini-art{height:50px}.cs-item-icon svg{height:50px}.cs-filter{font-size:9px;padding:5px 8px}.cs-intro h2{font-size:24px}.cs-mode{display:none}.cs-editor{border-radius:0 0 16px 16px}}
 
 /* V6.2: Arduino kodunu yaz / kontrol et / simüle et */
+.cs-part-focus{margin-left:5px;padding:0 5px;height:23px;border:1px solid #94b8dd;border-radius:5px;background:#e7f3ff;color:#174d84;font-size:15px;cursor:zoom-in}
+.cs-toolbar-group{flex-wrap:wrap}
+.cs-app{box-shadow:0 16px 55px #0002}
+.cs-intro{background:#142238;color:#edf4ff}
+.cs-intro h2{color:#f1f6ff}
+.cs-intro p,.cs-mode{color:#bdcde1}
+.cs-toolbar{gap:10px;padding:14px;background:#1a2940;border-color:#344963}
+.cs-work-head{background:#142238;color:#c6d6e9}
+.cs-work-head .cs-tip{color:#b1c6df}
+.cs-viewport{background:#dbe5ef}
+.cs-part-breadboard .cs-port:focus-visible,.cs-part-breadboard .cs-port:hover{outline:3px solid #1582e6;outline-offset:3px;z-index:10}
+.cs-part-breadboard .cs-port{cursor:crosshair}
+.cs-draft-end{fill:#fff;stroke:#2379e4;stroke-width:3;pointer-events:all;cursor:crosshair;filter:drop-shadow(0 0 4px #378eff)}
+.cs-draft-line{stroke-dasharray:8 4}
+.cs-part{z-index:6}.cs-part.selected{z-index:7}
+.cs-draft-overlay{position:absolute;inset:0;width:100%;height:100%;z-index:9;pointer-events:none}
+#cs-snap-grid[aria-pressed=true]{background:#d9eeff;color:#145c9c;border-color:#64b2ec}
 .cs-viewport{scroll-behavior:auto;overscroll-behavior:contain;}
 .cs-code-head{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#1c2d46;color:#e8f2ff;border:1px solid #2d4769;border-bottom:0;border-radius:13px 13px 0 0;padding:10px 12px;font-size:11px;font-weight:800}
 .cs-code-head span+span{font-size:8px;letter-spacing:.07em;color:#9cb3d0;text-align:right}

@@ -13,6 +13,12 @@ async function open(file,{language='tr',response=null}={}) {
   w.localStorage.setItem('ege-language',language);
   w.matchMedia=()=>({matches:true,addEventListener(){}});w.requestAnimationFrame=()=>1;w.cancelAnimationFrame=()=>{};
   w.ResizeObserver=class{observe(){}disconnect(){}};w.CSS={escape:s=>String(s).replace(/[^a-z0-9_-]/gi,'')};
+  const rail=w.document.querySelector('.showcase-slides');
+  if(rail){
+    Object.defineProperty(w.HTMLElement.prototype,'offsetLeft',{get(){return this.matches('.showcase-slide')?[...this.parentElement.children].indexOf(this)*395:0;}});
+    Object.defineProperty(rail,'clientWidth',{value:900});
+    rail.scrollTo=({left})=>{rail.scrollLeft=left;};
+  }
   const canvasLabels=[];const gradient=()=>({addColorStop(){}});const context=new Proxy({measureText:()=>({width:20}),createLinearGradient:gradient,createRadialGradient:gradient,createConicGradient:gradient,fillText:s=>canvasLabels.push(s)},{get:(target,key)=>key in target?target[key]:(()=>{})});
   w.HTMLCanvasElement.prototype.getContext=()=>context;
   const outbound=[];w.fetch=async(url,options)=>{outbound.push({url,options});if(response)return response(url,options);throw Error('Offline test');};
@@ -67,21 +73,18 @@ test('Homepage shelf keeps all tools accessible and supports reduced-motion navi
   try {
     const root=ui.d.querySelector('[data-showcase]');
     const rail=root.querySelector('.showcase-slides');
-    Object.defineProperties(rail,{clientWidth:{value:900},scrollWidth:{value:2800}});
-    rail.scrollTo=({left})=>{rail.scrollLeft=Math.min(left,1900);};
-    [...rail.children].forEach((card,i)=>Object.defineProperty(card,'offsetLeft',{value:i*395}));
     const active=()=>root.querySelector('[data-showcase-index][aria-current]');
     const next=root.querySelector('[data-showcase-step="1"]');
     const toggle=root.querySelector('[data-showcase-toggle]');
     assert.equal(toggle.getAttribute('aria-label'),'Start automatic rotation');
     next.click();
     assert.equal(active().getAttribute('aria-controls'),'showcase-slide-2');
-    assert.equal(root.querySelector('#showcase-slide-2 a').getAttribute('href'),'atolye/elektronik.html');
-    root.querySelector('[data-showcase-index="6"]').click();
+    assert.equal(root.querySelector('#showcase-slide-2 a').getAttribute('href'),'/atolye/elektronik/');
+    root.querySelector('[data-showcase-index="7"]').click();
     next.click();
     assert.equal(active().getAttribute('aria-controls'),'showcase-slide-1');
     next.dispatchEvent(new ui.w.KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true}));
-    assert.equal(active().getAttribute('aria-controls'),'showcase-slide-7');
+    assert.equal(active().getAttribute('aria-controls'),'showcase-slide-8');
     assert.equal(root.querySelectorAll('.showcase-slide[hidden]').length,0);
     assert.equal(ui.d.querySelector('#hero-panel-tools').hidden,false);
     ui.d.querySelector('#hero-tab-code').click();
@@ -127,20 +130,31 @@ test('Simplified header keeps all destinations in Explore and places Instagram o
     if(file==='index.html')assert.ok(ui.d.querySelector('.hero-instagram'),file);
   }finally{ui.close();}}
 });
-test('Assistant calls the real backend only on demand and renders model output as safe text',async()=>{
-  const ui=await open('index.html',{language:'en',response:async()=>({ok:true,status:200,json:async()=>({answer:'<img src=x onerror=alert(1)> A real model answer.',kind:'ai',links:[{label:'Bad',url:'javascript:alert(1)'},{label:'Weather source',url:'https://open-meteo.com/'}]})})});try{
-    assert.equal(ui.outbound.length,0);assert.equal(ui.d.querySelector('#burdur-weather'),null);assert.equal(ui.d.querySelector('#live-gpio'),null);
-    ui.w.SiteAssistantConfig={endpoint:'https://portfolio-test.workers.dev/chat'};
-    const input=ui.d.getElementById('assistant-question');input.value='What projects are here?';ui.d.getElementById('assistant-form').dispatchEvent(new ui.w.Event('submit',{bubbles:true,cancelable:true}));await settle();
-    assert.equal(ui.outbound.length,1);const payload=JSON.parse(ui.outbound[0].options.body);assert.equal(payload.language,'en');assert.equal(payload.messages.at(-1).content,'What projects are here?');assert.equal(ui.outbound[0].options.credentials,'omit');
-    const answer=ui.d.querySelector('.assistant-message-assistant');assert.match(answer.textContent,/<img src=x/);assert.equal(answer.querySelector('img'),null);assert.equal(answer.querySelectorAll('a').length,1);assert.equal(answer.querySelector('a').origin,'https://open-meteo.com');
-    ui.w.SiteI18n.setLanguage('tr');await settle();assert.match(answer.textContent,/<img src=x/);assert.equal(ui.d.getElementById('assistant-form').getAttribute('aria-busy'),'false');
+test('Local site guide answers project questions without sending requests',async()=>{
+  const ui=await open('index.html',{language:'en'});try{
+    const input=ui.d.getElementById('assistant-question');
+    input.value='How do I use the robot arm?';
+    ui.d.getElementById('assistant-form').dispatchEvent(new ui.w.Event('submit',{cancelable:true}));
+    await settle();
+    const answer=ui.d.querySelector('.assistant-message-assistant');
+    assert.equal(answer.querySelector('a').pathname,'/atolye/robot/');
+    assert.match(answer.textContent,/joint angles/);
+    assert.equal(ui.outbound.length,0);
+    ui.w.SiteI18n.setLanguage('tr');await settle();
+    assert.match(answer.textContent,/eklem açıları/);
   }finally{ui.close();}
 });
-test('Assistant quota errors preserve the question and clearing chat rejects a late response',async()=>{
-  const ui=await open('index.html',{response:async()=>({ok:false,status:429,json:async()=>({code:'quota'})})});try{
-    ui.w.SiteAssistantConfig={endpoint:'https://portfolio-test.workers.dev/chat'};const input=ui.d.getElementById('assistant-question');input.value='Projeler neler?';ui.d.getElementById('assistant-form').dispatchEvent(new ui.w.Event('submit',{cancelable:true}));await settle();
-    assert.equal(input.value,'Projeler neler?');assert.match(ui.d.getElementById('assistant-status').textContent,/Ücretsiz kullanım/);assert.equal(ui.d.querySelector('.assistant-message-assistant'),null);
-    let resolve;ui.w.fetch=()=>new Promise(r=>resolve=r);ui.d.getElementById('assistant-form').dispatchEvent(new ui.w.Event('submit',{cancelable:true}));ui.d.getElementById('assistant-clear').click();resolve({ok:true,status:200,json:async()=>({answer:'Late answer'})});await settle();assert.equal(ui.d.getElementById('assistant-messages').children.length,0);assert.equal(input.disabled,false);
+test('Local guide limits answers to the site and renders questions safely',async()=>{
+  const ui=await open('index.html');try{
+    const input=ui.d.getElementById('assistant-question');
+    input.value='<img src=x onerror=alert(1)> 2+2';
+    ui.d.getElementById('assistant-form').dispatchEvent(new ui.w.Event('submit',{cancelable:true}));
+    await settle();
+    assert.equal(ui.d.querySelector('#assistant-messages img'),null);
+    assert.match(ui.d.querySelector('.assistant-message-assistant').textContent,/sitedeki projeler/);
+    assert.equal(ui.outbound.length,0);
+    ui.d.getElementById('assistant-clear').click();
+    assert.equal(ui.d.getElementById('assistant-messages').children.length,0);
+    assert.equal(input.disabled,false);
   }finally{ui.close();}
 });

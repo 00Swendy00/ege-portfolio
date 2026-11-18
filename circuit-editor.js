@@ -6,6 +6,10 @@ const t=s=>window.SiteI18n?.t(s) ?? s;
 const $=s=>root.querySelector(s);
 const stage=$('#cs-stage'),partArea=$('#cs-parts'),wireSvg=$('#cs-wirepaths'),preview=$('#cs-previewwire'),viewport=$('#cs-viewport');
 const W=1160,H=720, TYPES=['arduino','breadboard','led','resistor','button','sonar','servo','buzzer'];
+const draftOverlay=document.createElementNS('http://www.w3.org/2000/svg','svg');
+draftOverlay.setAttribute('class','cs-draft-overlay');
+draftOverlay.setAttribute('viewBox','0 0 1160 720');
+stage.append(draftOverlay);
 const names={arduino:'Arduino Uno R3',breadboard:'Breadboard',led:'Kırmızı LED',resistor:'Direnç',button:'Buton',sonar:'HC-SR04',servo:'SG90 Servo',buzzer:'Buzzer'};
 const icons={arduino:'▣',breadboard:'▦',led:'◉',resistor:'▰',button:'●',sonar:'◎',servo:'⚙',buzzer:'♫'};
 const dims={arduino:[470,290],breadboard:[450,264],led:[126,145],resistor:[186,112],button:[146,136],sonar:[232,148],servo:[176,178],buzzer:[138,136]};
@@ -19,6 +23,7 @@ servo:`// SG90 servo · Sinyal: D11\n#include <Servo.h>\nServo motor;\nvoid setu
 buzzer:`// Aktif buzzer · D8 çıkışı / GND\nconst int buzzerPin = 8;\nvoid setup() { pinMode(buzzerPin, OUTPUT); }\nvoid loop() {\n  digitalWrite(buzzerPin, HIGH); delay(400);\n  digitalWrite(buzzerPin, LOW); delay(400);\n}\n`};
 let state={parts:[],wires:[],example:'blank'},seq=1,selected=null,pendingPort=null,dragPart=null,paletteDrag=null,wireDrag=null,zoom=1,wireColor=colors[2],running=false,timer=0,tick=0,buttonDown=false,history=[];
 let codeRuntime=null, codeLastExample=null, codeDraftTimer=0;
+let previousView=null;
 const safeState=window.ECCircuitState;
 let codeDrafts=Object.create(null);
 try{codeDrafts=safeState.drafts(localStorage.getItem('ege-arduino-code-v62')||'{}');}catch(_){ }
@@ -41,12 +46,19 @@ function render(){partArea.replaceChildren();for(const p of state.parts)partArea
 function buildPart(p){const e=document.createElement('div');e.className='cs-part cs-part-'+p.type+(selected?.type==='part'&&selected.id===p.id?' selected':'');e.dataset.id=p.id;e.style.left=p.x+'px';e.style.top=p.y+'px';const head=document.createElement('div');head.className='cs-part-header';head.innerHTML='<span class="cs-grip">⠿</span><span class="cs-part-name"></span><small>TAŞI</small>';head.querySelector('.cs-part-name').textContent=names[p.type];head.addEventListener('pointerdown',startMove);const body=document.createElement('div');body.className='cs-body';e.append(head,body);e.addEventListener('click',event=>{if(event.target.closest('.cs-port'))return;selected={type:'part',id:p.id};showSelection();});
 const put=(port,x,y,face,label,small)=>{const [node,lbl]=mkPort(p.id,port,x,y,face,label,small);e.append(node,lbl)};
 if(p.type==='arduino'){
-body.innerHTML='<img class="cs-board-art" src="assets/circuit-arduino-pro.svg" alt="" draggable="false">';
+body.innerHTML='<img class="cs-board-art" src="/assets/circuit-arduino-pro.svg" alt="" draggable="false">';
 Array.from({length:14},(_,i)=>put('D'+i,107+i*25,46,'top',''+i,true));
 ['IOREF','RESET','3V3','5V','GND','VIN'].forEach((t,i)=>put(t,103+i*26,268,'bottom',t,true));
 Array.from({length:6},(_,i)=>put('A'+i,314+i*25,268,'bottom','A'+i,true));
 }else if(p.type==='breadboard'){
-body.innerHTML='<img class="cs-board-art" src="assets/circuit-breadboard-pro.svg" alt="" draggable="false">';
+const enlarge=document.createElement('button');
+enlarge.type='button';enlarge.className='cs-part-focus';
+enlarge.textContent='⤢';enlarge.title=t('Breadboard pinlerini büyüt');
+enlarge.setAttribute('aria-label',t('Breadboard pinlerini büyüt'));
+enlarge.addEventListener('pointerdown',event=>event.stopPropagation());
+enlarge.addEventListener('click',event=>{event.stopPropagation();selected={type:'part',id:p.id};showSelection();focusBreadboard(p);});
+head.append(enlarge);
+body.innerHTML='<img class="cs-board-art" src="/assets/circuit-breadboard-pro.svg" alt="" draggable="false">';
 for(let i=0;i<10;i++){
  let x=49+i*38;
  put('P'+i,x,60,'top','',true);put('N'+i,x,81,'top','',true);
@@ -68,12 +80,61 @@ function path(a,b){
   const r=Math.min(18,Math.abs(mid-a.x)*.45,absy*.43);
   return `M ${a.x} ${a.y} L ${mid-sx*r} ${a.y} Q ${mid} ${a.y} ${mid} ${a.y+sy*r} L ${mid} ${b.y-sy*r} Q ${mid} ${b.y} ${mid+ex*r} ${b.y} L ${b.x} ${b.y}`;
 }
-function drawWires(){wireSvg.replaceChildren();for(const w of state.wires){const a=coords(w.from),b=coords(w.to);if(!a||!b)continue;const d=path(a,b);const g=document.createElementNS('http://www.w3.org/2000/svg','g');const line=document.createElementNS('http://www.w3.org/2000/svg','path');line.setAttribute('d',d);line.setAttribute('stroke',w.color);line.setAttribute('class','cs-wire-line'+(selected?.type==='wire'&&selected.id===w.id?' is-selected':''));const hit=document.createElementNS('http://www.w3.org/2000/svg','path');hit.setAttribute('d',d);hit.setAttribute('class','cs-wire-hit');hit.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();pendingPort=null;selected={type:'wire',id:w.id};drawWires();showSelection();});const under=document.createElementNS('http://www.w3.org/2000/svg','path');under.setAttribute('d',d);under.setAttribute('class','cs-wire-under');const shine=document.createElementNS('http://www.w3.org/2000/svg','path');shine.setAttribute('d',d);shine.setAttribute('class','cs-wire-shine');g.append(under,line,shine,hit);wireSvg.append(g)}updateCount()}
+function drawWires(){wireSvg.replaceChildren();for(const w of state.wires){const a=coords(w.from),b=coords(w.to);if(!a||!b)continue;const d=routedPath(a,b,w.points);const g=document.createElementNS('http://www.w3.org/2000/svg','g');const line=document.createElementNS('http://www.w3.org/2000/svg','path');line.setAttribute('d',d);line.setAttribute('stroke',w.color);line.setAttribute('class','cs-wire-line'+(selected?.type==='wire'&&selected.id===w.id?' is-selected':''));const hit=document.createElementNS('http://www.w3.org/2000/svg','path');hit.setAttribute('d',d);hit.setAttribute('class','cs-wire-hit');hit.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();pendingPort=null;selected={type:'wire',id:w.id};drawWires();showSelection();});const under=document.createElementNS('http://www.w3.org/2000/svg','path');under.setAttribute('d',d);under.setAttribute('class','cs-wire-under');const shine=document.createElementNS('http://www.w3.org/2000/svg','path');shine.setAttribute('d',d);shine.setAttribute('class','cs-wire-shine');g.append(under,line,shine,hit);wireSvg.append(g)}drawDraft();updateCount()}
 function updateCount(){$('#cs-count').textContent=state.parts.length+' bileşen · '+state.wires.length+' kablo'}
-function finishWire(from,to){if(!to||key(from)===key(to))return; if(state.wires.some(w=>[key(w.from),key(w.to)].sort().join('|')===[key(from),key(to)].sort().join('|'))){status('Bu bağlantı zaten mevcut.');return;} if(state.wires.length>=180){status('En fazla 180 kablo eklenebilir.','bad');return;} snap();state.wires.push({id:'w'+id(),from,to,color:wireColor});selected={type:'wire',id:state.wires.at(-1).id};change('Kablo eklendi.');}
-function startWire(e){e.preventDefault();e.stopPropagation();const from={part:e.currentTarget.dataset.part,port:e.currentTarget.dataset.port};if(pendingPort){if(key(pendingPort)!==key(from))finishWire(pendingPort,from);pendingPort=null;preview.setAttribute('d','');return;} wireDrag={from,startX:e.clientX,startY:e.clientY,dragged:false};pendingPort=null;}
-document.addEventListener('pointermove',e=>{if(wireDrag){const from=coords(wireDrag.from);if(!from)return;if(Math.hypot(e.clientX-wireDrag.startX,e.clientY-wireDrag.startY)>4)wireDrag.dragged=true;preview.setAttribute('d',path(from,point(e)))}if(dragPart){const current=part(dragPart.id);if(!current)return;const pt=point(e);const [w,h]=dims[current.type];current.x=clamp(Math.round(pt.x-dragPart.dx),3,W-w-3);current.y=clamp(Math.round(pt.y-dragPart.dy),3,H-h-3);const el=partArea.querySelector(`[data-id="${CSS.escape(current.id)}"]`);if(el){el.style.left=current.x+'px';el.style.top=current.y+'px'}drawWires()}if(paletteDrag){paletteDrag.ghost.style.left=e.clientX+10+'px';paletteDrag.ghost.style.top=e.clientY+12+'px'}});
-document.addEventListener('pointerup',e=>{if(wireDrag){const target=e.target.closest('.cs-port');const to=target?{part:target.dataset.part,port:target.dataset.port}:null;if(to&&key(wireDrag.from)!==key(to)){finishWire(wireDrag.from,to);pendingPort=null}else if(!wireDrag.dragged){pendingPort=wireDrag.from;status('İkinci bağlantı ucunu seç veya kabloyu oraya sürükle.');}else pendingPort=null;wireDrag=null;preview.setAttribute('d','')} if(dragPart){dragPart=null;save();validate(false)}if(paletteDrag){const rect=stage.getBoundingClientRect();const on=e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom;const type=paletteDrag.type;const click=Math.hypot(e.clientX-paletteDrag.startX,e.clientY-paletteDrag.startY)<10;paletteDrag.ghost.remove();paletteDrag=null;const pt=on?point(e):{x:clamp(viewport.scrollLeft/zoom+viewport.clientWidth/(2*zoom),75,W-115),y:clamp(viewport.scrollTop/zoom+viewport.clientHeight/(2*zoom),75,H-115)};if(on||click){snap();add(type,pt.x-55,pt.y-38)}else status('Parçayı yerleştirmek için çalışma alanına bırak.')}});
+function finishWire(from,to,points=[]){
+ if(!to||key(from)===key(to))return;
+ if(state.wires.some(w=>[key(w.from),key(w.to)].sort().join('|')===[key(from),key(to)].sort().join('|'))){status('Bu bağlantı zaten mevcut.');return;}
+ if(state.wires.length>=180){status('En fazla 180 kablo eklenebilir.','bad');return;}
+ snap();
+ state.wires.push({id:'w'+id(),from,to,color:state.draftWire?.color||wireColor,points:points.map(p=>({...p}))});
+ delete state.draftWire;
+ selected={type:'wire',id:state.wires.at(-1).id};change('Kablo eklendi.');
+}
+function routedPath(a,b,points=[]){
+ const vertices=[a,...points,b];
+ return vertices.slice(1).map((end,i)=>path(vertices[i],end)).join(' ');
+}
+function snappedPoint(event){
+ const p=point(event);
+ return $('#cs-snap-grid').getAttribute('aria-pressed')==='true'?{x:clamp(Math.round(p.x/20)*20,0,W),y:clamp(Math.round(p.y/20)*20,0,H)}:p;
+}
+function leaveDraft(from,points){
+ if(points.length>64){status('Bir kablo en fazla 64 ara nokta içerebilir.','bad');return;}
+ snap();state.draftWire={from,points,color:state.draftWire?.color||wireColor};
+ pendingPort=null;stop();drawWires();save();
+ status('Kablo ucu bırakıldı. Ucundan sürükleyerek devam et veya bir pine tıkla.','good');
+}
+function drawDraft(){
+ draftOverlay.replaceChildren();
+ const draft=state.draftWire;if(!draft)return;
+ const start=coords(draft.from),end=draft.points.at(-1);if(!start||!end){delete state.draftWire;return;}
+ const line=document.createElementNS('http://www.w3.org/2000/svg','path');
+ line.setAttribute('d',routedPath(start,end,draft.points.slice(0,-1)));
+ line.setAttribute('stroke',draft.color);line.setAttribute('class','cs-wire-line cs-draft-line');
+ const handle=document.createElementNS('http://www.w3.org/2000/svg','circle');
+ handle.setAttribute('cx',end.x);handle.setAttribute('cy',end.y);handle.setAttribute('r','8');
+ handle.setAttribute('class','cs-draft-end');handle.setAttribute('tabindex','0');handle.setAttribute('role','button');
+ handle.setAttribute('aria-label',t('Kabloya buradan devam et'));
+ handle.addEventListener('pointerdown',event=>{
+   event.preventDefault();event.stopPropagation();
+   wireDrag={from:draft.from,points:deep(draft.points),startX:event.clientX,startY:event.clientY,dragged:false};
+ });
+ handle.addEventListener('keydown',event=>{
+   if(event.key==='Enter'||event.key===' '){event.preventDefault();pendingPort=draft.from;status('Devam etmek için çalışma alanına veya bir pine tıkla.');}
+ });
+ wireSvg.append(line);draftOverlay.append(handle);
+}
+function startWire(e){
+ e.preventDefault();e.stopPropagation();
+ const from={part:e.currentTarget.dataset.part,port:e.currentTarget.dataset.port};
+ const draft=state.draftWire;
+ if(draft){if(key(draft.from)!==key(from))finishWire(draft.from,from,draft.points);return;}
+ if(pendingPort){if(key(pendingPort)!==key(from))finishWire(pendingPort,from);pendingPort=null;preview.setAttribute('d','');return;}
+ wireDrag={from,points:[],startX:e.clientX,startY:e.clientY,dragged:false};pendingPort=null;
+}
+document.addEventListener('pointermove',e=>{if(wireDrag){const from=coords(wireDrag.from);if(!from)return;if(Math.hypot(e.clientX-wireDrag.startX,e.clientY-wireDrag.startY)>4)wireDrag.dragged=true;preview.setAttribute('d',routedPath(from,snappedPoint(e),wireDrag.points))}if(dragPart){const current=part(dragPart.id);if(!current)return;const pt=point(e);const [w,h]=dims[current.type];current.x=clamp(Math.round(pt.x-dragPart.dx),3,W-w-3);current.y=clamp(Math.round(pt.y-dragPart.dy),3,H-h-3);const el=partArea.querySelector(`[data-id="${CSS.escape(current.id)}"]`);if(el){el.style.left=current.x+'px';el.style.top=current.y+'px'}drawWires()}if(paletteDrag){paletteDrag.ghost.style.left=e.clientX+10+'px';paletteDrag.ghost.style.top=e.clientY+12+'px'}});
+document.addEventListener('pointerup',e=>{if(wireDrag){const target=e.target.closest('.cs-port');const to=target?{part:target.dataset.part,port:target.dataset.port}:null;if(to&&key(wireDrag.from)!==key(to)){finishWire(wireDrag.from,to,wireDrag.points);pendingPort=null}else if(!wireDrag.dragged){pendingPort=wireDrag.from;status('İkinci bağlantı ucunu seç veya kabloyu oraya sürükle.');}else {const bounds=stage.getBoundingClientRect();if(e.clientX>=bounds.left&&e.clientX<=bounds.right&&e.clientY>=bounds.top&&e.clientY<=bounds.bottom)leaveDraft(wireDrag.from,[...wireDrag.points,snappedPoint(e)]);pendingPort=null;}wireDrag=null;preview.setAttribute('d','')} if(dragPart){dragPart=null;save();validate(false)}if(paletteDrag){const rect=stage.getBoundingClientRect();const on=e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom;const type=paletteDrag.type;const click=Math.hypot(e.clientX-paletteDrag.startX,e.clientY-paletteDrag.startY)<10;paletteDrag.ghost.remove();paletteDrag=null;const pt=on?point(e):{x:clamp(viewport.scrollLeft/zoom+viewport.clientWidth/(2*zoom),75,W-115),y:clamp(viewport.scrollTop/zoom+viewport.clientHeight/(2*zoom),75,H-115)};if(on||click){snap();add(type,pt.x-55,pt.y-38)}else status('Parçayı yerleştirmek için çalışma alanına bırak.')}});
 function startMove(e){e.preventDefault();e.stopPropagation();const elem=e.currentTarget.closest('.cs-part');const p=part(elem.dataset.id);if(!p)return;selected={type:'part',id:p.id};showSelection();snap();const pt=point(e);dragPart={id:p.id,dx:pt.x-p.x,dy:pt.y-p.y};}
 function showSelection(){partArea.querySelectorAll('.cs-part').forEach(el=>el.classList.toggle('selected',selected?.type==='part'&&el.dataset.id===selected.id));const ins=$('#cs-inspector');ins.replaceChildren();if(!selected){ins.innerHTML='<p>Bir bileşen veya kablo seçerek özelliklerini buradan değiştir.</p>';return}
 if(selected.type==='part'){const p=part(selected.id);if(!p){selected=null;return;}const title=document.createElement('h3');title.textContent=names[p.type];ins.append(title);const hint=document.createElement('p');hint.className='cs-helper';hint.textContent='Başlık çubuğundan taşıyabilirsin. Silmek için Delete tuşunu kullan.';ins.append(hint);
@@ -321,6 +382,25 @@ function setZoom(z,anchor){
  viewport.scrollTop+=after.top+localY*zoom-py;
  drawWires();
 }
+function focusBreadboard(target){
+ const bread=target||state.parts.find(p=>p.type==='breadboard'&&selected?.id===p.id)||state.parts.find(p=>p.type==='breadboard');
+ if(!bread){status('Önce çalışma alanına bir breadboard ekle.');return;}
+ if(!previousView)previousView={zoom,left:viewport.scrollLeft,top:viewport.scrollTop};
+ setZoom(2);
+ const element=partArea.querySelector('[data-id="'+CSS.escape(bread.id)+'"]');
+ const bounds=element.getBoundingClientRect(),view=viewport.getBoundingClientRect();
+ viewport.scrollLeft+=bounds.left+bounds.width/2-view.left-viewport.clientWidth/2;
+ viewport.scrollTop+=bounds.top+bounds.height/2-view.top-viewport.clientHeight/2;
+ $('#cs-restore-view').disabled=false;
+ status('Breadboard büyütüldü. Pinlere tıklayarak bağlantı kurabilirsin.','good');
+}
+$('#cs-bread-focus').addEventListener('click',()=>focusBreadboard());
+$('#cs-restore-view').addEventListener('click',()=>{
+ if(!previousView)return;
+ const saved=previousView;previousView=null;
+ setZoom(saved.zoom);viewport.scrollLeft=saved.left;viewport.scrollTop=saved.top;
+ $('#cs-restore-view').disabled=true;
+});
 viewport.addEventListener('wheel',e=>{
  e.preventDefault();
  const direction=Math.max(-1.5,Math.min(1.5,e.deltaY/(e.deltaMode===1?5:e.deltaMode===2?100:110)));
@@ -328,8 +408,23 @@ viewport.addEventListener('wheel',e=>{
 },{passive:false});
 $('#cs-zoom-in').addEventListener('click',()=>setZoom(zoom*1.15));
 $('#cs-zoom-out').addEventListener('click',()=>setZoom(zoom/1.15));
-stage.addEventListener('pointerdown',e=>{if(e.target===stage){selected=null;pendingPort=null;showSelection();drawWires()}});
-document.addEventListener('keydown',e=>{const tag=document.activeElement?.tagName;if(['INPUT','TEXTAREA','SELECT'].includes(tag))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();$('#cs-undo').click()}if(e.key==='Escape'){selected=null;pendingPort=null;preview.setAttribute('d','');showSelection();drawWires()}if(e.key==='Delete'&&selected){e.preventDefault();removeSelected()}});
+stage.addEventListener('pointerdown',e=>{
+ if(e.target.closest('.cs-part,.cs-wire-hit,.cs-draft-end'))return;
+ if(state.draftWire||pendingPort){
+   const from=state.draftWire?.from||pendingPort;
+   leaveDraft(from,[...(state.draftWire?.points||[]),snappedPoint(e)]);
+ }else{selected=null;showSelection();drawWires();}
+});
+$('#cs-snap-grid').onclick=event=>{
+ const button=event.currentTarget;
+ button.setAttribute('aria-pressed',String(button.getAttribute('aria-pressed')!=='true'));
+};
+$('#cs-route-wire').onclick=()=>{
+ const wire=selected?.type==='wire'&&state.wires.find(w=>w.id===selected.id);
+ if(!wire){status('Düzenlemek için önce bir kablo seç.');return;}
+ snap();wire.points=[];drawWires();save();status('Kablo otomatik düzenlendi.','good');
+};
+document.addEventListener('keydown',e=>{const tag=document.activeElement?.tagName;if(['INPUT','TEXTAREA','SELECT'].includes(tag))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();$('#cs-undo').click()}if(e.key==='Escape'){if(state.draftWire){snap();delete state.draftWire;save();}wireDrag=null;selected=null;pendingPort=null;preview.setAttribute('d','');showSelection();drawWires()}if(e.key==='Delete'&&selected){e.preventDefault();removeSelected()}});
 // Auto-load the user's work, keep the known example ready for first-time visitors.
 initPalette();try{
  const raw=localStorage.getItem('ege-circuit-v5');
